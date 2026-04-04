@@ -1,4 +1,4 @@
-### Jogo (Sem nome ainda)
+### Emoji Conquest
 
 ## Objetivo do jogo:
 
@@ -27,9 +27,9 @@ utilizado e o jogador só descobre no momento em que selecionar ele;
 - De acordo com o tipo de campo, as classes ficarão mais fortes ou mais fracas;
 
 - A cada rodada o jogador sorteará um cor entre 4 disponível, caso essa cor seja 
-correspondente a uma cor de uma das 4 áreas, o jogador ganha 10% a mais de pontos 
-caso jogue um emoji nessa área, porém tem uma chance de 25% de a cor da área mudar, 
-caso isso ocorra, o jogador perde 10% dos pontos de ataque;
+correspondente a uma cor de uma das 4 áreas, o jogador ganha 4 pontos a mais 
+caso jogue um emoji nessa área, porém tem uma chance de 25% de perder 4 pontos de
+ataque;
 
 - Cada uma das áreas de conquista terá 100 pontos de vida;
 
