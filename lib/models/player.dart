@@ -31,6 +31,6 @@ class Player {
     final Random rand = Random();
     int value = rand.nextInt(100) + 1;
 
-    return value > 25 ? -5 : 5;
+    return value > 25 ? -2 : 2;
   }
 }
