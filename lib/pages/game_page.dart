@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/themes/app_themes.dart';
 import 'package:drag_and_drop_game/routes/app_routes.dart';
 import 'package:drag_and_drop_game/models/emoji.dart';
 import 'package:drag_and_drop_game/models/emoji_data.dart';
@@ -17,7 +18,8 @@ import 'package:drag_and_drop_game/widgets/conquest_area.dart';
 import 'dart:math';
 
 class GamePage extends StatefulWidget {
-  const GamePage({super.key});
+  final GamePageArgs ars;
+  const GamePage({required this.ars, super.key});
 
   @override
   State<GamePage> createState() => _GamePageState();
@@ -42,6 +44,8 @@ class _GamePageState extends State<GamePage> {
   void initState() {
     super.initState();
 
+    args = widget.ars;
+
     colorsModel = ColorsModel(rand, [true, false, false, false], []);
     colorsModel.getColorsToColorOption();
 
@@ -54,26 +58,20 @@ class _GamePageState extends State<GamePage> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (args == null) {
-      args = ModalRoute.of(context)!.settings.arguments as GamePageArgs;
-
-      defenseEmoji.p1Emojis = args!.player1Emojis;
-      defenseEmoji.p2Emojis = args!.player2Emojis;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.cyan, toolbarHeight: 0),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 74, 75, 77),
+        surfaceTintColor: Colors.transparent,
+        toolbarHeight: 0
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return Container(
             padding: const EdgeInsets.all(10),
-            color: Colors.cyan,
+            decoration: BoxDecoration(
+              gradient: AppThemes.gradient
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -81,7 +79,7 @@ class _GamePageState extends State<GamePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 0),
-                    Text("Vez de: $playerTurn", style: const TextStyle(fontSize: 20)),
+                    Text("Vez de: $playerTurn", style: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 206, 206, 207))),
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 1),
                   ],
                 ),
@@ -158,7 +156,7 @@ class _GamePageState extends State<GamePage> {
                   ]
                 ),
                 FractionallySizedBox(
-                  widthFactor: 0.5,
+                  widthFactor: 0.4,
                   child: IgnorePointer(
                     ignoring: isSorted ? true : false,
                     child: Opacity(
@@ -177,8 +175,8 @@ class _GamePageState extends State<GamePage> {
 
   void initializeDefenseEmoji() {
     defenseEmoji = DefenseEmoji(
-      [EmojiData(emoji: "", emojiClass: EmojiClass.neutro, attack: 0)],
-      [EmojiData(emoji: "", emojiClass: EmojiClass.neutro, attack: 0)], 
+      args!.player1Emojis,
+      args!.player1Emojis,
       [
         EmojiData(emoji: "", emojiClass: EmojiClass.neutro, attack: 0), 
         EmojiData(emoji: "", emojiClass: EmojiClass.neutro, attack: 0)
@@ -235,7 +233,6 @@ class _GamePageState extends State<GamePage> {
         if (colorIterator == colorsModel.selectedColor.length-1 && i == selectedValue) {
           color = colorsModel.listColors[selectedValue];
           configPlayer();
-          print(player);
           break;
         }
         await Future.delayed(Duration(milliseconds: 200));
@@ -262,11 +259,9 @@ class _GamePageState extends State<GamePage> {
     changePlayerTurn();
     configPlayer();
 
-    print(defenseEmoji.defenseEmojiInField);
     if (defenseEmoji.defenseEmojiInField[0]) defenseEmoji.defenseEmojiTurns[0] += 1;
     if (defenseEmoji.defenseEmojiInField[1]) defenseEmoji.defenseEmojiTurns[1] += 1;
 
-    print(defenseEmoji.defenseEmojiTurns);
     if (defenseEmoji.defenseEmojiTurns[0] == turns) defenseEmoji.removeDefenseEmoji(0);
     if (defenseEmoji.defenseEmojiTurns[1] == turns) defenseEmoji.removeDefenseEmoji(1);
     
@@ -277,11 +272,15 @@ class _GamePageState extends State<GamePage> {
     final index = await showDialog<int>(
       context: context, 
       builder: (_) => AlertDialog(
+        backgroundColor: const Color.fromARGB(255, 46, 46, 47),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-             const Text("Escolha sua defesa"),
-             IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close))
+            const Text("Escolha sua defesa", style: TextStyle(color: Color.fromARGB(255, 206, 206, 207))),
+            IconButton(
+              onPressed: () => Navigator.pop(context), 
+              icon: const Icon(Icons.close, color: Color.fromARGB(255, 206, 206, 207))
+            )
           ],
         ),
         content: DefenseSelector(emojis: playerTurn == "X" ? defenseEmoji.p1Emojis : defenseEmoji.p2Emojis)
@@ -292,8 +291,6 @@ class _GamePageState extends State<GamePage> {
 
     defenseEmoji.emojiSelected[playerTurn == "X" ? 0 : 1] = (playerTurn == "X") ? defenseEmoji.p1Emojis[index] : defenseEmoji.p2Emojis[index];
     playerTurn == "X" ? defenseEmoji.p1Emojis.removeAt(index) : defenseEmoji.p2Emojis.removeAt(index);
-    print("SAIU: ${defenseEmoji.p1Emojis}");
-    print("SAIU: ${defenseEmoji.p2Emojis}");
     return defenseEmoji.emojiSelected[playerTurn == "X" ? 0 : 1];
   }
 
@@ -304,7 +301,7 @@ class _GamePageState extends State<GamePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(index == 0 ? "Relação entre Classes" : "Relação entre Campos"),
+            Text(index == 0 ? "Classes" : "Campos"),
             IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close)),
           ],
         ),

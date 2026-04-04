@@ -1,3 +1,4 @@
+import 'package:drag_and_drop_game/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:drag_and_drop_game/routes/app_routes.dart';
 import 'package:drag_and_drop_game/models/emoji_data.dart';
@@ -24,47 +25,58 @@ class _ChooseEmojiPageState extends State<ChooseEmojiPage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Escolha seus Emojis"),
+        title: const Text("Escolha seus Emojis", style: TextStyle(color: Colors.white)),
         centerTitle: true,
-        backgroundColor: Colors.cyan
+        backgroundColor: const Color.fromARGB(255, 74, 75, 77),
+        surfaceTintColor: Colors.transparent,
+        foregroundColor: Colors.white,
       ),
       body: Container(
         height: size.height,
         width: size.width,
-        color: Colors.cyan,  
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          gradient: AppThemes.gradient
+        ), 
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 10,
           children: <Widget>[
             Expanded(
               child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3), 
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 1), 
                 itemCount: Emoji.emojiStatsList.length,
                 itemBuilder: (context, index) {
-                  return IgnorePointer(
-                    ignoring: emojiAvaliable[index] ? false : true,
-                    child: Material(
-                      color: emojiAvaliable[index] 
-                        ? Colors.cyan 
-                        : indexP1.contains(index)
-                          ? Colors.yellowAccent
-                          : Colors.orange,
-                      type: MaterialType.circle,
-                      child: InkWell(
-                        onTap:() {
-                          selectEmoji(index);
-                          setState(() => emojiAvaliable[index] = !emojiAvaliable[index]);
-                        },
-                        child: Center(
-                          child: Text(
-                            Emoji.emojiStatsList[index].emoji,
-                            style: const TextStyle(
-                              fontSize: 20
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
+                    child: IgnorePointer(
+                      ignoring: emojiAvaliable[index] ? false : true,
+                      child: Material(
+                        elevation: 5,
+                        color: emojiAvaliable[index] 
+                          ? const Color.fromARGB(255, 82, 92, 111)
+                          : indexP1.contains(index)
+                            ? const Color.fromARGB(255, 71, 112, 189)
+                            : const Color.fromARGB(255, 177, 139, 84),
+                        type: MaterialType.card,
+                        borderRadius: BorderRadius.circular(12),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap:() {
+                            selectEmoji(index);
+                            setState(() => emojiAvaliable[index] = !emojiAvaliable[index]);
+                          },
+                          child: Center(
+                            child: Text(
+                              Emoji.emojiStatsList[index].emoji,
+                              style: const TextStyle(
+                                fontSize: 20
+                              )
                             )
                           )
                         )
                       )
-                    )
+                    ),
                   );
                 }
               )
@@ -102,9 +114,10 @@ class _ChooseEmojiPageState extends State<ChooseEmojiPage> {
       context: context, 
       barrierDismissible: false,
       builder: (_) => AlertDialog(
-        title: Center(child: const Text("Confirmar Emojis")),
+        backgroundColor:const Color.fromARGB(255, 46, 46, 47),
+        title: Center(child: const Text("Confirmar Emojis", style: TextStyle(color: Colors.white))),
         content: SizedBox(
-          height: 250,
+          height: 200,
           width: 250,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -125,19 +138,31 @@ class _ChooseEmojiPageState extends State<ChooseEmojiPage> {
                       
                       Navigator.pop(context);
                     }, 
-                    child: const Text("Cancelar")
+                    child: const Text("Cancelar", style: TextStyle(color: Colors.white))
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      int len = player == 1 ? indexP1.length : indexP2.length;
-                      for (int i=0; i<len; i++) {
-                        emojiAvaliable[player == 1 ? indexP1[i] : indexP2[i]] = false; 
-                      }
-                      Navigator.pop(context); 
-                      if (player == 2) goToGamePage();      
-                    }, 
-                    child: const Text("Confirmar")
-                  )
+                  Material(
+                    color: const Color.fromARGB(255, 206, 206, 207),
+                    borderRadius: BorderRadius.circular(12),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      splashColor: player == 1 
+                        ? const Color.fromARGB(255, 71, 112, 189) 
+                        : const Color.fromARGB(255, 177, 139, 84),
+                      onTap: () {
+                        int len = player == 1 ? indexP1.length : indexP2.length;
+                        for (int i=0; i<len; i++) {
+                          emojiAvaliable[player == 1 ? indexP1[i] : indexP2[i]] = false; 
+                        }
+                        Navigator.pop(context); 
+                        if (player == 2) goToGamePage();      
+                      },
+                      child: SizedBox(
+                        height: 50,
+                        width: 100,
+                        child: Center(child: const Text("Confirmar")),
+                      ),
+                    ),
+                  ),
                 ]
               )
             ]
