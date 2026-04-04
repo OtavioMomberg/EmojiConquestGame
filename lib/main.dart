@@ -1,9 +1,6 @@
-import 'package:drag_and_drop_game/pages/choose_emoji_page.dart';
-import 'package:drag_and_drop_game/pages/game_page.dart';
-import 'package:drag_and_drop_game/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:drag_and_drop_game/pages/home_page.dart';
+import 'package:drag_and_drop_game/routes/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,13 +21,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Emoji Conquest',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      theme: ThemeData(
+        colorScheme: .fromSeed(seedColor:const Color.fromARGB(255, 46, 46, 47)),
+      ),
       initialRoute: AppRoutes.home,
-      routes: {
-        AppRoutes.home: (context) => const HomePage(),
-        AppRoutes.chooseEmoji: (context) => const ChooseEmojiPage(),
-        AppRoutes.game: (context) => const GamePage(),
-      },
+      onGenerateRoute: (settings) => AppRoutes.dynamicRoute(settings),
     );
   }
 }
