@@ -19,13 +19,14 @@ class ColorOption extends StatelessWidget {
       width: 60,
       decoration: BoxDecoration(
         border: Border.all(
-          color: selectedColor ? Colors.black : Colors.white,
+          color: selectedColor ? const Color.fromARGB(255, 177, 139, 84) : const Color.fromARGB(255, 225, 209, 209),
           width: 2
         ),
         borderRadius: BorderRadius.circular(50)
       ),
       child: Card(
         elevation: 10,
+        shadowColor: cor.withValues(alpha: 0.4),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50)
         ),

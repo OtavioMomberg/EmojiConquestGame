@@ -56,6 +56,7 @@ class _ConquestAreaState extends State<ConquestArea> {
               ? widget.initialColor.withValues(alpha: 0.8) 
               : widget.initialColor,
             elevation: 5,
+            shadowColor: const Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.2),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12)
             ),
@@ -68,7 +69,7 @@ class _ConquestAreaState extends State<ConquestArea> {
                     color: widget.initialColor == Colors.black
                       ? Colors.white
                       : Colors.black, 
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.w500
                   )
                 ),
                 if (widget.defenseEmoji != null)...[
@@ -77,19 +78,19 @@ class _ConquestAreaState extends State<ConquestArea> {
                     style: TextStyle(
                       color: widget.initialColor == Colors.black
                         ? Colors.white
-                        : Colors.black,  
-                      fontWeight: FontWeight.bold, 
-                      fontSize: 20
+                        : Colors.black, 
+                      fontSize: 20, 
+                      fontWeight: FontWeight.w500  
                     )
                   )
-                ],  
+                ],
                 Text(
                   "X: $acceptedDataX / Y: $acceptedDataY",
                   style: TextStyle(
                     color: widget.initialColor == Colors.black
                       ? Colors.white
                       : Colors.black,  
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.w500
                   )
                 )
               ]

@@ -10,9 +10,9 @@ class ImageWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: Image.asset(
         imagePath,
-        fit: BoxFit.fitHeight,
+        fit: BoxFit.contain,
         filterQuality: FilterQuality.high,
-        colorBlendMode: BlendMode.darken
+        colorBlendMode: BlendMode.darken,
       )
     );
   }

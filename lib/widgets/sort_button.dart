@@ -10,10 +10,11 @@ class SortButton extends StatelessWidget {
     return Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(12),
-      type: MaterialType.card,
+      color: const Color.fromARGB(255, 206, 206, 207),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
+        splashColor: const Color.fromARGB(255, 71, 112, 189),
         child: SizedBox(
           height: 60,
           child: Row(

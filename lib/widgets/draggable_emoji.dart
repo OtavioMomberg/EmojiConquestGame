@@ -26,8 +26,12 @@ class DraggableEmoji extends StatelessWidget {
             width: 100,    
             child: Center(
               child: Text(
-                "${player["emoji"]}", 
-                style: TextStyle(fontSize: 20)
+                player["attack"] < 10 ? "${player["emoji"]}\n0${player["attack"]}\n" : "${player["emoji"]}\n${player["attack"]}\n" , 
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: color == Colors.black ? Colors.white : Colors.black
+                )
               )
             )
           )
@@ -56,7 +60,15 @@ class DraggableEmoji extends StatelessWidget {
             color: color,
             borderRadius: BorderRadius.circular(50)
           ),
-          child: Center(child: const Text("Widget!"))
+          child: Center(
+            child: Text(
+              color == Colors.transparent ? "" : "Emoji!",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: color == Colors.black ? Colors.white : Colors.black
+              ),
+            ),
+            )
         )
       )
     );
