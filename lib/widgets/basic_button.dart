@@ -26,11 +26,11 @@ class BasicButton extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF001F40).withValues(alpha: 0.6),
-              ),
+              )
             )
-          ),
-        ),
-      ),
+          )
+        )
+      )
     );
   }
 }

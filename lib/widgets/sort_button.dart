@@ -19,10 +19,10 @@ class SortButton extends StatelessWidget {
           height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const <Widget>[
-              Icon(Icons.shuffle),
+            children:  <Widget>[
+              const Icon(Icons.shuffle),
               Text("SORT"),
-              Icon(Icons.shuffle)
+              const Icon(Icons.shuffle)
             ]
           )  
         )

@@ -79,7 +79,7 @@ class _GamePageState extends State<GamePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 0),
-                    Text("Vez de: $playerTurn", style: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 206, 206, 207))),
+                    Text("Vez de: $playerTurn", style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 206, 206, 207))),
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 1),
                   ],
                 ),
@@ -323,9 +323,9 @@ class _GamePageState extends State<GamePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 10,
-          children: <Widget>[
+          children: const <Widget>[
             Icon(Icons.emoji_events, size: 40, color: Colors.blue),
-            const Text("Vencedor", style: TextStyle(color: Colors.blue)),
+            Text("Vencedor", style: TextStyle(color: Colors.blue)),
             Icon(Icons.emoji_events, size: 40, color: Colors.blue)
           ]
         ),
@@ -356,7 +356,7 @@ class _GamePageState extends State<GamePage> {
                     )
                   )
                 )
-              ),
+              )
             ),
             const SizedBox(height: 20)
           ]
@@ -370,7 +370,7 @@ class _GamePageState extends State<GamePage> {
                 color: Colors.blue
               )
             ),
-            child: const Text("Home")
+            child: Text("Home")
           ),
           ElevatedButton(
             onPressed: () => Navigator.pushReplacementNamed(context, AppRoutes.chooseEmoji), 

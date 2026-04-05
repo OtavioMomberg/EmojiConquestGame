@@ -62,13 +62,13 @@ class DraggableEmoji extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              color == Colors.transparent ? "" : "Emoji!",
+              color == Colors.transparent ? "" : "Emoji",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: color == Colors.black ? Colors.white : Colors.black
-              ),
-            ),
+              )
             )
+          )
         )
       )
     );

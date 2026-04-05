@@ -4,6 +4,7 @@ import 'package:drag_and_drop_game/routes/app_routes.dart';
 import 'package:drag_and_drop_game/models/emoji_data.dart';
 import 'package:drag_and_drop_game/models/game_page_args.dart';
 import 'package:drag_and_drop_game/models/emoji.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChooseEmojiPage extends StatefulWidget {
   const ChooseEmojiPage({super.key});
@@ -25,7 +26,10 @@ class _ChooseEmojiPageState extends State<ChooseEmojiPage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Escolha seus Emojis", style: TextStyle(color: Colors.white)),
+        title: Text(
+          "Escolha seus Emojis", 
+          style: GoogleFonts.electrolize(),
+        ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 74, 75, 77),
         surfaceTintColor: Colors.transparent,
@@ -115,7 +119,7 @@ class _ChooseEmojiPageState extends State<ChooseEmojiPage> {
       barrierDismissible: false,
       builder: (_) => AlertDialog(
         backgroundColor:const Color.fromARGB(255, 46, 46, 47),
-        title: Center(child: const Text("Confirmar Emojis", style: TextStyle(color: Colors.white))),
+        title: Center(child: Text("Confirmar Emojis", style: GoogleFonts.electrolize(color: Colors.white))),
         content: SizedBox(
           height: 200,
           width: 250,
@@ -138,7 +142,7 @@ class _ChooseEmojiPageState extends State<ChooseEmojiPage> {
                       
                       Navigator.pop(context);
                     }, 
-                    child: const Text("Cancelar", style: TextStyle(color: Colors.white))
+                    child: Text("Cancelar", style: GoogleFonts.electrolize(color: Colors.white))
                   ),
                   Material(
                     color: const Color.fromARGB(255, 206, 206, 207),
@@ -159,10 +163,18 @@ class _ChooseEmojiPageState extends State<ChooseEmojiPage> {
                       child: SizedBox(
                         height: 50,
                         width: 100,
-                        child: Center(child: const Text("Confirmar")),
-                      ),
-                    ),
-                  ),
+                        child: Center(
+                          child: Text(
+                            "Confirmar", 
+                            style: GoogleFonts.electrolize(
+                              color: const Color.fromARGB(255, 46, 46, 47),
+                              fontWeight: FontWeight.bold
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
                 ]
               )
             ]

@@ -1,5 +1,5 @@
-import 'package:drag_and_drop_game/themes/app_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/themes/app_themes.dart';
 
 class HowToPlayPage extends StatelessWidget {
   const HowToPlayPage({super.key});
@@ -26,7 +26,7 @@ class HowToPlayPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Text(
+              const Text(
                 """ 
 Objetivo do Jogo:
                 
@@ -42,7 +42,7 @@ Regras:
 
 4. Durante a partida é possível ver um diagrama mostrando quais classes possuem vanatagens sobre outras;
 
-5. No início da rodada, o jogador pode posicionar um emoji em um campo de conquisa, mas apenas um (Permanece por 3 rodadas ou se for derrotado antes);
+5. No início da rodada, o jogador pode posicionar um emoji em um campo de conquista, mas apenas um (Permanece por 3 rodadas ou se for derrotado antes);
 
 6. Durante a rodada, o jogador deve sortear uma cor a qual seu emoji terá, se essa cor for igual a cor de um dos campo o jogador tem 75% de chance de ganhar 2 pontos de dano extra, caso contrário ele perde 4 pontos
 
