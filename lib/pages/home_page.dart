@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/audio_services/audio_services.dart';
 import 'package:drag_and_drop_game/routes/app_routes.dart';
 import 'package:drag_and_drop_game/themes/app_themes.dart';
 import 'package:drag_and_drop_game/widgets/basic_button.dart';
@@ -39,13 +40,16 @@ class HomePage extends StatelessWidget {
                     color: Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.3)
                   )
                 ),
-                child: ImageWidget(imagePath: "images/emoji_conquest_logo.png"),
+                child: ImageWidget(imagePath: "assets/images/emoji_conquest_logo.png"),
               ),
             ),
             const SizedBox(height: 10),
             FractionallySizedBox(
               widthFactor: 0.6,
-              child: BasicButton(play: goChooseEmojisPage, text: "Jogar")
+              child: BasicButton(
+                play: goChooseEmojisPage,
+                text: "Jogar"
+              )
             ),
             TextButton(
               onPressed: () => goToHowToPlayPage(context), 
@@ -58,6 +62,8 @@ class HomePage extends StatelessWidget {
   }
   
   void goChooseEmojisPage(BuildContext context) {
+    AudioServices.play("audios/cliqueBotao.mp3", 1);
+    
     Navigator.pushNamed(
       context,
       AppRoutes.chooseEmoji
@@ -65,6 +71,8 @@ class HomePage extends StatelessWidget {
   }
   
   void goToHowToPlayPage(BuildContext context) {
+    AudioServices.play("audios/cliqueBotao.mp3", 1);
+
     Navigator.pushNamed(
       context, 
       AppRoutes.howToPlay, 

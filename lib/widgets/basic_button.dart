@@ -25,7 +25,7 @@ class BasicButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF001F40).withValues(alpha: 0.6),
+                color: const Color(0xFF001F40).withValues(alpha: 0.6),
               )
             )
           )

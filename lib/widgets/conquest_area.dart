@@ -1,3 +1,4 @@
+import 'package:drag_and_drop_game/audio_services/audio_services.dart';
 import 'package:flutter/material.dart';
 import 'package:drag_and_drop_game/models/emoji.dart';
 import 'package:drag_and_drop_game/models/emoji_data.dart';
@@ -67,9 +68,9 @@ class _ConquestAreaState extends State<ConquestArea> {
                   "${field.fieldSelected}",
                   style: TextStyle(
                     color: widget.initialColor == Colors.black
-                      ? Colors.white
-                      : Colors.black, 
-                    fontWeight: FontWeight.w500
+                      ? const Color.fromARGB(255, 206, 206, 207)
+                      : const Color.fromARGB(255, 33, 32, 32), 
+                    fontWeight: FontWeight.w600
                   )
                 ),
                 if (widget.defenseEmoji != null)...[
@@ -77,10 +78,10 @@ class _ConquestAreaState extends State<ConquestArea> {
                     "${widget.defenseEmoji?.emoji}  ${correctedDamage()} atk",
                     style: TextStyle(
                       color: widget.initialColor == Colors.black
-                        ? Colors.white
-                        : Colors.black, 
+                        ? const Color.fromARGB(255, 206, 206, 207)
+                        : const Color.fromARGB(255, 33, 32, 32),
                       fontSize: 20, 
-                      fontWeight: FontWeight.w500  
+                      fontWeight: FontWeight.w600  
                     )
                   )
                 ],
@@ -88,9 +89,9 @@ class _ConquestAreaState extends State<ConquestArea> {
                   "X: $acceptedDataX / Y: $acceptedDataY",
                   style: TextStyle(
                     color: widget.initialColor == Colors.black
-                      ? Colors.white
-                      : Colors.black,  
-                    fontWeight: FontWeight.w500
+                      ? const Color.fromARGB(255, 206, 206, 207)
+                      : const Color.fromARGB(255, 33, 32, 32),  
+                    fontWeight: FontWeight.w600
                   )
                 )
               ]
@@ -99,6 +100,7 @@ class _ConquestAreaState extends State<ConquestArea> {
         );
       },
       onAcceptWithDetails: (details) {
+        AudioServices.play("audios/cliqueBotao.mp3", 0.2);
         checkDefenseEmoji();
         if (field.isConquested == true) return;
 

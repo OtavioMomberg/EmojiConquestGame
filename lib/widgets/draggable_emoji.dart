@@ -29,8 +29,8 @@ class DraggableEmoji extends StatelessWidget {
                 player["attack"] < 10 ? "${player["emoji"]}\n0${player["attack"]}\n" : "${player["emoji"]}\n${player["attack"]}\n" , 
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: color == Colors.black ? Colors.white : Colors.black
+                  fontWeight: FontWeight.w600,
+                  color: color == Colors.black ? const Color.fromARGB(255, 206, 206, 207) : const Color.fromARGB(255, 33, 32, 32)
                 )
               )
             )
@@ -64,8 +64,8 @@ class DraggableEmoji extends StatelessWidget {
             child: Text(
               color == Colors.transparent ? "" : "Emoji",
               style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: color == Colors.black ? Colors.white : Colors.black
+                fontWeight: FontWeight.w600,
+                  color: color == Colors.black ? const Color.fromARGB(255, 206, 206, 207) : const Color.fromARGB(255, 33, 32, 32)
               )
             )
           )

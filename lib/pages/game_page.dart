@@ -1,3 +1,4 @@
+import 'package:drag_and_drop_game/audio_services/audio_services.dart';
 import 'package:flutter/material.dart';
 import 'package:drag_and_drop_game/themes/app_themes.dart';
 import 'package:drag_and_drop_game/routes/app_routes.dart';
@@ -231,6 +232,7 @@ class _GamePageState extends State<GamePage> {
           colorsModel.selectedColor[i] = true;
         });
         if (colorIterator == colorsModel.selectedColor.length-1 && i == selectedValue) {
+          AudioServices.play("audios/clique_campo.mp3", 0.3);
           color = colorsModel.listColors[selectedValue];
           configPlayer();
           break;
@@ -295,6 +297,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   void seeInfo(int index) {
+    AudioServices.play("audios/clique_campo.mp3", 0.1);
     showDialog(
       context: context, 
       builder: (_) => AlertDialog(
@@ -308,7 +311,7 @@ class _GamePageState extends State<GamePage> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            ImageWidget(imagePath: index == 0 ? "images/class_hierarchy.png" : "images/field_type_relation_class.png"),
+            ImageWidget(imagePath: index == 0 ? "assets/images/class_hierarchy.png" : "assets/images/field_type_relation_class.png"),
           ],
         ),
       ),

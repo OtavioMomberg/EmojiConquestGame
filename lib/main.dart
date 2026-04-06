@@ -8,8 +8,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   LicenseRegistry.addLicense(() async* {
-    final String license = await rootBundle.loadString('fonts/OFL.txt');
-    yield LicenseEntryWithLineBreaks(<String>['Google Fonts - NomeDaFonte'], license);
+    final String license = await rootBundle.loadString('assets/fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(<String>['Google Fonts - Electrolize'], license);
   });
 
   await SystemChrome.setPreferredOrientations([

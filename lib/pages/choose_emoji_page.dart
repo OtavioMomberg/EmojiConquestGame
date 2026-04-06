@@ -1,5 +1,6 @@
-import 'package:drag_and_drop_game/themes/app_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/audio_services/audio_services.dart';
+import 'package:drag_and_drop_game/themes/app_themes.dart';
 import 'package:drag_and_drop_game/routes/app_routes.dart';
 import 'package:drag_and_drop_game/models/emoji_data.dart';
 import 'package:drag_and_drop_game/models/game_page_args.dart';
@@ -67,6 +68,7 @@ class _ChooseEmojiPageState extends State<ChooseEmojiPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12),
                           onTap:() {
+                            AudioServices.play("audios/clique_campo.mp3", 0.15);
                             selectEmoji(index);
                             setState(() => emojiAvaliable[index] = !emojiAvaliable[index]);
                           },
