@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
   }
   
   void goChooseEmojisPage(BuildContext context) {
-    AudioServices.play("audios/cliqueBotao.mp3", 1);
+    AudioServices.play("audios/button_click2.mp3", 1);
     
     Navigator.pushNamed(
       context,
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
   }
   
   void goToHowToPlayPage(BuildContext context) {
-    AudioServices.play("audios/cliqueBotao.mp3", 1);
+    AudioServices.play("audios/button_click2.mp3", 1);
 
     Navigator.pushNamed(
       context, 
