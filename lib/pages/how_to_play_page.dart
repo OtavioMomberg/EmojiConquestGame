@@ -9,11 +9,11 @@ class HowToPlayPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Como Jogar", style: TextStyle(color: Colors.white)),
+        title: const Text("Como Jogar", style: TextStyle(color: Color.fromARGB(255, 206, 206, 207))),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 74, 75, 77),
         surfaceTintColor: Colors.transparent,
-        foregroundColor: Colors.white,
+        foregroundColor: Color.fromARGB(255, 206, 206, 207),
       ),
       backgroundColor: const Color.fromARGB(255, 46, 46, 47),
       body: Container(
@@ -62,7 +62,7 @@ Regras:
                 
 14. O primeiro jogador é chamado de X e o segundo de Y.
                 """,
-style: TextStyle(color: Colors.white)
+style: TextStyle(color: Color.fromARGB(255, 206, 206, 207))
               ),
             ],
           ),

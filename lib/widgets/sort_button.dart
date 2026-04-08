@@ -14,7 +14,7 @@ class SortButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        splashColor: const Color.fromARGB(255, 71, 112, 189),
+        splashColor: const Color.fromARGB(255, 110, 114, 123),
         child: SizedBox(
           height: 60,
           child: Row(

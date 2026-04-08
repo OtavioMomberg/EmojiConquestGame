@@ -57,7 +57,7 @@ class _ConquestAreaState extends State<ConquestArea> {
               ? widget.initialColor.withValues(alpha: 0.8) 
               : widget.initialColor,
             elevation: 5,
-            shadowColor: const Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.2),
+            shadowColor: widget.initialColor.withValues(alpha: 0.5),//const Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.2),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12)
             ),
@@ -100,7 +100,7 @@ class _ConquestAreaState extends State<ConquestArea> {
         );
       },
       onAcceptWithDetails: (details) {
-        AudioServices.play("audios/cliqueBotao.mp3", 0.2);
+        AudioServices.play("audios/emoji_placement_sound.mp3", 0.3);
         checkDefenseEmoji();
         if (field.isConquested == true) return;
 

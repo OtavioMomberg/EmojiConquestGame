@@ -1,5 +1,5 @@
-import 'package:drag_and_drop_game/audio_services/audio_services.dart';
 import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/audio_services/audio_services.dart';
 import 'package:drag_and_drop_game/themes/app_themes.dart';
 import 'package:drag_and_drop_game/routes/app_routes.dart';
 import 'package:drag_and_drop_game/models/emoji.dart';
@@ -50,9 +50,8 @@ class _GamePageState extends State<GamePage> {
     colorsModel = ColorsModel(rand, [true, false, false, false], []);
     colorsModel.getColorsToColorOption();
 
-    int val = rand.nextInt(colorsModel.selectedColor.length) + 1;
-    playerTurn = val % 2 == 0 ? "X" : "Y";
-
+    playerTurn = args!.playerTurn;
+    
     getFields();
     initializeDefenseEmoji();
     configPlayer();
@@ -77,10 +76,11 @@ class _GamePageState extends State<GamePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  spacing: 10,
+                  children: <Widget>[
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 0),
-                    Text("Vez de: $playerTurn", style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 206, 206, 207))),
+                    Text("Vez de: $playerTurn", style: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 206, 206, 207))),
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 1),
                   ],
                 ),
@@ -94,16 +94,34 @@ class _GamePageState extends State<GamePage> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () async {
-                          if (isSorted) return;
+                          if (isSorted) {
+                            AudioServices.play("audios/error_sound.mp3", 0.2);  
+                            return;
+                          }
 
-                          if (defenseEmoji.defenseEmojiSelected[index]!.attack > 0) return;
+                          if (defenseEmoji.defenseEmojiSelected[index]!.attack > 0) {
+                            AudioServices.play("audios/error_sound.mp3", 0.2);  
+                            return;
+                          }
 
                           if (playerTurn == "X") {
-                            if(defenseEmoji.p1Emojis.length < 2) return;
-                            if (defenseEmoji.defenseEmojiInField[0]) return;
+                            if(defenseEmoji.p1Emojis.length < 2) {
+                              AudioServices.play("audios/error_sound.mp3", 0.2);  
+                              return;
+                            }
+                            if (defenseEmoji.defenseEmojiInField[0]) {
+                              AudioServices.play("audios/error_sound.mp3", 0.2);  
+                              return;
+                            }
                           }else {
-                            if(defenseEmoji.p2Emojis.length < 2) return;
-                            if (defenseEmoji.defenseEmojiInField[1]) return;
+                            if(defenseEmoji.p2Emojis.length < 2) {
+                              AudioServices.play("audios/error_sound.mp3", 0.2);  
+                              return;
+                            }
+                            if (defenseEmoji.defenseEmojiInField[1]) {
+                              AudioServices.play("audios/error_sound.mp3", 0.2);  
+                              return;
+                            }
                           }
 
                           defenseEmoji.defenseEmojiSelected[index] = await getDefense();
@@ -111,6 +129,7 @@ class _GamePageState extends State<GamePage> {
                           if (defenseEmoji.defenseEmojiSelected[index] != null && defenseEmoji.defenseEmojiSelected[index]!.attack > 0) {
                             playerTurn == "X" ? defenseEmoji.defenseEmojiInField[0] = true : defenseEmoji.defenseEmojiInField[1] = true;
                               defenseEmoji.defenseEmojiPlayer["player"] = playerTurn;
+                              AudioServices.play("audios/defense_emoji_sound.mp3", 0.25);  
                           }
                           setState(() {});
                         },
@@ -121,8 +140,7 @@ class _GamePageState extends State<GamePage> {
                               : const EdgeInsets.only(right: 10)
                             : index == 1
                               ? const EdgeInsets.only(left: 10, bottom: 10)
-                              : const EdgeInsets.only(left: 10),
-                            
+                              : const EdgeInsets.only(left: 10),  
                           child: ConquestArea(
                             updateGameTurn: updateTurnState,
                             removeDefenseEmoji: defenseEmoji.removeDefenseEmoji,
@@ -133,7 +151,7 @@ class _GamePageState extends State<GamePage> {
                               defenseEmoji.defenseEmojiSelected[index]!.emoji == ""
                                 ? null 
                                 : defenseEmoji.defenseEmojiSelected[index],
-                          ),
+                          )
                         )
                       );
                     }
@@ -177,7 +195,7 @@ class _GamePageState extends State<GamePage> {
   void initializeDefenseEmoji() {
     defenseEmoji = DefenseEmoji(
       args!.player1Emojis,
-      args!.player1Emojis,
+      args!.player2Emojis,
       [
         EmojiData(emoji: "", emojiClass: EmojiClass.neutro, attack: 0), 
         EmojiData(emoji: "", emojiClass: EmojiClass.neutro, attack: 0)
@@ -232,7 +250,7 @@ class _GamePageState extends State<GamePage> {
           colorsModel.selectedColor[i] = true;
         });
         if (colorIterator == colorsModel.selectedColor.length-1 && i == selectedValue) {
-          AudioServices.play("audios/clique_campo.mp3", 0.3);
+          AudioServices.play("audios/general_use_sound.mp3", 0.1);
           color = colorsModel.listColors[selectedValue];
           configPlayer();
           break;
@@ -256,6 +274,12 @@ class _GamePageState extends State<GamePage> {
       } else if (conquestedFields[1] == 3) {
         showResult(player);
       }
+    }
+
+    if (playerTurn == "X") {
+      if (defenseEmoji.p1Emojis.isEmpty) showResult("Y");
+    } else {
+      if (defenseEmoji.p2Emojis.isEmpty) showResult("X");
     }
 
     changePlayerTurn();
@@ -297,7 +321,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   void seeInfo(int index) {
-    AudioServices.play("audios/clique_campo.mp3", 0.1);
+    AudioServices.play("audios/button_click1.mp3", 0.1);
     showDialog(
       context: context, 
       builder: (_) => AlertDialog(
@@ -319,17 +343,31 @@ class _GamePageState extends State<GamePage> {
   }
 
   void showResult(String winner) {
+    AudioServices.play("audios/victory_sound.mp3", 0.3);
     showDialog(
       context: context, 
       barrierDismissible: false,
       builder: (_) => AlertDialog(
+        backgroundColor: const Color.fromARGB(255, 46, 46, 47),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           spacing: 10,
-          children: const <Widget>[
-            Icon(Icons.emoji_events, size: 40, color: Colors.blue),
-            Text("Vencedor", style: TextStyle(color: Colors.blue)),
-            Icon(Icons.emoji_events, size: 40, color: Colors.blue)
+          children: <Widget>[
+            Material(
+              elevation: 5,
+              shadowColor: const Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.3),
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+              child: const Icon(Icons.emoji_events, size: 40, color: Color.fromARGB(255, 206, 206, 207))
+            ),
+            Text("Vencedor", style: TextStyle(color: const Color.fromARGB(255, 206, 206, 207))),
+            Material(
+              elevation: 5,
+              shadowColor: const Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.3),
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+              child: const Icon(Icons.emoji_events, size: 40, color: Color.fromARGB(255, 206, 206, 207))
+            )
           ]
         ),
         content: Column(
@@ -338,7 +376,8 @@ class _GamePageState extends State<GamePage> {
             const SizedBox(height: 20),
             Material(
               elevation: 10,
-              shadowColor: Colors.blue.withValues(alpha: 0.5),
+              shadowColor: winner == "Y" ? const Color.fromARGB(255, 177, 139, 84) : const Color.fromARGB(255, 71, 112, 189),
+              color: const Color.fromARGB(255, 46, 46, 47).withValues(alpha: 0.7),
               borderRadius: BorderRadius.circular(50),
               child: Container(
                 height: 60,
@@ -346,7 +385,8 @@ class _GamePageState extends State<GamePage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
-                    color: Colors.blue,
+                    width: 1.5,
+                    color: winner == "Y" ? const Color.fromARGB(255, 177, 139, 84) : const Color.fromARGB(255, 71, 112, 189),
                   )
                 ),
                 child: Center(
@@ -354,7 +394,7 @@ class _GamePageState extends State<GamePage> {
                     winner.toUpperCase(), 
                     style: TextStyle(
                       fontSize: 40,
-                      color: Colors.blue,
+                      color: winner == "Y" ? const Color.fromARGB(255, 177, 139, 84) : const Color.fromARGB(255, 71, 112, 189),
                       fontWeight: FontWeight.bold
                     )
                   )
@@ -368,18 +408,20 @@ class _GamePageState extends State<GamePage> {
           TextButton(
             onPressed: () => Navigator.popUntil(context, (route) => route.isFirst), 
             style: TextButton.styleFrom(
-              foregroundColor: Colors.blue, 
-              side: BorderSide(
-                color: Colors.blue
-              )
+              foregroundColor: Color.fromARGB(255, 206, 206, 207), 
             ),
             child: Text("Home")
           ),
           ElevatedButton(
-            onPressed: () => Navigator.pushReplacementNamed(context, AppRoutes.chooseEmoji), 
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, AppRoutes.chooseEmoji);
+            }, 
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white
+              backgroundColor: const Color.fromARGB(255, 206, 206, 207),
+              foregroundColor: const Color.fromARGB(255, 46, 46, 47),
+              elevation: 10,
+              shadowColor: const Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.3)
             ),
             child: Text("Jogar novamente?")
           )

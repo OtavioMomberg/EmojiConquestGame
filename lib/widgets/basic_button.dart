@@ -15,7 +15,7 @@ class BasicButton extends StatelessWidget {
       surfaceTintColor: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        splashColor: const Color.fromARGB(255, 220, 220, 252).withValues(alpha: 0.3),
+        splashColor: const Color.fromARGB(255, 110, 114, 123),
         onTap: () => play(context),
         child: SizedBox(
           height: 60,
