@@ -38,6 +38,7 @@ class _GamePageState extends State<GamePage> {
   int selectedValue = 0;
   int colorIterator = 0;
   bool isSorted = false;
+  bool draggableOpacity = true;
   String playerTurn = "X";
   GamePageArgs? args;
   
@@ -80,9 +81,16 @@ class _GamePageState extends State<GamePage> {
                   spacing: 10,
                   children: <Widget>[
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 0),
-                    Text("Vez de: $playerTurn", style: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 206, 206, 207))),
-                    FieldClassInfo(seeInfo: seeInfo, imageIndex: 1),
-                  ],
+                    Text(
+                      "Vez de: $playerTurn", 
+                      style: TextStyle(
+                        fontSize: 20, 
+                        fontWeight: FontWeight.w600,
+                        color: playerTurn == "X" ? const Color.fromARGB(255, 71, 112, 189) : const Color.fromARGB(255, 177, 139, 84)
+                      )
+                    ),
+                    FieldClassInfo(seeInfo: seeInfo, imageIndex: 1)
+                  ]
                 ),
                 SizedBox(
                   height: constraints.maxHeight * .5,
@@ -136,11 +144,11 @@ class _GamePageState extends State<GamePage> {
                         child: Padding(
                           padding: index % 2 == 0
                             ? index == 0
-                              ? const EdgeInsets.only(right: 10, bottom: 10)
-                              : const EdgeInsets.only(right: 10)
+                              ? const EdgeInsets.only(right: 5, bottom: 10)
+                              : const EdgeInsets.only(right: 5)
                             : index == 1
-                              ? const EdgeInsets.only(left: 10, bottom: 10)
-                              : const EdgeInsets.only(left: 10),  
+                              ? const EdgeInsets.only(left: 5, bottom: 10)
+                              : const EdgeInsets.only(left: 5),  
                           child: ConquestArea(
                             updateGameTurn: updateTurnState,
                             removeDefenseEmoji: defenseEmoji.removeDefenseEmoji,
@@ -157,10 +165,13 @@ class _GamePageState extends State<GamePage> {
                     }
                   )
                 ),
-                DraggableEmoji(
-                  player: player.toMap(),
-                  isSorted: isSorted,
-                  color: color
+                Opacity(
+                  opacity: draggableOpacity ? 0.0 : 1.0,
+                  child: DraggableEmoji(
+                    player: player.toMap(),
+                    isSorted: isSorted,
+                    color: color
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -253,6 +264,7 @@ class _GamePageState extends State<GamePage> {
           AudioServices.play("audios/general_use_sound.mp3", 0.1);
           color = colorsModel.listColors[selectedValue];
           configPlayer();
+          if (draggableOpacity) draggableOpacity = false;
           break;
         }
         await Future.delayed(Duration(milliseconds: 200));

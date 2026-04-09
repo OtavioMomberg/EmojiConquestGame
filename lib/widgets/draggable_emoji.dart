@@ -20,12 +20,12 @@ class DraggableEmoji extends StatelessWidget {
         data: player,
         feedback: Material(
           color: color.withValues(alpha: 0.8),
-          borderRadius: BorderRadius.circular(50),
+          shape: StarBorder.polygon(sides: 6, pointRounding: 0.3),
           elevation: 8,
           shadowColor: color.withValues(alpha: 0.5),
           child: SizedBox(
-            height: 80,
-            width: 80,    
+            height: 95,
+            width: 100,    
             child: Center(
               child: Text(
                 player["attack"] < 10 
@@ -42,24 +42,23 @@ class DraggableEmoji extends StatelessWidget {
             )
           )
         ),
-        childWhenDragging: Container(
-          height: 80,
-          width: 80,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            border: Border.all(
-              style: BorderStyle.solid,
-              color: color
-            )
-          )  
+        childWhenDragging: Material(
+          color: const Color.fromARGB(255, 46, 46, 47),
+          shape: StarBorder.polygon(sides: 6, pointRounding: 0.3),
+          elevation: 8,
+          shadowColor: const Color.fromARGB(255, 36, 37, 39).withValues(alpha: 0.3),
+          child: SizedBox(
+            height: 95,
+            width: 100, 
+          )
         ),
         child: Material(
           color: color.withValues(alpha: 0.8),
-          borderRadius: BorderRadius.circular(50),
+          shape: StarBorder.polygon(sides: 6, pointRounding: 0.3),
           elevation: 8,
           child: SizedBox(
-            height: 80,
-            width: 80,
+            height: 95,
+            width: 100,
             child: Center(
               child: Text(
                 color == Colors.transparent ? "" : "Emoji",
@@ -71,7 +70,7 @@ class DraggableEmoji extends StatelessWidget {
                 )
               )
             )
-          ),
+          )
         )
       )
     );

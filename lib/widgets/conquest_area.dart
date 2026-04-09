@@ -1,5 +1,5 @@
-import 'package:drag_and_drop_game/audio_services/audio_services.dart';
 import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/audio_services/audio_services.dart';
 import 'package:drag_and_drop_game/models/emoji.dart';
 import 'package:drag_and_drop_game/models/emoji_data.dart';
 import 'package:drag_and_drop_game/models/field.dart';
@@ -57,7 +57,7 @@ class _ConquestAreaState extends State<ConquestArea> {
               ? widget.initialColor.withValues(alpha: 0.8) 
               : widget.initialColor,
             elevation: 5,
-            shadowColor: widget.initialColor.withValues(alpha: 0.5),//const Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.2),
+            shadowColor: widget.initialColor.withValues(alpha: 0.5),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12)
             ),
@@ -102,7 +102,10 @@ class _ConquestAreaState extends State<ConquestArea> {
       onAcceptWithDetails: (details) {
         AudioServices.play("audios/emoji_placement_sound.mp3", 0.3);
         checkDefenseEmoji();
-        if (field.isConquested == true) return;
+        if (field.isConquested == true) {
+          AudioServices.play("audios/error_sound.mp3", 0.3);
+          return;
+        }
 
         changeValue = details.data["color"] == widget.initialColor ? Player.changeValue() : 0;
         changeValue -= details.data["attack"] as int;

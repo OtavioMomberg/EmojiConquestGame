@@ -19,7 +19,9 @@ class ColorOption extends StatelessWidget {
       width: 60,
       decoration: BoxDecoration(
         border: Border.all(
-          color: selectedColor ? const Color.fromARGB(255, 177, 139, 84) : const Color.fromARGB(255, 225, 209, 209),
+          color: selectedColor 
+            ? const Color.fromARGB(255, 184, 141, 80) 
+            : const Color.fromARGB(255, 225, 209, 209),
           width: 2
         ),
         borderRadius: BorderRadius.circular(50)
