@@ -44,7 +44,7 @@ Regras:
 
 5. No início da rodada, o jogador pode posicionar um emoji em um campo de conquista, mas apenas um (Permanece por 3 rodadas ou se for derrotado antes);
 
-6. Durante a rodada, o jogador deve sortear uma cor a qual seu emoji terá, se essa cor for igual a cor de um dos campo o jogador tem 75% de chance de ganhar 2 pontos de dano extra, caso contrário ele perde 4 pontos
+6. Durante a rodada, o jogador deve sortear uma cor a qual seu emoji terá, se essa cor for igual a cor de um dos campo o jogador tem 75% de chance de ganhar 2 pontos de dano extra, caso contrário ele perde 2 pontos
 
 7. Após ter sorteado uma cor, não é possível posicionar um emoji para defender uma área durante a rodada;
 
