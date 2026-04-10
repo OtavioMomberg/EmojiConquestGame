@@ -186,7 +186,7 @@ class _GamePageState extends State<GamePage> {
                   ]
                 ),
                 FractionallySizedBox(
-                  widthFactor: 0.4,
+                  widthFactor: 0.45,
                   child: IgnorePointer(
                     ignoring: isSorted ? true : false,
                     child: Opacity(
@@ -314,7 +314,7 @@ class _GamePageState extends State<GamePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text("Escolha sua defesa", style: TextStyle(color: Color.fromARGB(255, 206, 206, 207))),
+            const Text("Defesa", style: TextStyle(color: Color.fromARGB(255, 206, 206, 207))),
             IconButton(
               onPressed: () => Navigator.pop(context), 
               icon: const Icon(Icons.close, color: Color.fromARGB(255, 206, 206, 207))

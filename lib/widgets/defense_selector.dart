@@ -11,7 +11,7 @@ class DefenseSelector extends StatelessWidget {
       height: 150,
       width: 200,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
