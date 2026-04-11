@@ -81,12 +81,28 @@ class _GamePageState extends State<GamePage> {
                   spacing: 10,
                   children: <Widget>[
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 0),
-                    Text(
-                      "Vez de: $playerTurn", 
-                      style: TextStyle(
-                        fontSize: 20, 
-                        fontWeight: FontWeight.w600,
-                        color: playerTurn == "X" ? const Color.fromARGB(255, 71, 112, 189) : const Color.fromARGB(255, 177, 139, 84)
+                    Material(
+                      color: const Color.fromARGB(255, 74, 75, 77),
+                      elevation: 8,
+                      shadowColor: playerTurn == "X" 
+                        ? const Color.fromARGB(255, 71, 112, 189).withValues(alpha: 0.5) 
+                        : const Color.fromARGB(255, 177, 139, 84).withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(8),
+                      child: SizedBox(
+                        height: 30,
+                        width: 100,
+                        child: Center(
+                          child: Text(
+                            "Turno: $playerTurn", 
+                            style: TextStyle(
+                              fontSize: 20, 
+                              fontWeight: FontWeight.w600,
+                              color: playerTurn == "X" 
+                                ? const Color.fromARGB(255, 71, 112, 189) 
+                                : const Color.fromARGB(255, 177, 139, 84)
+                            )
+                          )
+                        )
                       )
                     ),
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 1)
