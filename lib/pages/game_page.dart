@@ -82,7 +82,7 @@ class _GamePageState extends State<GamePage> {
                   children: <Widget>[
                     FieldClassInfo(seeInfo: seeInfo, imageIndex: 0),
                     Material(
-                      color: const Color.fromARGB(255, 74, 75, 77),
+                      color: const Color.fromARGB(255, 206, 206, 207),
                       elevation: 8,
                       shadowColor: playerTurn == "X" 
                         ? const Color.fromARGB(255, 71, 112, 189).withValues(alpha: 0.5) 
@@ -353,6 +353,7 @@ class _GamePageState extends State<GamePage> {
     showDialog(
       context: context, 
       builder: (_) => AlertDialog(
+        backgroundColor: const Color.fromARGB(255, 206, 206, 207),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
