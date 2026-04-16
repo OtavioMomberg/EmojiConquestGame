@@ -27,8 +27,8 @@ utilizado e o jogador só descobre no momento em que selecionar ele;
 - De acordo com o tipo de campo, as classes ficarão mais fortes ou mais fracas;
 
 - A cada rodada o jogador sorteará um cor entre 4 disponível, caso essa cor seja 
-correspondente a uma cor de uma das 4 áreas, o jogador ganha 4 pontos a mais 
-caso jogue um emoji nessa área, porém tem uma chance de 25% de perder 4 pontos de
+correspondente a uma cor de uma das 4 áreas, o jogador ganha 2 pontos a mais 
+caso jogue um emoji nessa área, porém tem uma chance de 25% de perder 2 pontos de
 ataque;
 
 - Cada uma das áreas de conquista terá 100 pontos de vida;
