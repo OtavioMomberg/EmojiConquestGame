@@ -47,12 +47,13 @@ class HomePage extends StatelessWidget {
             FractionallySizedBox(
               widthFactor: 0.6,
               child: BasicButton(
-                play: goChooseEmojisPage,
+                play: goNextPage,
+                pageName: AppRoutes.chooseEmoji,
                 text: "Jogar"
               )
             ),
             TextButton(
-              onPressed: () => goToHowToPlayPage(context), 
+              onPressed: () => goNextPage(context, AppRoutes.howToPlay), 
               child: const Text("Como Jogar", style: TextStyle(color: Color.fromARGB(255, 206, 206, 207)))
             )
           ]
@@ -61,21 +62,13 @@ class HomePage extends StatelessWidget {
     );
   }
   
-  void goChooseEmojisPage(BuildContext context) {
+  void goNextPage(BuildContext context, String page) {
     AudioServices.play("audios/button_click2.mp3", 1);
     
     Navigator.pushNamed(
       context,
-      AppRoutes.chooseEmoji
-    );
-  }
-  
-  void goToHowToPlayPage(BuildContext context) {
-    AudioServices.play("audios/button_click2.mp3", 1);
-
-    Navigator.pushNamed(
-      context, 
-      AppRoutes.howToPlay, 
+      page
+      
     );
   }
 }

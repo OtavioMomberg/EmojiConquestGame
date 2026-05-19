@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 class BasicButton extends StatelessWidget {
-  final void Function(BuildContext) play;
+  final void Function(BuildContext, String) play;
+  final String pageName;
   final String text;
-  const BasicButton({required this.play, required this.text, super.key});
+  const BasicButton({
+    required this.play, 
+    required this.pageName,
+    required this.text, 
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class BasicButton extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         splashColor: const Color.fromARGB(255, 110, 114, 123),
-        onTap: () => play(context),
+        onTap: () => play(context, pageName),
         child: SizedBox(
           height: 60,
           child: Center(
