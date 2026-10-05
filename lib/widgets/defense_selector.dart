@@ -1,5 +1,5 @@
 import 'package:drag_and_drop_game/models/emoji_data.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DefenseSelector extends StatelessWidget {
   final List<EmojiData> emojis;
@@ -11,17 +11,20 @@ class DefenseSelector extends StatelessWidget {
       height: 150,
       width: 200,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: .center,
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: <Widget>[
-              ...List.generate(emojis.length, (index) {
+              ....generate(emojis.length, (index) {
                 return GestureDetector(
                   onTap:() {
                     Navigator.pop<int>(context, index);
                   },
-                  child: Text(emojis[index].emoji, style: const TextStyle(fontSize: 20))
+                  child: Text(
+                    emojis[index].emoji, 
+                    style: const TextStyle(fontSize: 20)
+                  )
                 );
               })
             ]

@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/themes/app_themes.dart';
+import 'package:material_ui/material_ui.dart';
 
 class FieldClassInfo extends StatelessWidget {
   final void Function(int) seeInfo;
@@ -8,12 +9,16 @@ class FieldClassInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color.fromARGB(255, 71, 112, 189),
-      borderRadius: BorderRadius.circular(50),
+      color: AppThemes.blue,
+      borderRadius: AppThemes.largerBorderRadius,
       child: InkWell(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: AppThemes.largerBorderRadius,
         onTap: () => seeInfo(imageIndex),
-        child: Icon(Icons.help_outline, color: Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.7)),
+        child: Icon(
+          Icons.help_outline, 
+          color: AppThemes.white
+            .withValues(alpha: 0.7)
+        ),
       )
     );
   }

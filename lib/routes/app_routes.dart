@@ -1,50 +1,49 @@
-import 'package:flutter/material.dart';
-import 'package:drag_and_drop_game/models/game_page_args.dart';
-import 'package:drag_and_drop_game/pages/choose_emoji_page.dart';
-import 'package:drag_and_drop_game/pages/game_page.dart';
-import 'package:drag_and_drop_game/pages/home_page.dart';
-import 'package:drag_and_drop_game/pages/how_to_play_page.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/models/game_screen_data.dart';
+import 'package:drag_and_drop_game/pages/export_screens.dart';
 
-
-class AppRoutes {
+final class AppRoutes._() {
   static const home = "/";
-  static const howToPlay = "/how_to_play";
-  static const chooseEmoji = "/choose_emoji";
+  static const rules = "/rules";
+  static const selectEmojis = "/select_emojis";
   static const game = "/game";
 
-  static Route<dynamic> dynamicRoute(RouteSettings settings) {
-    Widget? page;
-
-    switch(settings.name) {
+  static Widget _getScreen({required RouteSettings settings}) {
+    switch (settings.name) {
       case home:
-        page = const HomePage();
-        break;
-      case chooseEmoji:
-        page = const ChooseEmojiPage();
-        break;
-      case howToPlay:
-        page = const HowToPlayPage();
-        break;
+        return HomeScreen();
+      case selectEmojis:
+        return const SelectEmojisScreen();
+      case rules:
+        return const RulesScreen();
       case game:
-        final args = settings.arguments as GamePageArgs;
-        page = GamePage(ars: args);
-        break;
+        final arguments = settings.arguments as GameScreenData;
+        return GameScreen(playersData: arguments);
     }
+    return HomeScreen();
+  }
+
+  static Route<dynamic> getRoute(RouteSettings settings) {
+    final screen = _getScreen(settings: settings);
+
     return PageRouteBuilder(
       settings: settings,
-      pageBuilder: (_, _, _) => page!,
+      pageBuilder: (_, _, _) => screen,
+      transitionDuration: const Duration(milliseconds: 350),
+      reverseTransitionDuration: const Duration(milliseconds: 400),
       transitionsBuilder: (_, animation, _, child) {
-        const begin = Offset(1.0, 0.0); 
+        const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
         const curve = Curves.easeInOut;
 
-        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            
+        final tween = Tween(begin: begin, end: end)
+          .chain(CurveTween(curve: curve));
+
         return SlideTransition(
-          position: animation.drive(tween),
+          position: animation.drive(tween), 
           child: child
         );
-      },
+      }
     );
   }
 }

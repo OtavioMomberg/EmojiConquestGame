@@ -1,18 +1,19 @@
-import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/themes/app_themes.dart';
+import 'package:material_ui/material_ui.dart';
 
-class ImageWidget extends StatelessWidget {
-  final String imagePath;
-  const ImageWidget({required this.imagePath, super.key});
-
+class const ImageWidget({
+  required final String imagePath, 
+  super.key
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppThemes.stdBorderRadius,
       child: Image.asset(
         imagePath,
-        fit: BoxFit.contain,
-        filterQuality: FilterQuality.high,
-        colorBlendMode: BlendMode.darken,
+        fit: .contain,
+        filterQuality: .high,
+        colorBlendMode: .darken
       )
     );
   }

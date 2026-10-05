@@ -1,28 +1,32 @@
-import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/themes/app_themes.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BasicButton extends StatelessWidget {
-  final void Function(BuildContext, String) play;
-  final String pageName;
+  final void Function({
+    required BuildContext context, 
+    required String screen
+  }) play;
+  final String screen;
   final String text;
   const BasicButton({
-    required this.play, 
-    required this.pageName,
-    required this.text, 
-    super.key
+    required this.play,
+    required this.screen,
+    required this.text,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
       elevation: 10,
-      shadowColor: const Color.fromARGB(255, 206, 206, 207).withValues(alpha: 0.3),
-      color: const Color.fromARGB(255, 206, 206, 207),
-      borderRadius: BorderRadius.circular(12),
+      shadowColor: AppThemes.white.withValues(alpha: 0.3),
+      color: AppThemes.white,
+      borderRadius: AppThemes.stdBorderRadius,
       surfaceTintColor: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        splashColor: const Color.fromARGB(255, 110, 114, 123),
-        onTap: () => play(context, pageName),
+        borderRadius: AppThemes.stdBorderRadius,
+        splashColor: AppThemes.lightGray2,
+        onTap: () => play(context: context, screen: screen),
         child: SizedBox(
           height: 60,
           child: Center(
@@ -30,13 +34,13 @@ class BasicButton extends StatelessWidget {
               text,
               style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xFF001F40).withValues(alpha: 0.6),
-              )
-            )
-          )
-        )
-      )
+                fontWeight: .bold,
+                color: AppThemes.darkBlue.withValues(alpha: 0.6),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

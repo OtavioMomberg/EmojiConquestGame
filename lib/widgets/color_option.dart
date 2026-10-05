@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/themes/app_themes.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ColorOption extends StatelessWidget {
   final int index;
@@ -18,19 +19,19 @@ class ColorOption extends StatelessWidget {
       height: 60,
       width: 60,
       decoration: BoxDecoration(
-        border: Border.all(
+        border: .all(
           color: selectedColor 
-            ? const Color.fromARGB(255, 184, 141, 80) 
-            : const Color.fromARGB(255, 225, 209, 209),
+            ? AppThemes.orange 
+            : AppThemes.blue,
           width: 2
         ),
-        borderRadius: BorderRadius.circular(50)
+        borderRadius: AppThemes.largerBorderRadius
       ),
       child: Card(
         elevation: 10,
         shadowColor: cor.withValues(alpha: 0.4),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50)
+          borderRadius: AppThemes.largerBorderRadius
         ),
         color: cor
       )

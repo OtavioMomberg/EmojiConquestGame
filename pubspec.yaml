@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.13.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,8 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  material_ui: 
   flutter_launcher_icons:
-  google_fonts: 
   audioplayers: 
 
   # The following adds the Cupertino Icons font to your application.
@@ -86,10 +86,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Electrolize
+      fonts:
+        - asset: assets/fonts/Electrolize-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

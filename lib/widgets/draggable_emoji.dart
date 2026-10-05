@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:drag_and_drop_game/themes/app_themes.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DraggableEmoji extends StatelessWidget {
   final Map<String, dynamic> player;
@@ -20,7 +21,7 @@ class DraggableEmoji extends StatelessWidget {
         data: player,
         feedback: Material(
           color: color.withValues(alpha: 0.8),
-          shape: StarBorder.polygon(sides: 6, pointRounding: 0.3),
+          shape: const StarBorder.polygon(sides: 6, pointRounding: 0.3),
           elevation: 8,
           shadowColor: color.withValues(alpha: 0.5),
           child: SizedBox(
@@ -33,28 +34,28 @@ class DraggableEmoji extends StatelessWidget {
                   : "${player["emoji"]}\n${player["attack"]}", 
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: color == Colors.black 
-                    ? const Color.fromARGB(255, 206, 206, 207) 
-                    : const Color.fromARGB(255, 33, 32, 32)
+                  fontWeight: .w600,
+                  color: color == AppThemes.black 
+                    ? AppThemes.white
+                    : AppThemes.black
                 )
               )
             )
           )
         ),
         childWhenDragging: Material(
-          color: const Color.fromARGB(255, 46, 46, 47),
-          shape: StarBorder.polygon(sides: 6, pointRounding: 0.3),
+          color: AppThemes.gray,
+          shape: const StarBorder.polygon(sides: 6, pointRounding: 0.3),
           elevation: 8,
-          shadowColor: const Color.fromARGB(255, 36, 37, 39).withValues(alpha: 0.3),
-          child: SizedBox(
+          shadowColor: AppThemes.darkGray.withValues(alpha: 0.3),
+          child: const SizedBox(
             height: 95,
             width: 100, 
           )
         ),
         child: Material(
           color: color.withValues(alpha: 0.8),
-          shape: StarBorder.polygon(sides: 6, pointRounding: 0.3),
+          shape: const StarBorder.polygon(sides: 6, pointRounding: 0.3),
           elevation: 8,
           child: SizedBox(
             height: 95,
@@ -63,10 +64,10 @@ class DraggableEmoji extends StatelessWidget {
               child: Text(
                 color == Colors.transparent ? "" : "Emoji",
                 style: TextStyle(
-                  fontWeight: FontWeight.w600,
+                  fontWeight: .w600,
                     color: color == Colors.black 
-                      ? const Color.fromARGB(255, 206, 206, 207) 
-                      : const Color.fromARGB(255, 33, 32, 32)
+                      ? AppThemes.white
+                      : AppThemes.black
                 )
               )
             )

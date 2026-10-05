@@ -1,32 +1,30 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/themes/app_themes.dart';
 
-class HowToPlayPage extends StatelessWidget {
-  const HowToPlayPage({super.key});
-
+class const RulesScreen({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Como Jogar", style: TextStyle(color: Color.fromARGB(255, 206, 206, 207))),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 74, 75, 77),
-        surfaceTintColor: Colors.transparent,
-        foregroundColor: Color.fromARGB(255, 206, 206, 207),
-      ),
-      backgroundColor: const Color.fromARGB(255, 46, 46, 47),
-      body: Container(
-        height: size.height,
-        width: size.width,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          gradient: AppThemes.gradient
+        title: const Text(
+          "Como Jogar",
+          style: TextStyle(color: AppThemes.white),
         ),
-        child: SingleChildScrollView(
+        centerTitle: true,
+        backgroundColor: AppThemes.lightGray,
+        surfaceTintColor: Colors.transparent,
+        foregroundColor: AppThemes.white,
+      ),
+      backgroundColor: AppThemes.gray,
+      body: Container(
+        height: .infinity,
+        width: .infinity,
+        padding: const .all(10),
+        decoration: const BoxDecoration(gradient: AppThemes.gradient),
+        child: const SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              const Text(
+              Text(
                 """ 
 Objetivo do Jogo:
                 
@@ -62,7 +60,7 @@ Regras:
                 
 14. O primeiro jogador é chamado de X e o segundo de Y.
                 """,
-style: TextStyle(color: Color.fromARGB(255, 206, 206, 207))
+                style: TextStyle(color: AppThemes.white),
               ),
             ],
           ),
