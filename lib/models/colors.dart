@@ -1,10 +1,12 @@
 import 'package:material_ui/material_ui.dart';
 import 'dart:math';
 
-class ColorsModel {
-  static List<Color> colorsList = [
-    Colors.black,
-    Colors.white,
+final class ColorsModel({
+  required var List<bool> selectedColor,
+  required final List<Color> colorPickerColors,
+  required final List<Color> fieldColors,
+}) {
+  static final List<Color> _colors = [
     Colors.amberAccent,
     Colors.blue,
     Colors.cyanAccent,
@@ -18,40 +20,33 @@ class ColorsModel {
     Colors.lightBlueAccent,
     Colors.orange,
     Colors.pinkAccent,
-    Colors.purpleAccent,
     Colors.purple,
     Colors.red,
     Colors.teal,
-    Colors.yellow
   ];
 
-  List<bool> selectedColor;
-  List<Color> listColors;
-  Random rand;
+  final _random = Random();
 
-  ColorsModel(Random random, this.selectedColor, this.listColors) : rand = random;
+  void getColors() {
+    final colorPickerIndexes = _getColorsIndex();
+    final fieldIndexes = _getColorsIndex();
 
-  void getColorsToColorOption() {
-    List<int> indexListToColorOption = loop();
-    List<int> indexListToConquestArea = loop();
-
-    for (int i=0; i < indexListToColorOption.length * 2; i++) {
-      if (i < 4) {
-        listColors.add(colorsList[indexListToColorOption[i]]);
-      } else {
-        listColors.add(colorsList[indexListToConquestArea[i-4]]);
-      }
+    for (int i = 0; i < colorPickerIndexes.length; i++) {
+      colorPickerColors.add(_colors[colorPickerIndexes[i]]);
+      fieldColors.add(_colors[fieldIndexes[i]]);
     }
   }
 
-  List<int> loop() {
+  List<int> _getColorsIndex() {
     List<int> indexList = [];
     int index = 0;
 
-    while(indexList.length < 4) {
-      index = rand.nextInt(colorsList.length);
+    while (indexList.length < 4) {
+      index = _random.nextInt(_colors.length);
 
-      if (!indexList.contains(index)) indexList.add(index);
+      if (!indexList.contains(index)) {
+        indexList.add(index);
+      }
     }
     return indexList;
   }

@@ -1,5 +1,5 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:drag_and_drop_game/themes/app_themes.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
 class const RulesScreen({super.key}) extends StatelessWidget {
   @override

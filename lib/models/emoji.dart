@@ -1,69 +1,68 @@
 import 'package:drag_and_drop_game/models/emoji_data.dart';
 
-enum EmojiClass {
-  criaturas,
-  poderes,
-  humanos,
-  animais,
-  frutas,
-  neutro,
-}
+enum EmojiType { criaturas, poderes, humanos, animais, frutas, neutro }
 
-class EmojiCheckClass {
-  static List<Map<String, dynamic>> classes = [
-    {"class" : EmojiClass.criaturas, "strong": EmojiClass.poderes, "weak": EmojiClass.frutas},
-    {"class" : EmojiClass.poderes, "strong": EmojiClass.humanos, "weak": EmojiClass.criaturas},
-    {"class" : EmojiClass.humanos, "strong": EmojiClass.animais, "weak": EmojiClass.poderes},
-    {"class" : EmojiClass.animais, "strong": EmojiClass.frutas, "weak": EmojiClass.humanos},
-    {"class" : EmojiClass.frutas, "strong": EmojiClass.criaturas, "weak": EmojiClass.animais}
+class const EmojiHierarchy({
+  required final EmojiType type,
+  required final EmojiType strong,
+  required final EmojiType weak,
+});
+
+class const EmojiHierarchies._() {
+  static const hierarchies = [
+    EmojiHierarchy(type: .criaturas, strong: .poderes, weak: .frutas),
+    EmojiHierarchy(type: .poderes, strong: .humanos, weak: .criaturas),
+    EmojiHierarchy(type: .humanos, strong: .animais, weak: .poderes),
+    EmojiHierarchy(type: .animais, strong: .frutas, weak: .humanos),
+    EmojiHierarchy(type: .frutas, strong: .criaturas, weak: .animais),
   ];
 }
 
-class Emoji {
-  static List<EmojiData> emojiStatsList = [
-    EmojiData(emoji: "🤖", emojiClass: EmojiClass.criaturas, attack: 15),
-    EmojiData(emoji: "👾", emojiClass: EmojiClass.criaturas, attack: 10),
-    EmojiData(emoji: "👽", emojiClass: EmojiClass.criaturas, attack: 12),
-    EmojiData(emoji: "👻", emojiClass: EmojiClass.criaturas, attack: 8),
-    EmojiData(emoji: "💀", emojiClass: EmojiClass.criaturas, attack: 5),
-    EmojiData(emoji: "💩", emojiClass: EmojiClass.criaturas, attack: 8),
-    EmojiData(emoji: "🧚‍♀️", emojiClass: EmojiClass.poderes, attack: 9),
-    EmojiData(emoji: "🧞‍♂️", emojiClass: EmojiClass.poderes, attack: 10),
-    EmojiData(emoji: "🥷", emojiClass: EmojiClass.poderes, attack: 10),
-    EmojiData(emoji: "🧑‍🎤", emojiClass: EmojiClass.poderes, attack: 12),
-    EmojiData(emoji: "🧛", emojiClass: EmojiClass.poderes, attack: 14),
-    EmojiData(emoji: "🧙‍♂️", emojiClass: EmojiClass.poderes, attack: 18),
-    EmojiData(emoji: "👨‍🔧", emojiClass: EmojiClass.humanos, attack: 11),
-    EmojiData(emoji: "👩‍🚀", emojiClass: EmojiClass.humanos, attack: 12),
-    EmojiData(emoji: "🧑‍⚖️", emojiClass: EmojiClass.humanos, attack: 8),
-    EmojiData(emoji: "👩‍🔬", emojiClass: EmojiClass.humanos, attack: 14),
-    EmojiData(emoji: "👩‍💻", emojiClass: EmojiClass.humanos, attack: 13),
-    EmojiData(emoji: "🕵️‍♀️", emojiClass: EmojiClass.humanos, attack: 9),
-    EmojiData(emoji: "🦧", emojiClass: EmojiClass.animais, attack: 16),
-    EmojiData(emoji: "🦓", emojiClass: EmojiClass.animais, attack: 8),
-    EmojiData(emoji: "🦬", emojiClass: EmojiClass.animais, attack: 14),
-    EmojiData(emoji: "🦥", emojiClass: EmojiClass.animais, attack: 6),
-    EmojiData(emoji: "🦏", emojiClass: EmojiClass.animais, attack: 16),
-    EmojiData(emoji: "🦘", emojiClass: EmojiClass.animais, attack: 13),
-    EmojiData(emoji: "🍉", emojiClass: EmojiClass.frutas, attack: 5),
-    EmojiData(emoji: "🍎", emojiClass: EmojiClass.frutas, attack: 11),
-    EmojiData(emoji: "🍊", emojiClass: EmojiClass.frutas, attack: 7),
-    EmojiData(emoji: "🍇", emojiClass: EmojiClass.frutas, attack: 3),
-    EmojiData(emoji: "🍓", emojiClass: EmojiClass.frutas, attack: 7),
-    EmojiData(emoji: "🍐", emojiClass: EmojiClass.frutas, attack: 10),
+class const EmojisInfo._() {
+  static const emojis = [
+    EmojiData(emoji: "🤖", emojiType: .criaturas, attack: 15),
+    EmojiData(emoji: "👾", emojiType: .criaturas, attack: 10),
+    EmojiData(emoji: "👽", emojiType: .criaturas, attack: 12),
+    EmojiData(emoji: "👻", emojiType: .criaturas, attack: 8),
+    EmojiData(emoji: "💀", emojiType: .criaturas, attack: 5),
+    EmojiData(emoji: "💩", emojiType: .criaturas, attack: 8),
+    EmojiData(emoji: "🧚‍♀️", emojiType: .poderes, attack: 9),
+    EmojiData(emoji: "🧞‍♂️", emojiType: .poderes, attack: 10),
+    EmojiData(emoji: "🥷", emojiType: .poderes, attack: 10),
+    EmojiData(emoji: "🧑‍🎤", emojiType: .poderes, attack: 12),
+    EmojiData(emoji: "🧛", emojiType: .poderes, attack: 14),
+    EmojiData(emoji: "🧙‍♂️", emojiType: .poderes, attack: 18),
+    EmojiData(emoji: "👨‍🔧", emojiType: .humanos, attack: 11),
+    EmojiData(emoji: "👩‍🚀", emojiType: .humanos, attack: 12),
+    EmojiData(emoji: "🧑‍⚖️", emojiType: .humanos, attack: 8),
+    EmojiData(emoji: "👩‍🔬", emojiType: .humanos, attack: 14),
+    EmojiData(emoji: "👩‍💻", emojiType: .humanos, attack: 13),
+    EmojiData(emoji: "🕵️‍♀️", emojiType: .humanos, attack: 9),
+    EmojiData(emoji: "🦧", emojiType: .animais, attack: 16),
+    EmojiData(emoji: "🦓", emojiType: .animais, attack: 8),
+    EmojiData(emoji: "🦬", emojiType: .animais, attack: 14),
+    EmojiData(emoji: "🦥", emojiType: .animais, attack: 6),
+    EmojiData(emoji: "🦏", emojiType: .animais, attack: 16),
+    EmojiData(emoji: "🦘", emojiType: .animais, attack: 13),
+    EmojiData(emoji: "🍉", emojiType: .frutas, attack: 5),
+    EmojiData(emoji: "🍎", emojiType: .frutas, attack: 11),
+    EmojiData(emoji: "🍊", emojiType: .frutas, attack: 7),
+    EmojiData(emoji: "🍇", emojiType: .frutas, attack: 3),
+    EmojiData(emoji: "🍓", emojiType: .frutas, attack: 7),
+    EmojiData(emoji: "🍐", emojiType: .frutas, attack: 10),
   ];
 
-  static int checkEmojiClassAdvantage(EmojiClass defenseEmoji, EmojiClass attackerEmoji) {
-    Map<EmojiClass, int> map = {
-      EmojiClass.criaturas : 0,
-      EmojiClass.poderes : 1,
-      EmojiClass.humanos : 2,
-      EmojiClass.animais : 3,
-      EmojiClass.frutas : 4
-    };
+  static int getAdjustmentEmojiDamage({
+    required EmojiType defenseEmoji,
+    required EmojiType attackerEmoji,
+  }) {
+    final findHierarchy = EmojiHierarchies.hierarchies.firstWhere(
+      (h) => h.type == defenseEmoji,
+    );
 
-    int buff = EmojiCheckClass.classes[map[defenseEmoji]!]["strong"] == attackerEmoji ? 3 : 0;
-    int nerf = EmojiCheckClass.classes[map[defenseEmoji]!]["weak"] == attackerEmoji ? -3 : 0;
+    int buff = (findHierarchy.strong == attackerEmoji) ? 3 : 0;
+
+    int nerf = (findHierarchy.weak == attackerEmoji) ? -3 : 0;
 
     return buff + nerf;
   }

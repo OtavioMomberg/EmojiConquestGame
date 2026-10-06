@@ -1,4 +1,4 @@
-import 'package:drag_and_drop_game/themes/app_themes.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ColorOption extends StatelessWidget {

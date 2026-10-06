@@ -1,11 +1,6 @@
-import 'dart:ui';
+import 'package:material_ui/material_ui.dart';
 
-class AttackOptions {
-  final Color color;
-  final int attack;
-
-  const AttackOptions({
-    required this.color,
-    required this.attack
-  });
-}
+final class AttackOptions({
+  required final Color color,
+  required final int attack
+});

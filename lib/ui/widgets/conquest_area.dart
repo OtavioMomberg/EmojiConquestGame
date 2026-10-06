@@ -1,6 +1,6 @@
-import 'package:drag_and_drop_game/themes/app_themes.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:drag_and_drop_game/audio_services/audio_helper.dart';
+import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
 import 'package:drag_and_drop_game/models/emoji.dart';
 import 'package:drag_and_drop_game/models/emoji_data.dart';
 import 'package:drag_and_drop_game/models/field.dart';
@@ -9,7 +9,7 @@ import 'package:drag_and_drop_game/models/player.dart';
 class ConquestArea extends StatefulWidget {
   final AudioService player;
   final void Function([String?]) updateGameTurn;
-  final void Function(int, [bool?]) removeDefenseEmoji;
+  final void Function({required int index, bool? removeAttacker}) removeDefenseEmoji;
   final String Function() getDefenseEmojiOwner;
   final Color initialColor;
   final int fieldIndex;
@@ -114,7 +114,9 @@ class _ConquestAreaState extends State<ConquestArea> {
             ? Player.changeValue()
             : 0;
         changeValue -= details.data["attack"] as int;
-        changeValue += field.checkFieldAdvantage(details.data["emoji_class"]);
+        changeValue += field.getAdjustmentFieldDamage(
+          details.data["emoji_class"],
+        );
 
         if (details.data["player"] == "X") {
           if (!attackDefense(
@@ -157,7 +159,7 @@ class _ConquestAreaState extends State<ConquestArea> {
     if (widget.defenseEmoji != null) {
       if (widget.defenseEmoji!.attack == 0) return 0;
       correctionValue =
-          field.checkFieldAdvantage(widget.defenseEmoji!.emojiClass) * (-1);
+          field.getAdjustmentFieldDamage(widget.defenseEmoji!.emojiType) * (-1);
       correctionValue += widget.defenseEmoji?.attack as int;
       return correctionValue < 0 ? 1 : correctionValue;
     }
@@ -168,7 +170,7 @@ class _ConquestAreaState extends State<ConquestArea> {
   bool attackDefense(
     int attack,
     String player,
-    EmojiClass emojiPlayer,
+    EmojiType emojiPlayer,
     String? emojiOwner,
   ) {
     if (emojiOwner == null) return false;
@@ -177,19 +179,19 @@ class _ConquestAreaState extends State<ConquestArea> {
       if (widget.defenseEmoji!.attack == 0) return false;
 
       if (player != emojiOwner) {
-        correctionValue += Emoji.checkEmojiClassAdvantage(
-          widget.defenseEmoji!.emojiClass,
-          emojiPlayer,
+        correctionValue += EmojisInfo.getAdjustmentEmojiDamage(
+          defenseEmoji: widget.defenseEmoji!.emojiType,
+          attackerEmoji: emojiPlayer,
         );
 
         if ((correctionValue) <= attack) {
-          widget.removeDefenseEmoji(player == "X" ? 1 : 0, true);
+          widget.removeDefenseEmoji(index: player == "X" ? 1 : 0, removeAttacker: true);
           player == "X"
               ? acceptedDataX -= (attack - correctionValue)
               : acceptedDataY -= (attack - correctionValue);
           return true;
         } else {
-          widget.removeDefenseEmoji(player == "X" ? 0 : 1, false);
+          widget.removeDefenseEmoji(index: player == "X" ? 0 : 1, removeAttacker: false);
           return true;
         }
       }

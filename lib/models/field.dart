@@ -1,42 +1,44 @@
 import 'package:drag_and_drop_game/models/emoji.dart';
 
-class FieldType {
-  static List<Map<String, dynamic>> fields = [
-    {"field" : "Selva", "buff": EmojiClass.animais, "nerf": EmojiClass.humanos},
-    {"field" : "Cidade", "buff": EmojiClass.humanos, "nerf": EmojiClass.animais},
-    {"field" : "Espaço", "buff": EmojiClass.poderes, "nerf": EmojiClass.frutas},
-    {"field" : "Deserto", "buff": EmojiClass.criaturas, "nerf": EmojiClass.poderes},
-    {"field" : "Gelo", "buff": EmojiClass.frutas, "nerf": EmojiClass.criaturas},
-    {"field" : "Nuvem", "buff": EmojiClass.neutro, "nerf": EmojiClass.neutro},
-    {"field" : "Montanha", "buff": EmojiClass.neutro, "nerf": EmojiClass.neutro},
-    {"field" : "Vulcão", "buff": EmojiClass.neutro, "nerf": EmojiClass.neutro},
+enum FieldType { selva, cidade, espaco, deserto, gelo, nuvem, montanha, vulcao }
+
+class const FieldHierarchy({
+  required final FieldType field,
+  required final EmojiType buff,
+  required final EmojiType nerf,
+});
+
+class const FieldHierarchies._() {
+  static const fields = [
+    FieldHierarchy(field: .selva, buff: .animais, nerf: .humanos),
+    FieldHierarchy(field: .cidade, buff: .humanos, nerf: .animais),
+    FieldHierarchy(field: .espaco, buff: .poderes, nerf: .frutas),
+    FieldHierarchy(field: .deserto, buff: .criaturas, nerf: .poderes),
+    FieldHierarchy(field: .gelo, buff: .frutas, nerf: .criaturas),
+    FieldHierarchy(field: .nuvem, buff: .neutro, nerf: .neutro),
+    FieldHierarchy(field: .montanha, buff: .neutro, nerf: .neutro),
+    FieldHierarchy(field: .vulcao, buff: .neutro, nerf: .neutro),
   ];
 }
 
-class Field {
-  final int index;
-  bool? isConquested = false;
-  String? playerConquested;
-  bool? containDefenseEmoji = false;
-  String? defenseEmojiOwner;
-
-  Field({
-    required this.index, 
-    this.isConquested, 
-    this.playerConquested,
-    this.containDefenseEmoji,
-    this.defenseEmojiOwner
-  });
-
+class Field({
+  required final int index,
+  var bool? isConquested = false,
+  var bool? containDefenseEmoji = false,
+  var String? playerConquested,
+  var String? defenseEmojiOwner,
+}) {
   String? fieldSelected;
 
   void setField() {
-    fieldSelected = FieldType.fields[index]["field"];
+    fieldSelected = FieldHierarchies.fields[index].field.toString();
   }
 
-  int checkFieldAdvantage(EmojiClass emojiClass) {
-    int buff = FieldType.fields[index]["buff"] == emojiClass ? -4 : 0;
-    int nerf = FieldType.fields[index]["nerf"] == emojiClass ? 4 : 0;
+  int getAdjustmentFieldDamage(EmojiType emojiClass) {
+    final field = FieldHierarchies.fields[index];
+
+    int buff = (field.buff == emojiClass) ? -4 : 0;
+    int nerf = (field.nerf == emojiClass) ? 4 : 0;
 
     return buff + nerf;
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
 final class AppThemes._() {
@@ -23,5 +24,22 @@ final class AppThemes._() {
       gray,
       darkGray
     ]
+  );
+
+  static const systemUiOverlayStyle = SystemUiOverlayStyle(
+    systemStatusBarContrastEnforced: false,
+    statusBarColor: lightGray,
+    statusBarIconBrightness: .light,
+    systemNavigationBarContrastEnforced: false,
+    systemNavigationBarColor: darkGray,
+    systemNavigationBarIconBrightness: .light,
+  );
+
+  static final appBar = AppBar(
+    toolbarHeight: 0,
+    surfaceTintColor: Colors.transparent,
+    backgroundColor: lightGray,
+    foregroundColor: white,
+    systemOverlayStyle: systemUiOverlayStyle,
   );
 }

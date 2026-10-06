@@ -1,9 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:drag_and_drop_game/audio_services/audio_helper.dart';
-import 'package:drag_and_drop_game/themes/app_themes.dart';
-import 'package:drag_and_drop_game/routes/app_routes.dart';
+import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
+import 'package:drag_and_drop_game/core/routes/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +13,8 @@ void main() async {
     yield LicenseEntryWithLineBreaks(["Google Fonts - Electrolize"], license);
   });
 
-  await SystemChrome.setPreferredOrientations([.portraitUp, .portraitDown]);
+  await SystemChrome.setPreferredOrientations([
+    .portraitUp, .portraitDown]);
 
   await AudioService.instance()
     .setupAudios(start: startFirstSetup, end: endFirstSetUp);

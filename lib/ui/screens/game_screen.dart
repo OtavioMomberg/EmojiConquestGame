@@ -1,16 +1,14 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:drag_and_drop_game/audio_services/audio_helper.dart';
-import 'package:drag_and_drop_game/themes/app_themes.dart';
-import 'package:drag_and_drop_game/routes/app_routes.dart';
+import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
+import 'package:drag_and_drop_game/core/routes/app_routes.dart';
 import 'package:drag_and_drop_game/models/export_models_game_screen.dart';
-import 'package:drag_and_drop_game/widgets/export_widgets_game_screen.dart';
+import 'package:drag_and_drop_game/ui/widgets/export_widgets_game_screen.dart';
 
 import 'dart:math';
 
-class const GameScreen({
-  required final GameScreenData playersData, 
-  super.key
-}) extends StatefulWidget {
+class const GameScreen({required final GameScreenData playersData, super.key})
+    extends StatefulWidget {
   @override
   State<GameScreen> createState() => _GameScreenState();
 }
@@ -38,8 +36,12 @@ class _GameScreenState extends State<GameScreen> {
 
     args = widget.playersData;
 
-    colorsModel = ColorsModel(rand, [true, false, false, false], []);
-    colorsModel.getColorsToColorOption();
+    colorsModel = ColorsModel(
+      selectedColor: [true, false, false, false],
+      colorPickerColors: [],
+      fieldColors: [],
+    );
+    colorsModel.getColors();
 
     playerTurn = args!.playerTurn;
 
@@ -170,7 +172,7 @@ class _GameScreenState extends State<GameScreen> {
                             removeDefenseEmoji: defenseEmoji.removeDefenseEmoji,
                             getDefenseEmojiOwner:
                                 defenseEmoji.checkDefenseEmojiPlayer,
-                            initialColor: colorsModel.listColors[index + 4],
+                            initialColor: colorsModel.fieldColors[index],
                             fieldIndex: fieldsIndex[index],
                             defenseEmoji:
                                 defenseEmoji
@@ -199,7 +201,7 @@ class _GameScreenState extends State<GameScreen> {
                     ...List.generate(colorsModel.selectedColor.length, (index) {
                       return ColorOption(
                         index: index,
-                        cor: colorsModel.listColors[index],
+                        cor: colorsModel.colorPickerColors[index],
                         selectedColor: colorsModel.selectedColor[index],
                       );
                     }),
@@ -225,36 +227,35 @@ class _GameScreenState extends State<GameScreen> {
 
   void initializeDefenseEmoji() {
     defenseEmoji = DefenseEmoji(
-      args!.player1Emojis,
-      args!.player2Emojis,
-      [
-        EmojiData(emoji: "", emojiClass: .neutro, attack: 0),
-        EmojiData(emoji: "", emojiClass: .neutro, attack: 0),
+      p1Emojis: args!.player1Emojis,
+      p2Emojis: args!.player2Emojis,
+      emojiSelected: [
+        EmojiData(emoji: "", emojiType: .neutro, attack: 0),
+        EmojiData(emoji: "", emojiType: .neutro, attack: 0),
       ],
-      [false, false],
-      [0, 0],
-      [
-        EmojiData(emoji: "", emojiClass: .neutro, attack: 0),
-        EmojiData(emoji: "", emojiClass: .neutro, attack: 0),
-        EmojiData(emoji: "", emojiClass: .neutro, attack: 0),
-        EmojiData(emoji: "", emojiClass: .neutro, attack: 0),
+      defenseEmojiInField:  [false, false],
+      defenseEmojiTurns: [0, 0],
+      defenseEmojiSelected: [
+        EmojiData(emoji: "", emojiType: .neutro, attack: 0),
+        EmojiData(emoji: "", emojiType: .neutro, attack: 0),
+        EmojiData(emoji: "", emojiType: .neutro, attack: 0),
+        EmojiData(emoji: "", emojiType: .neutro, attack: 0),
       ],
-      {"player": ""},
-      0,
-      rand,
+      defenseEmojiPlayer: {"player": ""},
+      emojiIndex: 0,
     );
   }
 
   void configPlayer() {
     player = Player(
       player: playerTurn,
-      emoji: defenseEmoji.getEmoji(playerTurn),
+      emoji: defenseEmoji.getEmoji(playerTurn: playerTurn),
       attack: playerTurn == "X"
-          ? defenseEmoji.p1Emojis[defenseEmoji.emojiIndex].attack
-          : defenseEmoji.p2Emojis[defenseEmoji.emojiIndex].attack,
-      emojiClass: playerTurn == "X"
-          ? defenseEmoji.p1Emojis[defenseEmoji.emojiIndex].emojiClass
-          : defenseEmoji.p2Emojis[defenseEmoji.emojiIndex].emojiClass,
+        ? defenseEmoji.p1Emojis[defenseEmoji.emojiIndex].attack
+        : defenseEmoji.p2Emojis[defenseEmoji.emojiIndex].attack,
+      emojiType: playerTurn == "X"
+        ? defenseEmoji.p1Emojis[defenseEmoji.emojiIndex].emojiType
+        : defenseEmoji.p2Emojis[defenseEmoji.emojiIndex].emojiType,
       color: color,
     );
   }
@@ -263,7 +264,7 @@ class _GameScreenState extends State<GameScreen> {
     int index = 0;
 
     while (fieldsIndex.length < colorsModel.selectedColor.length) {
-      index = rand.nextInt(FieldType.fields.length);
+      index = rand.nextInt(FieldHierarchies.fields.length);
 
       if (!fieldsIndex.contains(index)) fieldsIndex.add(index);
     }
@@ -283,7 +284,7 @@ class _GameScreenState extends State<GameScreen> {
         if (colorIterator == colorsModel.selectedColor.length - 1 &&
             i == selectedValue) {
           audioPlayer.play(audio: .general);
-          color = colorsModel.listColors[selectedValue];
+          color = colorsModel.colorPickerColors[selectedValue];
           configPlayer();
           if (draggableOpacity) draggableOpacity = false;
           break;
@@ -318,11 +319,19 @@ class _GameScreenState extends State<GameScreen> {
     changePlayerTurn();
     configPlayer();
 
-    if (defenseEmoji.defenseEmojiInField[0]) {defenseEmoji.defenseEmojiTurns[0] += 1;}
-    if (defenseEmoji.defenseEmojiInField[1]) {defenseEmoji.defenseEmojiTurns[1] += 1;}
+    if (defenseEmoji.defenseEmojiInField[0]) {
+      defenseEmoji.defenseEmojiTurns[0] += 1;
+    }
+    if (defenseEmoji.defenseEmojiInField[1]) {
+      defenseEmoji.defenseEmojiTurns[1] += 1;
+    }
 
-    if (defenseEmoji.defenseEmojiTurns[0] == turns) {defenseEmoji.removeDefenseEmoji(0);}
-    if (defenseEmoji.defenseEmojiTurns[1] == turns) {defenseEmoji.removeDefenseEmoji(1);}
+    if (defenseEmoji.defenseEmojiTurns[0] == turns) {
+      defenseEmoji.removeDefenseEmoji(index: 0);
+    }
+    if (defenseEmoji.defenseEmojiTurns[1] == turns) {
+      defenseEmoji.removeDefenseEmoji(index: 1);
+    }
 
     setState(() => isSorted = false);
   }
@@ -335,35 +344,31 @@ class _GameScreenState extends State<GameScreen> {
         title: Row(
           mainAxisAlignment: .spaceBetween,
           children: <Widget>[
-            const Text(
-              "Defesa",
-              style: TextStyle(color: AppThemes.white),
-            ),
+            const Text("Defesa", style: TextStyle(color: AppThemes.white)),
             IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.close,
-                color: AppThemes.white,
-              ),
+              icon: const Icon(Icons.close, color: AppThemes.white),
             ),
           ],
         ),
         content: DefenseSelector(
           emojis: playerTurn == "X"
-              ? defenseEmoji.p1Emojis
-              : defenseEmoji.p2Emojis,
+            ? defenseEmoji.p1Emojis
+            : defenseEmoji.p2Emojis,
         ),
       ),
     );
 
-    if (index == null) {return EmojiData(emoji: "", emojiClass: .neutro, attack: 0);}
+    if (index == null) {
+      return EmojiData(emoji: "", emojiType: .neutro, attack: 0);
+    }
 
     defenseEmoji.emojiSelected[playerTurn == "X" ? 0 : 1] = (playerTurn == "X")
-        ? defenseEmoji.p1Emojis[index]
-        : defenseEmoji.p2Emojis[index];
+      ? defenseEmoji.p1Emojis[index]
+      : defenseEmoji.p2Emojis[index];
     playerTurn == "X"
-        ? defenseEmoji.p1Emojis.removeAt(index)
-        : defenseEmoji.p2Emojis.removeAt(index);
+      ? defenseEmoji.p1Emojis.removeAt(index)
+      : defenseEmoji.p2Emojis.removeAt(index);
     return defenseEmoji.emojiSelected[playerTurn == "X" ? 0 : 1];
   }
 
@@ -388,8 +393,8 @@ class _GameScreenState extends State<GameScreen> {
           children: <Widget>[
             ImageWidget(
               imagePath: index == 0
-                  ? "assets/images/class_hierarchy.png"
-                  : "assets/images/field_type_relation_class.png",
+                ? "assets/images/class_hierarchy.png"
+                : "assets/images/field_type_relation_class.png",
             ),
           ],
         ),
@@ -419,10 +424,7 @@ class _GameScreenState extends State<GameScreen> {
                 color: AppThemes.white,
               ),
             ),
-            const Text(
-              "Vencedor",
-              style: TextStyle(color: AppThemes.white),
-            ),
+            const Text("Vencedor", style: TextStyle(color: AppThemes.white)),
             Material(
               elevation: 5,
               shadowColor: AppThemes.white.withValues(alpha: 0.3),
@@ -442,9 +444,7 @@ class _GameScreenState extends State<GameScreen> {
             const SizedBox(height: 20),
             Material(
               elevation: 10,
-              shadowColor: winner == "Y"
-                  ? AppThemes.orange
-                  : AppThemes.blue,
+              shadowColor: winner == "Y" ? AppThemes.orange : AppThemes.blue,
               color: AppThemes.gray.withValues(alpha: 0.7),
               borderRadius: AppThemes.largerBorderRadius,
               child: Container(
@@ -454,9 +454,7 @@ class _GameScreenState extends State<GameScreen> {
                   borderRadius: AppThemes.largerBorderRadius,
                   border: .all(
                     width: 1.5,
-                    color: winner == "Y"
-                        ? AppThemes.orange
-                        : AppThemes.blue,
+                    color: winner == "Y" ? AppThemes.orange : AppThemes.blue,
                   ),
                 ),
                 child: Center(
@@ -464,9 +462,7 @@ class _GameScreenState extends State<GameScreen> {
                     winner.toUpperCase(),
                     style: TextStyle(
                       fontSize: 40,
-                      color: winner == "Y"
-                          ? AppThemes.orange
-                          : AppThemes.blue,
+                      color: winner == "Y" ? AppThemes.orange : AppThemes.blue,
                       fontWeight: .bold,
                     ),
                   ),
@@ -480,9 +476,7 @@ class _GameScreenState extends State<GameScreen> {
           TextButton(
             onPressed: () =>
                 Navigator.popUntil(context, (route) => route.isFirst),
-            style: TextButton.styleFrom(
-              foregroundColor: AppThemes.white,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppThemes.white),
             child: Text("Home"),
           ),
           ElevatedButton(

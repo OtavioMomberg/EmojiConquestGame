@@ -1,8 +1,10 @@
 import 'package:material_ui/material_ui.dart';
+
 import 'dart:math';
-import 'package:drag_and_drop_game/audio_services/audio_helper.dart';
-import 'package:drag_and_drop_game/themes/app_themes.dart';
-import 'package:drag_and_drop_game/routes/app_routes.dart';
+
+import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
+import 'package:drag_and_drop_game/core/routes/app_routes.dart';
 import 'package:drag_and_drop_game/models/emoji_data.dart';
 import 'package:drag_and_drop_game/models/game_screen_data.dart';
 import 'package:drag_and_drop_game/models/emoji.dart';
@@ -65,29 +67,25 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
                   crossAxisCount: 3,
                   childAspectRatio: 1,
                 ),
-                itemCount: Emoji.emojiStatsList.length,
+                itemCount: EmojisInfo.emojis.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const .only(
-                      right: 5,
-                      left: 5,
-                      bottom: 10,
-                    ),
+                    padding: const .only(right: 5, left: 5, bottom: 10),
                     child: IgnorePointer(
                       ignoring: emojiAvaliable[index] ? false : true,
                       child: Material(
                         elevation: 5,
                         color: emojiAvaliable[index]
-                          ? AppThemes.grayBluish
-                          : indexP1.contains(index) &&
-                              sortPlayerToStart == "X"
-                          ? AppThemes.blue
-                          : indexP1.contains(index) &&
-                              sortPlayerToStart == "Y"
-                          ? AppThemes.orange
-                          : sortPlayerToStart == "Y"
-                          ? AppThemes.blue
-                          : AppThemes.orange,
+                            ? AppThemes.grayBluish
+                            : indexP1.contains(index) &&
+                                  sortPlayerToStart == "X"
+                            ? AppThemes.blue
+                            : indexP1.contains(index) &&
+                                  sortPlayerToStart == "Y"
+                            ? AppThemes.orange
+                            : sortPlayerToStart == "Y"
+                            ? AppThemes.blue
+                            : AppThemes.orange,
                         type: .card,
                         borderRadius: AppThemes.stdBorderRadius,
                         child: InkWell(
@@ -102,7 +100,7 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
                           },
                           child: Center(
                             child: Text(
-                              Emoji.emojiStatsList[index].emoji,
+                              EmojisInfo.emojis[index].emoji,
                               style: const TextStyle(fontSize: 20),
                             ),
                           ),
@@ -122,7 +120,7 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
   void selectEmoji(int index) async {
     contEmoji += 1;
     if (player1Emojis.length < 4) {
-      player1Emojis.add(Emoji.emojiStatsList[index]);
+      player1Emojis.add(EmojisInfo.emojis[index]);
       indexP1.add(index);
       if (player1Emojis.length == 4) {
         await confirmEmojis(1);
@@ -132,7 +130,7 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
     }
 
     if (player2Emojis.length <= 4) {
-      player2Emojis.add(Emoji.emojiStatsList[index]);
+      player2Emojis.add(EmojisInfo.emojis[index]);
       indexP2.add(index);
       if (player2Emojis.length == 4) {
         await confirmEmojis(2);
@@ -181,9 +179,7 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
                     },
                     child: Text(
                       "Cancelar",
-                      style: const TextStyle(
-                        color: AppThemes.white,
-                      ),
+                      style: const TextStyle(color: AppThemes.white),
                     ),
                   ),
                   Material(
