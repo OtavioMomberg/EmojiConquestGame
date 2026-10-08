@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:drag_and_drop_game/models/game_screen_data.dart';
-import 'package:drag_and_drop_game/ui/screens/export_screens.dart';
+import 'package:drag_and_drop_game/shared/data/game_screen_data.dart';
+import 'package:drag_and_drop_game/features/export_screens.dart';
 
 final class AppRoutes._() {
   static const home = "/";

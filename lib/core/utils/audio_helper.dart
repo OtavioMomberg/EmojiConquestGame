@@ -51,6 +51,8 @@ final class AudioService._() {
       await audio.player.setReleaseMode(.stop);
       await audio.player.setPlayerMode(.lowLatency);
       await audio.player.setSource(AssetSource(audio.audioPath));
+
+      await Future.delayed(const Duration(milliseconds: 50));
     }
   }
 
