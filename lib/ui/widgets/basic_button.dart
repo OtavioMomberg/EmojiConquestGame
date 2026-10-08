@@ -35,7 +35,7 @@ class BasicButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: .bold,
-                color: AppThemes.darkBlue.withValues(alpha: 0.6),
+                color: AppThemes.darkBlue.withValues(alpha: 0.8),
               ),
             ),
           ),

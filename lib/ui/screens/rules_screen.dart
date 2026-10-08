@@ -1,3 +1,7 @@
+import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
+import 'package:drag_and_drop_game/ui/widgets/formatted_container.dart';
+import 'package:drag_and_drop_game/ui/widgets/rules.dart';
+import 'package:drag_and_drop_game/ui/widgets/rules_header.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
@@ -5,67 +9,58 @@ class const RulesScreen({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Como Jogar",
-          style: TextStyle(color: AppThemes.white),
-        ),
-        centerTitle: true,
-        backgroundColor: AppThemes.lightGray,
-        surfaceTintColor: Colors.transparent,
-        foregroundColor: AppThemes.white,
-      ),
-      backgroundColor: AppThemes.gray,
-      body: Container(
-        height: .infinity,
-        width: .infinity,
-        padding: const .all(10),
-        decoration: const BoxDecoration(gradient: AppThemes.gradient),
-        child: const SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Text(
-                """ 
-Objetivo do Jogo:
-                
-O objetivo é conquistar 3 das 4 áreas de conquista ou derrotar todos os emojis do adversário.
-
-Regras:
-
-1. Cada jogador escolhe 4 emojis para a batalha;
-
-2. Cada emoji possui ataque e classe;
-
-3. Classes mais fortes ganham 3 pontos de ataque extra;
-
-4. Durante a partida é possível ver um diagrama mostrando quais classes possuem vanatagens sobre outras;
-
-5. No início da rodada, o jogador pode posicionar um emoji em um campo de conquista, mas apenas um (Permanece por 3 rodadas ou se for derrotado antes);
-
-6. Durante a rodada, o jogador deve sortear uma cor a qual seu emoji terá, se essa cor for igual a cor de um dos campo o jogador tem 75% de chance de ganhar 2 pontos de dano extra, caso contrário ele perde 2 pontos
-
-7. Após ter sorteado uma cor, não é possível posicionar um emoji para defender uma área durante a rodada;
-
-8. Caso o emoji posicionado em uma das áreas seja derrotado, ele não poderá mais ser utilizado ao decorrer da partida;
-
-9. Se o emoji que atacar um emoji que esta defendendo uma área possuir menos ataque, este por sua vez será derrotado e não poderá ser utilizado até o fim da partida;
-
-10. A cada rodada 1 dos 4 emojis escolhidos é sortado aleatoriamente para ser usado no ataque;
-
-11. Se o jogador possuir apenas 1 emoji restante, esse não poderá ser posicionado para defender uma área;
-
-12. Cada um dos campos de conquista possuem uma cor e um tipo específico;
-
-13. Cada uma das classes ficam mais fortes ou mais fracas estando em uma tipo de campo especifico (Ganhando 4 pontos ou perdendo 4 pontos de ataque);
-                
-14. O primeiro jogador é chamado de X e o segundo de Y.
-                """,
-                style: TextStyle(color: AppThemes.white),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: AppThemes.appBar,
+      backgroundColor: AppThemes.darkGray,
+      body: FormattedContainer(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                RulesHeader(
+                  onPressed: () {
+                    AudioService.instance().play(audio: .button2);
+                    Navigator.pop(context);
+                  }
+                ),
+                const SizedBox(height: 30),
+                const Align(
+                  alignment: .centerLeft,
+                  child: Text(
+                    "Objetivo do Jogo:",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: .bold,
+                      color: AppThemes.white
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  "O objetivo é conquistar 3 das 4 áreas de "
+                  "conquista ou derrotar todos os emojis do adversário.",
+                  style: TextStyle(
+                    color: AppThemes.white
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Align(
+                  alignment: .centerLeft,
+                  child: Text(
+                    "Regras:",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: .bold,
+                      color: AppThemes.white
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Rules()
+              ]
+            )
+          )
+        )
+      )
     );
   }
 }

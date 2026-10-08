@@ -43,7 +43,7 @@ class _GameScreenState extends State<GameScreen> {
     );
     colorsModel.getColors();
 
-    playerTurn = args!.playerTurn;
+    //playerTurn = args!.playerTurn;
 
     getFields();
     initializeDefenseEmoji();
