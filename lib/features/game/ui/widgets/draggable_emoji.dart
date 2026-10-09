@@ -25,8 +25,8 @@ class DraggableEmoji extends StatelessWidget {
           elevation: 8,
           shadowColor: color.withValues(alpha: 0.5),
           child: SizedBox(
-            height: 95,
-            width: 100,    
+            height: 110,
+            width: 110,    
             child: Center(
               child: Text(
                 player["attack"] < 10 
@@ -49,7 +49,7 @@ class DraggableEmoji extends StatelessWidget {
           elevation: 8,
           shadowColor: AppThemes.darkGray.withValues(alpha: 0.3),
           child: const SizedBox(
-            height: 95,
+            height: 100,
             width: 100, 
           )
         ),
@@ -58,7 +58,7 @@ class DraggableEmoji extends StatelessWidget {
           shape: const StarBorder.polygon(sides: 6, pointRounding: 0.3),
           elevation: 8,
           child: SizedBox(
-            height: 95,
+            height: 100,
             width: 100,
             child: Center(
               child: Text(

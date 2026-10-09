@@ -1,11 +1,12 @@
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:material_ui/material_ui.dart';
 
-class SortButton extends StatelessWidget {
-  final Future<void> Function() onTap;
+typedef OnTap = Future<void> Function();
 
-  const SortButton({required this.onTap, super.key});
-
+class const SortButton({
+  required final OnTap onTap, 
+  super.key
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -26,7 +27,7 @@ class SortButton extends StatelessWidget {
                 "SORTEAR", 
                 style: TextStyle(
                   color: AppThemes.gray, 
-                  fontWeight: .w600)
+                  fontWeight: .bold)
                 ),
               Icon(Icons.shuffle, color: AppThemes.gray)
             ]

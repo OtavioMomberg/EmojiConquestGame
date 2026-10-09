@@ -2,7 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/shared/data/game_screen_data.dart';
 import 'package:drag_and_drop_game/features/export_screens.dart';
 
-final class AppRoutes._() {
+final class const AppRoutes._() {
   static const home = "/";
   static const rules = "/rules";
   static const selectEmojis = "/select_emojis";

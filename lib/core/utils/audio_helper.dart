@@ -44,9 +44,8 @@ final class AudioService._() {
 
   Future<void> setupAudios({required int start, int? end}) async {
     _ensurePlayersAreAlive();
-    if (_audioList.isEmpty) {
-      _createAudioList();
-    }
+    if (_audioList.isEmpty) { _createAudioList(); }
+
     for (var audio in _audioList.sublist(start, end)) {
       await audio.player.setReleaseMode(.stop);
       await audio.player.setPlayerMode(.lowLatency);
@@ -88,12 +87,12 @@ final class AudioService._() {
 
   void _ensurePlayersAreAlive() {
     if (_isPlayersDisposed) {
-      throw StateError("[ERROR] => [Players has already been disposed]");
+      throw StateError("[ERROR]: Players has already been disposed");
     }
   }
 }
 
 final class InitAudios({
   required final AudioPlayer player,
-  required final String audioPath,
+  required final String audioPath
 });

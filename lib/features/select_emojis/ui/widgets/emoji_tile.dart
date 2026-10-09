@@ -15,6 +15,7 @@ class const EmojiTile({
       child: Material(
         elevation: 5,
         color: selectService.getTileColor(index: index),
+        shadowColor: AppThemes.gray,
         borderRadius: AppThemes.stdBorderRadius,
         child: InkWell(
           borderRadius: AppThemes.stdBorderRadius,

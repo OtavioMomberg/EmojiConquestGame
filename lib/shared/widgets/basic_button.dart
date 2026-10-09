@@ -1,20 +1,17 @@
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:material_ui/material_ui.dart';
 
-class BasicButton extends StatelessWidget {
-  final void Function({
-    required BuildContext context, 
-    required String screen
-  }) play;
-  final String screen;
-  final String text;
-  const BasicButton({
-    required this.play,
-    required this.screen,
-    required this.text,
-    super.key,
-  });
+typedef Navigate = void Function({
+  required BuildContext context, 
+  required String screen
+});
 
+class const BasicButton({ 
+  required final Navigate play,
+  required final String screen,
+  required final String text,
+  super.key
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(

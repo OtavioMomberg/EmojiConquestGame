@@ -13,51 +13,55 @@ class const RulesScreen({super.key}) extends StatelessWidget {
       backgroundColor: AppThemes.darkGray,
       body: FormattedContainer(
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                RulesHeader(
-                  onPressed: () {
-                    AudioService.instance().play(audio: .button2);
-                    Navigator.pop(context);
-                  }
-                ),
-                const SizedBox(height: 30),
-                const Align(
-                  alignment: .centerLeft,
-                  child: Text(
-                    "Objetivo do Jogo:",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: .bold,
-                      color: AppThemes.white
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                const Text(
-                  "O objetivo é conquistar 3 das 4 áreas de "
-                  "conquista ou derrotar todos os emojis do adversário.",
-                  style: TextStyle(
-                    color: AppThemes.white
-                  ),
-                ),
-                const SizedBox(height: 15),
-                const Align(
-                  alignment: .centerLeft,
-                  child: Text(
-                    "Regras:",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: .bold,
-                      color: AppThemes.white
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                const Rules()
-              ]
-            )
+          child: Column(
+            children: <Widget>[
+              RulesHeader(
+                onPressed: () {
+                  AudioService.instance().play(audio: .button2);
+                  Navigator.pop(context);
+                },
+              ),
+              const SizedBox(height: 25),
+              const Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Align(
+                        alignment: .centerLeft,
+                        child: Text(
+                          "Objetivo do Jogo:",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: .bold,
+                            color: AppThemes.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Text(
+                        "O objetivo é conquistar 3 das 4 áreas de "
+                        "conquista ou derrotar todos os emojis do adversário.",
+                        style: TextStyle(color: AppThemes.white),
+                      ),
+                      SizedBox(height: 15),
+                      Align(
+                        alignment: .centerLeft,
+                        child: Text(
+                          "Regras:",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: .bold,
+                            color: AppThemes.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Rules()
+                    ]
+                  )
+                )
+              )
+            ]
           )
         )
       )

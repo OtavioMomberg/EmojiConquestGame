@@ -11,8 +11,7 @@ class const EmojiSelectionGrid({
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: 1
+        crossAxisCount: 3
       ),
       itemCount: EmojisInfo.emojis.length,
       itemBuilder: (context, index) {

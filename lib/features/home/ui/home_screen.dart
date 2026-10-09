@@ -27,14 +27,14 @@ class HomeScreen extends StatelessWidget {
               FractionallySizedBox(
                 widthFactor: 0.6,
                 child: BasicButton(
-                  play: _goSelectEmojiScreen,
+                  play: _navigateScreen,
                   screen: AppRoutes.selectEmojis,
                   text: "Jogar",
                 ),
               ),
               TextButton(
                 onPressed: () =>
-                  _goRulesScreen(
+                  _navigateScreen(
                     context: context, 
                     screen: AppRoutes.rules
                   ),
@@ -50,13 +50,16 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void _goSelectEmojiScreen({required BuildContext context, required String screen}) {
+  void _navigateScreen({
+    required BuildContext context, 
+    required String screen
+  }) {
     _player.play(audio: .button2);
-    Navigator.pushReplacementNamed(context, screen);
-  }
 
-  void _goRulesScreen({required BuildContext context, required String screen}) {
-    _player.play(audio: .button2);
-    Navigator.pushNamed(context, screen);
+    if (screen == AppRoutes.selectEmojis) {
+      Navigator.pushReplacementNamed(context, screen);
+      return;
+    }
+    Navigator.pushNamed(context, screen);   
   }
 }

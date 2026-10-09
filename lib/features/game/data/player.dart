@@ -2,13 +2,15 @@ import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/shared/data/emoji.dart';
 import 'dart:math';
 
-class Player({
+final class Player({
   required final String player,
   required final String emoji,
   required final int attack,
   required final EmojiType emojiType,
-  required final Color color,
+  required var Color _color,
 }) {
+  Color get color => _color;
+
   Map<String, dynamic> toMap() {
     return {
       "player": player,
@@ -17,6 +19,10 @@ class Player({
       "emoji_class": emojiType,
       "color": color,
     };
+  }
+
+  void changePlayerColor({required Color newColor}) {
+    _color = newColor;
   }
 
   static int changeValue() {

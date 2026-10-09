@@ -50,10 +50,10 @@ class SelectEmojiService {
     int value = Random().nextInt(_sortRange) + 1;
     _sortPlayerToStart = (value % 2 == 0) ? .x : .y;
     _displayPlayer = sortPlayerToStart;
-    switchPalyers();
+    _switchPalyers();
   }
 
-  void switchPalyers() {
+  void _switchPalyers() {
     if (_sortPlayerToStart == .x) { return; }
 
     final aux = player1Emojis;
@@ -108,10 +108,9 @@ class SelectEmojiService {
         _resetEmojisTile(response: true);
         _clearEmojisLists();
         break;
-
       case false:
-        _switchDisplay();
         _resetEmojisTile(response: false);
+        _switchDisplay();
         break;
     }
   }
@@ -147,7 +146,6 @@ class SelectEmojiService {
     if (_player1Emojis.indexes.contains(index)) {
       return AppThemes.blue;
     }
-
     return AppThemes.orange;
   }
 }

@@ -73,7 +73,7 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
       content: "\nDeseja trocar de emojis?\n",
       buttonColor: AppThemes.white,
       buttonFontColor: AppThemes.gray,
-    ) ?? false;
+    ) ?? true;
 
     if (!mounted) { return; }
 
@@ -82,8 +82,6 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
   }
 
   void _goGameScreen() {
-    _selectService.switchPalyers();
-
     Navigator.pushReplacementNamed(
       context,
       AppRoutes.game,

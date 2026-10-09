@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
-final class AppThemes._() {
+final class const AppThemes._() {
   static const black = Color.fromARGB(255, 33, 32, 32);
   static const gray = Color.fromARGB(255, 46, 46, 47);
   static const darkGray = Color.fromARGB(255, 36, 37, 39);

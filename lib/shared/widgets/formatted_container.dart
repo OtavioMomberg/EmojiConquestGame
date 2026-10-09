@@ -9,7 +9,7 @@ class const FormattedContainer({final Widget? child, super.key}) extends Statele
       width: .infinity,
       padding: const .symmetric(horizontal: 10, vertical: 20),
       decoration: const BoxDecoration(gradient: AppThemes.gradient),
-      child: child,
+      child: child
     );
   }
 }
