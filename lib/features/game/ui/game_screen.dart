@@ -20,16 +20,20 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppThemes.appBar,
-      backgroundColor: AppThemes.darkGray,
+      backgroundColor: AppColors.darkGray,
       body: FormattedContainer(
         child: SafeArea(
           child: Column(
             mainAxisAlignment: .spaceEvenly,
             children: <Widget>[
               GameHeader(),
+              
               const SizedBox(height: 10),
+
               Flexible(child: FieldsGrid()),
+
               Opacity(opacity: 1.0, child: DraggableEmoji()),
+
               const SizedBox(height: 20),
 
               ColorPicker(),

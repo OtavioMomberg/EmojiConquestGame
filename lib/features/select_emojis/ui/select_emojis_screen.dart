@@ -32,7 +32,7 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppThemes.appBar,
-      backgroundColor: AppThemes.darkGray,
+      backgroundColor: AppColors.darkGray,
       body: FormattedContainer(
         child: SafeArea(
           child: Column(
@@ -43,14 +43,14 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: .bold,
-                  color: AppThemes.white,
+                  color: AppColors.white,
                 ),
               ),
               const SizedBox(height: 10),
               Text(
                 "Emojis selecionados de ${_selectService.displayPlayer}: "
                 "${_selectService.contEmoji.toString()}/4",
-                style: const TextStyle(color: AppThemes.white),
+                style: const TextStyle(color: AppColors.white),
               ),
               Expanded(
                 child: EmojiSelectionGrid(selectService: _selectService),
@@ -66,12 +66,12 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
     final response =
         await CustomFeedback.confirmDialog(
           context: context,
-          backgroundColor: AppThemes.gray,
+          backgroundColor: AppColors.gray,
           title: "Confirmar Emojis",
-          fontColor: AppThemes.white,
+          fontColor: AppColors.white,
           content: "\nDeseja trocar de emojis?\n",
-          buttonColor: AppThemes.white,
-          buttonFontColor: AppThemes.gray,
+          buttonColor: AppColors.white,
+          buttonFontColor: AppColors.gray,
         ) ??
         true;
 

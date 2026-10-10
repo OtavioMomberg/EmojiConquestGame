@@ -5,9 +5,9 @@ class const Button({
   required final String text,
   required final VoidCallback onTap,
   final double height = 60,
-  final Color color = AppThemes.white,
-  final Color txtColor = AppThemes.darkBlue,
-  final Color splash = AppThemes.lightGray2,
+  final Color color = AppColors.white,
+  final Color txtColor = AppColors.darkBlue,
+  final Color splash = AppColors.lightGray2,
   super.key
 }) extends StatelessWidget {
   @override

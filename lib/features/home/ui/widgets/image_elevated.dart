@@ -5,7 +5,7 @@ import 'package:drag_and_drop_game/shared/widgets/image_rounded.dart';
 class const ImageElevated({
   required final String imagePath,
   final double elevation = 10,
-  final Color color = AppThemes.white,
+  final Color color = AppColors.white,
   final BorderRadius borderRadius = AppThemes.stdBorderRadius,
   super.key,
 }) extends StatelessWidget {

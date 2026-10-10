@@ -14,17 +14,17 @@ class const RulesHeader({
           child: DecoratedBox(
             decoration: const ShapeDecoration(
               shape: CircleBorder(
-                side: BorderSide(color: AppThemes.white)
+                side: BorderSide(color: AppColors.white)
               ),
             ),
             child: IconButton(
               onPressed: onPressed,
               style: IconButton.styleFrom(
-                highlightColor: AppThemes.white.withValues(alpha: 0.1)
+                highlightColor: AppColors.white.withValues(alpha: 0.1)
               ),
               icon: const Icon(
                 Icons.arrow_back_outlined, 
-                color: AppThemes.white
+                color: AppColors.white
               ),
             ),
           ),
@@ -35,7 +35,7 @@ class const RulesHeader({
           style: TextStyle(
             fontSize: 22, 
             fontWeight: .bold,
-            color: AppThemes.white
+            color: AppColors.white
           ),
         ),
       ],

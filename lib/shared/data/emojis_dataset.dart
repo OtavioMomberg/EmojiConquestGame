@@ -2,13 +2,15 @@ import 'package:drag_and_drop_game/shared/data/emoji_model.dart';
 
 enum EmojiType { criaturas, poderes, humanos, animais, frutas, neutro }
 
-class const EmojiHierarchy({
+final class const EmojiHierarchy({
   required final EmojiType type,
   required final EmojiType strong,
   required final EmojiType weak,
 });
 
-class const EmojiHierarchies._() {
+// strong +1 attack
+// weak -1 attack
+final class const EmojiHierarchies._() {
   static const hierarchies = [
     EmojiHierarchy(type: .criaturas, strong: .poderes, weak: .frutas),
     EmojiHierarchy(type: .poderes, strong: .humanos, weak: .criaturas),
@@ -18,7 +20,7 @@ class const EmojiHierarchies._() {
   ];
 }
 
-class const EmojisDataset._() {
+final class const EmojisDataset._() {
   static const emojis = [
     EmojiModel(emoji: "🤖", emojiType: .criaturas, attack: 15),
     EmojiModel(emoji: "👾", emojiType: .criaturas, attack: 10),

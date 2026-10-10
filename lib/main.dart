@@ -30,7 +30,7 @@ class const EmojiConquest({super.key}) extends StatelessWidget {
       title: "Emoji Conquest",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: AppThemes.gray),
+        colorScheme: .fromSeed(seedColor: AppColors.gray),
         fontFamily: "Electrolize",
       ),
       initialRoute: AppRoutes.home,

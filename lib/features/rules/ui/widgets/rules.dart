@@ -30,7 +30,7 @@ class const Rules({super.key}) extends StatelessWidget {
       "13. Cada uma das classes ficam mais fortes ou mais fracas estando em uma "
       "tipo de campo especifico (Ganhando 4 pontos ou perdendo 4 pontos de ataque);\n\n"
       "14. O primeiro jogador é chamado de X e o segundo de Y.",
-      style: TextStyle(color: AppThemes.white),
+      style: TextStyle(color: AppColors.white),
     );
   }
 }

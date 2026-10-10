@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget with RouterScreens {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppThemes.appBar,
-      backgroundColor: AppThemes.darkGray,
+      backgroundColor: AppColors.darkGray,
       body: FormattedContainer(
         useSafeArea: true,
         child: Column(
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget with RouterScreens {
               },
               child: const Text(
                 "Como Jogar",
-                style: TextStyle(color: AppThemes.white),
+                style: TextStyle(color: AppColors.white),
               ),
             ),
           ],

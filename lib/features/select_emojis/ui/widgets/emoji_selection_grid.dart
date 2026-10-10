@@ -17,7 +17,10 @@ class const EmojiSelectionGrid({
       itemBuilder: (context, index) {
         return Padding(
           padding: const .only(right: 5, left: 5, bottom: 10),
-          child: EmojiTile(selectService: selectService, index: index),
+          child: EmojiTile(
+            selectService: selectService, 
+            index: index
+          ),
         );
       },
     );

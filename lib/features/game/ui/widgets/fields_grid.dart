@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/features/game/ui/widgets/field.dart';
 
 class const FieldsGrid({super.key}) extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class const FieldsGrid({super.key}) extends StatelessWidget {
       ),
       itemCount: 4,
       itemBuilder: (context, index) {
-        return GestureDetector();
+        return GestureDetector(child: Field());
       },
     );
   }

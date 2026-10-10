@@ -8,27 +8,27 @@ class const DraggableEmoji({super.key}) extends StatelessWidget {
       ignoring: false,
       child: Draggable(
         feedback: _PlayerTile(
-          color: AppThemes.blue,
+          color: AppColors.blue,
           child: Text(
             "",
             style: const TextStyle(
               fontSize: 20,
               fontWeight: .bold,
-              color: AppThemes.white,
+              color: AppColors.white,
             ),
           ),
         ),
         childWhenDragging: const _PlayerTile(
-          color: AppThemes.gray,
+          color: AppColors.gray,
           dimension: 80,
         ),
         child: _PlayerTile(
-          color: AppThemes.blue,
+          color: AppColors.blue,
           child: Text(
             "Emoji",
             style: const TextStyle(
               fontWeight: .bold,
-              color:AppThemes.white
+              color:AppColors.white
             ),
           ),
         ),

@@ -7,25 +7,25 @@ class const SortButton({ super.key}) extends StatelessWidget {
     return Material(
       elevation: 5,
       borderRadius: AppThemes.stdBorderRadius,
-      color: AppThemes.white,
+      color: AppColors.white,
       child: InkWell(
         onTap: () {},
         borderRadius: AppThemes.stdBorderRadius,
-        splashColor: AppThemes.lightGray2,
+        splashColor: AppColors.lightGray2,
         child: const SizedBox(
           height: 60,
           child: Row(
-            mainAxisAlignment: .spaceEvenly,
+            spacing: 10,
+            mainAxisAlignment: .center,
             children:  <Widget>[
-              Icon(Icons.shuffle, color: AppThemes.gray),
               Text(
                 "SORTEAR", 
                 style: TextStyle(
-                  color: AppThemes.gray, 
+                  color: AppColors.gray, 
                   fontWeight: .bold
                 )
               ),
-              Icon(Icons.shuffle, color: AppThemes.gray)
+              Icon(Icons.shuffle, color: AppColors.gray)
             ]
           )  
         )

@@ -4,39 +4,51 @@ import 'package:drag_and_drop_game/features/export_screens.dart';
 
 enum TransitionType { slide, fade, scale }
 
-Widget _getTranslation({
-  required Animation<double> animation, 
-  required Widget child,
-  required TransitionType type
-}) {
-  switch (type) {
-    case .slide:
-      const begin = Offset(1.0, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.easeInOut;
-      final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(position: animation.drive(tween), child: child);
-
-    case .fade:
-      return FadeTransition(
-        opacity: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
-        child: child,
-      );
-      
-    case .scale:
-      return ScaleTransition(
-        scale: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
-        child: child,
-      );
-  }
-}
-
 final class const AppRoutes._() {
   static const home = "/";
   static const rules = "/rules";
   static const selectEmojis = "/select_emojis";
   static const game = "/game";
+
+  static Widget _getTranslation({
+  required Animation<double> animation, 
+  required Widget child,
+  required TransitionType type
+  }) {
+    switch (type) {
+      case .slide:
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+        final tween = Tween(
+          begin: begin, 
+          end: end
+        ).chain(
+          CurveTween(curve: curve)
+        );
+
+        return SlideTransition(
+          position: animation.drive(tween), 
+          child: child
+        );
+      case .fade:
+        return FadeTransition(
+          opacity: CurvedAnimation(
+            parent: animation, 
+            curve: Curves.easeInOut
+          ),
+          child: child,
+        );
+      case .scale:
+        return ScaleTransition(
+          scale: CurvedAnimation(
+            parent: animation, 
+            curve: Curves.easeInOut
+          ),
+          child: child,
+        );
+    }
+  }
 
   static Widget _getScreen({required RouteSettings settings}) {
     switch (settings.name) {

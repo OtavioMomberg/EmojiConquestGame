@@ -1,5 +1,5 @@
-import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:drag_and_drop_game/features/game/ui/widgets/game_info_button.dart';
 
 class const GameHeader({super.key}) extends StatelessWidget {
@@ -11,14 +11,12 @@ class const GameHeader({super.key}) extends StatelessWidget {
       children: <Widget>[
         Text(
           "Turno: X",
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: .bold,
-            color: AppThemes.white,
-          ),
+          style: AppThemes.fieldTextStyle.copyWith(
+            fontSize: 20
+          )
         ),
-        GameInfoButton(),
-      ],
+        GameInfoButton()
+      ]
     );
   }
 }

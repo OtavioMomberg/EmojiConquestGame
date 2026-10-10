@@ -5,7 +5,7 @@ class const GameInfoButton({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppThemes.blue,
+      color: AppColors.blue,
       borderRadius: AppThemes.largerBorderRadius,
       child: InkWell(
         borderRadius: AppThemes.largerBorderRadius,
@@ -17,8 +17,8 @@ class const GameInfoButton({super.key}) extends StatelessWidget {
           ),
           child: const Icon(
             Icons.help_outline, 
-            color: AppThemes.white
-            ),
+            color: AppColors.white
+          ),
         ),
       ),
     );

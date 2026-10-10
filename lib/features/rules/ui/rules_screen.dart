@@ -10,7 +10,7 @@ class const RulesScreen({super.key}) extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppThemes.appBar,
-      backgroundColor: AppThemes.darkGray,
+      backgroundColor: AppColors.darkGray,
       body: FormattedContainer(
         child: SafeArea(
           child: Column(
@@ -33,7 +33,7 @@ class const RulesScreen({super.key}) extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: .bold,
-                            color: AppThemes.white,
+                            color: AppColors.white,
                           ),
                         ),
                       ),
@@ -41,7 +41,7 @@ class const RulesScreen({super.key}) extends StatelessWidget {
                       Text(
                         "O objetivo é conquistar 3 das 4 áreas de "
                         "conquista ou derrotar todos os emojis do adversário.",
-                        style: TextStyle(color: AppThemes.white),
+                        style: TextStyle(color: AppColors.white),
                       ),
                       SizedBox(height: 15),
                       Align(
@@ -51,7 +51,7 @@ class const RulesScreen({super.key}) extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: .bold,
-                            color: AppThemes.white,
+                            color: AppColors.white,
                           ),
                         ),
                       ),

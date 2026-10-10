@@ -16,7 +16,7 @@ enum PlayerId { x, y }
 
 typedef DialogFunction = Future<void> Function({required int player});
 
-class SelectEmojiService {
+final class SelectEmojiService {
   late final VoidCallback setState;
   late final DialogFunction dialog;
 
@@ -56,9 +56,7 @@ class SelectEmojiService {
   }
 
   void _switchPalyers() {
-    if (_sortPlayerToStart == .x) {
-      return;
-    }
+    if (_sortPlayerToStart == .x) { return; }
 
     final aux = player1Emojis;
 
@@ -121,8 +119,8 @@ class SelectEmojiService {
 
   void _resetEmojisTile({required bool response}) {
     final index = (_player2Emojis.indexes.isEmpty)
-        ? _player1Emojis.indexes
-        : _player2Emojis.indexes;
+      ? _player1Emojis.indexes
+      : _player2Emojis.indexes;
 
     for (int i = 0; i < index.length; i++) {
       _emojiAvaliable[index[i]] = response;
@@ -145,11 +143,11 @@ class SelectEmojiService {
 
   Color getTileColor({required int index}) {
     if (emojiAvaliable[index]) {
-      return AppThemes.grayBluish;
+      return AppColors.grayBluish;
     }
     if (_player1Emojis.indexes.contains(index)) {
-      return AppThemes.blue;
+      return AppColors.blue;
     }
-    return AppThemes.orange;
+    return AppColors.orange;
   }
 }
