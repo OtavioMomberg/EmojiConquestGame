@@ -1,12 +1,12 @@
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
-import 'package:drag_and_drop_game/shared/data/emoji.dart';
+import 'package:drag_and_drop_game/shared/data/emojis_dataset.dart';
 import 'package:drag_and_drop_game/features/select_emojis/domain/select_emoji_service.dart';
 import 'package:material_ui/material_ui.dart';
 
 class const EmojiTile({
   required final SelectEmojiService selectService,
   required final int index,
-  super.key
+  super.key,
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,11 +25,11 @@ class const EmojiTile({
           },
           child: Center(
             child: Text(
-              EmojisInfo.emojis[index].emoji,
-              style: const TextStyle(fontSize: 20)
-            )
-          )
-        )
+              EmojisDataset.emojis[index].emoji,
+              style: const TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
       ),
     );
   }

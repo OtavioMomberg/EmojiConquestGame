@@ -13,6 +13,8 @@ final class const AppThemes._() {
   static const darkBlue = Color.fromARGB(255, 0, 31, 64);
   static const orange = Color.fromARGB(255, 177, 139, 84);
 
+  static const containerStdPadding = EdgeInsets.symmetric(horizontal: 10, vertical: 20);
+
   static const stdBorderRadius = BorderRadius.all(.circular(12));
   static const largerBorderRadius = BorderRadius.all(.circular(50));
 

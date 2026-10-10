@@ -6,7 +6,7 @@ import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
 import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:drag_and_drop_game/core/routes/app_routes.dart';
-import 'package:drag_and_drop_game/shared/data/game_screen_data.dart';
+import 'package:drag_and_drop_game/shared/data/game_initial_data.dart';
 
 class const SelectEmojisScreen({super.key}) extends StatefulWidget {
   @override
@@ -53,39 +53,43 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
                 style: const TextStyle(color: AppThemes.white),
               ),
               Expanded(
-                child: EmojiSelectionGrid(
-                  selectService: _selectService
-                )
-              )
-            ]
-          )
-        )
-      )
+                child: EmojiSelectionGrid(selectService: _selectService),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
   Future<void> _confirmEmojis({required int player}) async {
-    final response = await CustomFeedback.confirmDialog(
-      context: context,
-      backgroundColor: AppThemes.gray,
-      title: "Confirmar Emojis",
-      fontColor: AppThemes.white,
-      content: "\nDeseja trocar de emojis?\n",
-      buttonColor: AppThemes.white,
-      buttonFontColor: AppThemes.gray,
-    ) ?? true;
+    final response =
+        await CustomFeedback.confirmDialog(
+          context: context,
+          backgroundColor: AppThemes.gray,
+          title: "Confirmar Emojis",
+          fontColor: AppThemes.white,
+          content: "\nDeseja trocar de emojis?\n",
+          buttonColor: AppThemes.white,
+          buttonFontColor: AppThemes.gray,
+        ) ??
+        true;
 
-    if (!mounted) { return; }
+    if (!mounted) {
+      return;
+    }
 
     _selectService.dialogResponseAction(response: response);
-    if (player == playerTwo && !response) { _goGameScreen(); }
+    if (player == playerTwo && !response) {
+      _goGameScreen();
+    }
   }
 
   void _goGameScreen() {
     Navigator.pushReplacementNamed(
       context,
       AppRoutes.game,
-      arguments: GameScreenData(
+      arguments: GameInitialData(
         player1Emojis: _selectService.player1Emojis,
         player2Emojis: _selectService.player2Emojis,
         playerTurn: _selectService.sortPlayerToStart,

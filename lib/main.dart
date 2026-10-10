@@ -13,11 +13,12 @@ void main() async {
     yield LicenseEntryWithLineBreaks(["Google Fonts - Electrolize"], license);
   });
 
-  await SystemChrome.setPreferredOrientations([
-    .portraitUp, .portraitDown]);
+  await SystemChrome.setPreferredOrientations([.portraitUp, .portraitDown]);
 
-  await AudioService.instance()
-    .setupAudios(start: startFirstSetup, end: endFirstSetUp);
+  await AudioHelper.instance().setupAudios(
+    start: startFirstSetup,
+    end: endFirstSetUp,
+  );
 
   runApp(const EmojiConquest());
 }
@@ -34,7 +35,7 @@ class const EmojiConquest({super.key}) extends StatelessWidget {
       ),
       initialRoute: AppRoutes.home,
       onGenerateRoute: (settings) => 
-        AppRoutes.getRoute(settings)
+        AppRoutes.getRoute(settings),
     );
   }
 }

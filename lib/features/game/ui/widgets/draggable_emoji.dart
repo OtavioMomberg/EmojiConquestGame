@@ -1,79 +1,60 @@
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:material_ui/material_ui.dart';
 
-class DraggableEmoji extends StatelessWidget {
-  final Map<String, dynamic> player;
-  final bool isSorted;
-  final Color color;
-  
-  const DraggableEmoji({
-    required this.player,
-    required this.isSorted, 
-    required this.color,
-    super.key
-  });
-
+class const DraggableEmoji({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-      ignoring: isSorted ? false : true,
-      child: Draggable<Map<String, dynamic>>(
-        data: player,
-        feedback: Material(
-          color: color.withValues(alpha: 0.8),
-          shape: const StarBorder.polygon(sides: 6, pointRounding: 0.3),
-          elevation: 8,
-          shadowColor: color.withValues(alpha: 0.5),
-          child: SizedBox(
-            height: 110,
-            width: 110,    
-            child: Center(
-              child: Text(
-                player["attack"] < 10 
-                  ? "${player["emoji"]}\n0${player["attack"]}" 
-                  : "${player["emoji"]}\n${player["attack"]}", 
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: .w600,
-                  color: color == AppThemes.black 
-                    ? AppThemes.white
-                    : AppThemes.black
-                )
-              )
-            )
-          )
+      ignoring: false,
+      child: Draggable(
+        feedback: _PlayerTile(
+          color: AppThemes.blue,
+          child: Text(
+            "",
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: .bold,
+              color: AppThemes.white,
+            ),
+          ),
         ),
-        childWhenDragging: Material(
+        childWhenDragging: const _PlayerTile(
           color: AppThemes.gray,
-          shape: const StarBorder.polygon(sides: 6, pointRounding: 0.3),
-          elevation: 8,
-          shadowColor: AppThemes.darkGray.withValues(alpha: 0.3),
-          child: const SizedBox(
-            height: 100,
-            width: 100, 
-          )
+          dimension: 80,
         ),
-        child: Material(
-          color: color.withValues(alpha: 0.8),
-          shape: const StarBorder.polygon(sides: 6, pointRounding: 0.3),
-          elevation: 8,
-          child: SizedBox(
-            height: 100,
-            width: 100,
-            child: Center(
-              child: Text(
-                color == Colors.transparent ? "" : "Emoji",
-                style: TextStyle(
-                  fontWeight: .w600,
-                    color: color == Colors.black 
-                      ? AppThemes.white
-                      : AppThemes.black
-                )
-              )
-            )
-          )
-        )
-      )
+        child: _PlayerTile(
+          color: AppThemes.blue,
+          child: Text(
+            "Emoji",
+            style: const TextStyle(
+              fontWeight: .bold,
+              color:AppThemes.white
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class const _PlayerTile({
+  required final Color color,
+  final double dimension = 100,
+  final Widget? child,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color,
+      shape: const StarBorder.polygon(
+        sides: 8, 
+        pointRounding: 0.3
+      ),
+      elevation: 8,
+      child: SizedBox.square(
+        dimension: dimension,
+        child: Center(child: child)
+      ),
     );
   }
 }

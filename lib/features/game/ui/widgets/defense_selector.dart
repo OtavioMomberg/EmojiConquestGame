@@ -1,36 +1,28 @@
-import 'package:drag_and_drop_game/shared/data/emoji_data.dart';
 import 'package:material_ui/material_ui.dart';
 
-class DefenseSelector extends StatelessWidget {
-  final List<EmojiData> emojis;
-  const DefenseSelector({required this.emojis, super.key});
-
+class const DefenseSelector({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
-      width: 200,
-      child: Column(
-        mainAxisAlignment: .center,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: .spaceBetween,
-            children: <Widget>[
-              ....generate(emojis.length, (index) {
-                return GestureDetector(
-                  onTap:() {
-                    Navigator.pop<int>(context, index);
-                  },
-                  child: Text(
-                    emojis[index].emoji, 
-                    style: const TextStyle(fontSize: 20)
-                  )
-                );
-              })
-            ]
-          )
-        ]
-      )
+    return Column(
+      mainAxisSize: .min,
+      children: <Widget>[
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: .spaceBetween,
+          children: <Widget>[
+            ....generate(4, (index) {
+              return GestureDetector(
+                onTap: () => Navigator.pop<int>(context, index),
+                child: Text(
+                  "EMOJI",
+                  style: const TextStyle(fontSize: 20),
+                ),
+              );
+            }),
+          ],
+        ),
+        const SizedBox(height: 20)
+      ]
     );
   }
 }

@@ -17,7 +17,7 @@ class const RulesScreen({super.key}) extends StatelessWidget {
             children: <Widget>[
               RulesHeader(
                 onPressed: () {
-                  AudioService.instance().play(audio: .button2);
+                  AudioHelper.instance().play(audio: .button2);
                   Navigator.pop(context);
                 },
               ),
@@ -56,15 +56,15 @@ class const RulesScreen({super.key}) extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 15),
-                      Rules()
-                    ]
-                  )
-                )
-              )
-            ]
-          )
-        )
-      )
+                      Rules(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

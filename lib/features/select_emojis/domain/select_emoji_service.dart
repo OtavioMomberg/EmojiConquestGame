@@ -1,9 +1,11 @@
 import 'package:material_ui/material_ui.dart';
+
 import 'dart:math';
+
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
-import 'package:drag_and_drop_game/shared/data/emoji.dart';
-import 'package:drag_and_drop_game/shared/data/emoji_data.dart';
+import 'package:drag_and_drop_game/shared/data/emojis_dataset.dart';
+import 'package:drag_and_drop_game/shared/data/emoji_model.dart';
 import 'package:drag_and_drop_game/features/select_emojis/data/players_emojis.dart';
 
 const playerOne = 1;
@@ -18,12 +20,12 @@ class SelectEmojiService {
   late final VoidCallback setState;
   late final DialogFunction dialog;
 
-  final player = AudioService.instance();
+  final player = AudioHelper.instance();
   final _player1Emojis = PlayerEmojis();
   final _player2Emojis = PlayerEmojis();
   final _emojiAvaliable = List.generate(
-    EmojisInfo.emojis.length,
-    (index) => true
+    EmojisDataset.emojis.length,
+    (index) => true,
   );
 
   PlayerId _sortPlayerToStart = .x;
@@ -35,8 +37,8 @@ class SelectEmojiService {
   String get displayPlayer => _displayPlayer == .x ? "X" : "Y";
 
   List<bool> get emojiAvaliable => _emojiAvaliable;
-  List<EmojiData> get player1Emojis => _player1Emojis.emojis;
-  List<EmojiData> get player2Emojis => _player2Emojis.emojis;
+  List<EmojiModel> get player1Emojis => _player1Emojis.emojis;
+  List<EmojiModel> get player2Emojis => _player2Emojis.emojis;
 
   void getFunctions({
     required VoidCallback getSetState,
@@ -54,7 +56,9 @@ class SelectEmojiService {
   }
 
   void _switchPalyers() {
-    if (_sortPlayerToStart == .x) { return; }
+    if (_sortPlayerToStart == .x) {
+      return;
+    }
 
     final aux = player1Emojis;
 
@@ -79,26 +83,26 @@ class SelectEmojiService {
       player = _player2Emojis;
       playerNumber = playerTwo;
     }
-    
+
     _addEmojiToPlayerList(
-      index: index, 
-      playerNumber: playerNumber, 
-      player: player
+      index: index,
+      playerNumber: playerNumber,
+      player: player,
     );
   }
 
   Future<void> _addEmojiToPlayerList({
     required int index,
     required int playerNumber,
-    required PlayerEmojis player
+    required PlayerEmojis player,
   }) async {
-    player.emojis.add(EmojisInfo.emojis[index]);
+    player.emojis.add(EmojisDataset.emojis[index]);
     player.indexes.add(index);
     setState();
     if (player.emojis.length == 4) {
       await dialog(player: playerNumber);
       setState();
-    }    
+    }
   }
 
   void dialogResponseAction({required bool response}) {
@@ -117,8 +121,8 @@ class SelectEmojiService {
 
   void _resetEmojisTile({required bool response}) {
     final index = (_player2Emojis.indexes.isEmpty)
-      ? _player1Emojis.indexes
-      : _player2Emojis.indexes;
+        ? _player1Emojis.indexes
+        : _player2Emojis.indexes;
 
     for (int i = 0; i < index.length; i++) {
       _emojiAvaliable[index[i]] = response;

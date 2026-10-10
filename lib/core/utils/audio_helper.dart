@@ -14,8 +14,8 @@ const startLastSetup = 2;
 
 enum Audios { button1, button2, defense, placement, error, general, victory }
 
-final class AudioService._() {
-  static final _instance = AudioService._();
+final class AudioHelper._() {
+  static final _instance = AudioHelper._();
   factory instance() => _instance;
 
   final _button1 = AudioPlayer();
@@ -44,7 +44,9 @@ final class AudioService._() {
 
   Future<void> setupAudios({required int start, int? end}) async {
     _ensurePlayersAreAlive();
-    if (_audioList.isEmpty) { _createAudioList(); }
+    if (_audioList.isEmpty) {
+      _createAudioList();
+    }
 
     for (var audio in _audioList.sublist(start, end)) {
       await audio.player.setReleaseMode(.stop);
@@ -57,13 +59,20 @@ final class AudioService._() {
 
   AudioPlayer _getPlayer({required Audios audio}) {
     switch (audio) {
-      case .button1: return _button1;
-      case .button2: return _button2;
-      case .defense: return _defense;
-      case .error: return _error;
-      case .general: return _general;
-      case .placement: return _placement;
-      case .victory: return _victory;
+      case .button1:
+        return _button1;
+      case .button2:
+        return _button2;
+      case .defense:
+        return _defense;
+      case .error:
+        return _error;
+      case .general:
+        return _general;
+      case .placement:
+        return _placement;
+      case .victory:
+        return _victory;
     }
   }
 
@@ -77,7 +86,9 @@ final class AudioService._() {
   }
 
   Future<void> disposePlayers() async {
-    if (_isPlayersDisposed) { return; }
+    if (_isPlayersDisposed) {
+      return;
+    }
 
     for (var audio in _audioList) {
       await audio.player.dispose();
@@ -94,5 +105,5 @@ final class AudioService._() {
 
 final class InitAudios({
   required final AudioPlayer player,
-  required final String audioPath
+  required final String audioPath,
 });
