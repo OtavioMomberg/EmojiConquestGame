@@ -1,35 +1,35 @@
-import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
-class const DraggableEmoji({super.key}) extends StatelessWidget {
+class const DraggableEmoji({
+  required final Color color,
+  super.key
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      ignoring: false,
-      child: Draggable(
-        feedback: _PlayerTile(
-          color: AppColors.blue,
-          child: Text(
-            "",
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: .bold,
-              color: AppColors.white,
-            ),
+    return Draggable(
+      feedback: _PlayerTile(
+        color: color,
+        child: Text(
+          "",
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: .bold,
+            color: AppColors.white,
           ),
         ),
-        childWhenDragging: const _PlayerTile(
-          color: AppColors.gray,
-          dimension: 80,
-        ),
-        child: _PlayerTile(
-          color: AppColors.blue,
-          child: Text(
-            "Emoji",
-            style: const TextStyle(
-              fontWeight: .bold,
-              color:AppColors.white
-            ),
+      ),
+      childWhenDragging: const _PlayerTile(
+        color: AppColors.gray,
+        dimension: 80,
+      ),
+      child: _PlayerTile(
+        color: color,
+        child: Text(
+          "Emoji",
+          style: const TextStyle(
+            fontWeight: .bold,
+            color:AppColors.white
           ),
         ),
       ),

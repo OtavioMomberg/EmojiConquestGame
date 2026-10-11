@@ -1,7 +1,12 @@
+import 'package:drag_and_drop_game/features/game/domain/game_service.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
-class const SortButton({ super.key}) extends StatelessWidget {
+class const SortButton({ 
+  required final GameService gameService,
+  super.key
+}) extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -9,7 +14,7 @@ class const SortButton({ super.key}) extends StatelessWidget {
       borderRadius: AppThemes.stdBorderRadius,
       color: AppColors.white,
       child: InkWell(
-        onTap: () {},
+        onTap: gameService.selectColor,
         borderRadius: AppThemes.stdBorderRadius,
         splashColor: AppColors.lightGray2,
         child: const SizedBox(

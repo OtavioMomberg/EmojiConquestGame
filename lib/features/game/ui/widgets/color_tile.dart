@@ -3,6 +3,7 @@ import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
 class const ColorTile({
   required final Color color, 
+  required final bool isSelected,
   super.key
 }) extends StatelessWidget {
   @override
@@ -11,7 +12,10 @@ class const ColorTile({
       height: 60,
       width: 60,
       decoration: BoxDecoration(
-        border: .all(color: AppColors.white, width: 2),
+        border: .all(
+          color: isSelected ? AppColors.orange : AppColors.white, 
+          width: isSelected ? 4 : 2
+        ),
         borderRadius: AppThemes.largerBorderRadius,
       ),
       child: Card(
