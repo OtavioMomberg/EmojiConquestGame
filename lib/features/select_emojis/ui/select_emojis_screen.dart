@@ -6,7 +6,7 @@ import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
 import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:drag_and_drop_game/core/routes/app_routes.dart';
-import 'package:drag_and_drop_game/shared/data/game_initial_data.dart';
+import 'package:drag_and_drop_game/shared/data/game_data.dart';
 
 class const SelectEmojisScreen({super.key}) extends StatefulWidget {
   @override
@@ -89,10 +89,10 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
     Navigator.pushReplacementNamed(
       context,
       AppRoutes.game,
-      arguments: GameInitialData(
+      arguments: GameData(
         player1Emojis: _selectService.player1Emojis,
         player2Emojis: _selectService.player2Emojis,
-        playerTurn: _selectService.sortPlayerToStart,
+        playerToStart: _selectService.sortPlayerToStart,
       ),
     );
   }

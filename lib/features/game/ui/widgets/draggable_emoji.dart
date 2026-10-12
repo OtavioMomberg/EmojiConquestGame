@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/features/game/data/player_model.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
 class const DraggableEmoji({
@@ -7,7 +8,7 @@ class const DraggableEmoji({
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Draggable(
+    return Draggable<PlayerModel>(
       feedback: _PlayerTile(
         color: color,
         child: Text(
@@ -25,6 +26,7 @@ class const DraggableEmoji({
       ),
       child: _PlayerTile(
         color: color,
+        dimension: 80,
         child: Text(
           "Emoji",
           style: const TextStyle(
@@ -51,6 +53,7 @@ class const _PlayerTile({
         pointRounding: 0.3
       ),
       elevation: 8,
+      shadowColor: color,
       child: SizedBox.square(
         dimension: dimension,
         child: Center(child: child)

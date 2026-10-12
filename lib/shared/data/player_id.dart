@@ -1,0 +1,1 @@
+enum PlayerId { x, y, neutro }

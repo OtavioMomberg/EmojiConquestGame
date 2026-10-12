@@ -1,18 +1,15 @@
 import 'package:material_ui/material_ui.dart';
-
 import 'dart:math';
-
-import 'package:drag_and_drop_game/core/themes/app_themes.dart';
-import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
 import 'package:drag_and_drop_game/shared/data/emojis_dataset.dart';
 import 'package:drag_and_drop_game/shared/data/emoji_model.dart';
+import 'package:drag_and_drop_game/shared/data/player_id.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
+import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
 import 'package:drag_and_drop_game/features/select_emojis/data/players_emojis.dart';
 
 const playerOne = 1;
 const playerTwo = 2;
 const _sortRange = 4;
-
-enum PlayerId { x, y }
 
 typedef DialogFunction = Future<void> Function({required int player});
 

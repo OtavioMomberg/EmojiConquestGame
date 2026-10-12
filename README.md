@@ -11,11 +11,7 @@ ou derrotar todos os personagens do adversário para sair vencedor.
 
 - Cada emoji é composto por ataque e por uma classe;
 
-- 4 áreas de conquista, definidas por tipo de campo;
-
-- 8 tipos de campo;
-
-- Campos: (selva, cidade, espaco, deserto, gelo, nuvem, montanha, vulcao);
+- 4 áreas de conquista;
 
 - Os 30 emojis serão divididos em 5 classes e mais uma neutra;
 
@@ -29,9 +25,6 @@ ou derrotar todos os personagens do adversário para sair vencedor.
 
 - A cada rodada 1 dos 4 emojis é sorteado de forma aleatória para ser 
 utilizado e o jogador só descobre no momento em que o seleciona;
-
-- De acordo com o tipo de campo, as classes ficarão mais fortes ou mais fracas,
-com aumento ou diminuição de 2 pontos de ataque;
 
 - A cada rodada o jogador sorteará um cor entre 4 disponível, dependendo da cor
 sorteada, um tipo de buff ou nerf poderá ser aplicado ao ataque do emoji;

@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/features/game/data/player_model.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
 class const Field({super.key}) extends StatefulWidget {
@@ -14,7 +15,7 @@ class _FieldState extends State<Field> {
 
   @override
   Widget build(BuildContext context) {
-    return DragTarget(
+    return DragTarget<PlayerModel>(
       builder: (_, item, _) {
         return AnimatedScale(
           scale: item.isNotEmpty ? 1.05 : 1.0,

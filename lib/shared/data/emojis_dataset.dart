@@ -21,7 +21,7 @@ final class const EmojiHierarchies._() {
 }
 
 final class const EmojisDataset._() {
-  static const emojis = [
+  static final emojis = [
     EmojiModel(emoji: "🤖", emojiType: .criaturas, attack: 15),
     EmojiModel(emoji: "👾", emojiType: .criaturas, attack: 10),
     EmojiModel(emoji: "👽", emojiType: .criaturas, attack: 12),
