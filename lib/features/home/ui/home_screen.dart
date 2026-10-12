@@ -21,7 +21,9 @@ class HomeScreen extends StatelessWidget with RouterScreens {
         child: Column(
           mainAxisAlignment: .spaceEvenly,
           children: <Widget>[
-            const ImageElevated(imagePath: ImagePaths.emojiConquestLogo),
+            const ImageElevated(
+              imagePath: ImagePaths.emojiConquestLogo
+            ),
             const SizedBox(height: 10),
             FractionallySizedBox(
               widthFactor: 0.6,
@@ -31,7 +33,7 @@ class HomeScreen extends StatelessWidget with RouterScreens {
                   navigate(
                     context: context,
                     screen: AppRoutes.selectEmojis,
-                    type: .pushReplacementNamed,
+                    type: .pushReplacementNamed
                   );
                 },
                 text: "Jogar",
@@ -40,16 +42,19 @@ class HomeScreen extends StatelessWidget with RouterScreens {
             TextButton(
               onPressed: () {
                 _player.play(audio: .button2);
-                navigate(context: context, screen: AppRoutes.rules);
+                navigate(
+                  context: context, 
+                  screen: AppRoutes.rules
+                );
               },
               child: const Text(
                 "Como Jogar",
-                style: TextStyle(color: AppColors.white),
-              ),
-            ),
-          ],
-        ),
-      ),
+                style: TextStyle(color: AppColors.white)
+              )
+            )
+          ]
+        )
+      )
     );
   }
 }

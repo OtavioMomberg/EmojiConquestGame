@@ -33,9 +33,7 @@ final class FieldModel {
       _conquestField(player: .x);
       return;
     }
-    if (_lifeY == 0) {
-      _conquestField(player: .y);
-    }
+    if (_lifeY == 0) { _conquestField(player: .y); }
   }
 
   void _conquestField({required PlayerId player}) {

@@ -4,15 +4,19 @@ import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
 class const DraggableEmoji({
   required final Color color,
+  required final PlayerModel player,
   super.key
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Draggable<PlayerModel>(
+      data: player,
       feedback: _PlayerTile(
         color: color,
         child: Text(
-          "",
+          "${player.emoji.emoji}\n"
+          "${player.emoji.attack}",
+          textAlign: .center,
           style: const TextStyle(
             fontSize: 20,
             fontWeight: .bold,
