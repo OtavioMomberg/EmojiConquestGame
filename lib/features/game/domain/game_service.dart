@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
+
 import 'dart:math';
+
 import 'package:drag_and_drop_game/features/game/data/notifiers.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/shared/data/player_id.dart';
@@ -28,9 +30,9 @@ final class GameService._() {
   ValueNotifier<Color> get draggableColor => _notifiers.draggableColor;
   ValueNotifier<bool> get blockSortButton => _notifiers.blockSortButton;
   ValueNotifier<List<bool>> get selectedColor => _notifiers.selectedColor;
-  
+
   void disposeNotifiers() => _notifiers.dispose();
-  
+
   void setUpPlayers({required GameData gameData}) {
     _notifiers.turn.value = gameData.playerToStart;
 
@@ -39,30 +41,24 @@ final class GameService._() {
       playerId: gameData.playerToStart,
     );
 
-    final playerId = (_notifiers.turn.value == .x) 
-      ? PlayerId.y : PlayerId.x; 
+    final playerId = (_notifiers.turn.value == .x) ? PlayerId.y : PlayerId.x;
 
-    _player2 = PlayerModel(
-      emojis: gameData.player2Emojis, 
-      playerId: playerId
-    );
+    _player2 = PlayerModel(emojis: gameData.player2Emojis, playerId: playerId);
   }
 
-  void initFields() => 
-    _fields = .generate(fieldsQuantity, (field) => FieldModel());
+  void initFields() =>
+      _fields = .generate(fieldsQuantity, (field) => FieldModel());
 
   void changeTurn() =>
-    _notifiers.turn.value = (_notifiers.turn.value == .x) ? .y : .x;
+      _notifiers.turn.value = (_notifiers.turn.value == .x) ? .y : .x;
 
   PlayerModel getPlayer() {
-    return (_notifiers.turn.value == _player1.playerId)
-      ? _player1
-      : _player2;
+    return (_notifiers.turn.value == _player1.playerId) ? _player1 : _player2;
   }
 
   String turnToStr() => (_notifiers.turn.value == .x) ? "X" : "Y";
-  
-  Future<void> selectColor() async {
+
+  Future<void> sortEmojiColor() async {
     _notifiers.blockSortButton.value = true;
     _notifiers.draggableColor.value = AppColors.gray;
 
@@ -82,9 +78,9 @@ final class GameService._() {
 
         if (isLastIteration && i == index) {
           audioPlayer.play(audio: .general);
-          _notifiers.blockSortButton.value = false;
+          //_notifiers.blockSortButton.value = false;
           _notifiers.draggableColor.value = AppThemes.colorPicker[i];
-          _sortEmojiToPlayer();
+          _sortEmojiToPlayer(colorIndex: index);
         }
         await Future.delayed(const Duration(milliseconds: 200));
       }
@@ -92,8 +88,8 @@ final class GameService._() {
     }
   }
 
-  void _sortEmojiToPlayer() {
-    final maxValue = (_notifiers.turn.value == _player1.playerId) 
+  void _sortEmojiToPlayer({required int colorIndex}) {
+    final maxValue = (_notifiers.turn.value == _player1.playerId)
       ? _player1.emojis.length
       : _player2.emojis.length;
 
@@ -101,8 +97,10 @@ final class GameService._() {
 
     if (_notifiers.turn.value == _player1.playerId) {
       _player1.getCurrentEmoji(index: emojiIndex);
+      _player1.changeColor(newColor: AppThemes.colorPicker[colorIndex]);
       return;
     }
     _player2.getCurrentEmoji(index: emojiIndex);
+    _player2.changeColor(newColor: AppThemes.colorPicker[colorIndex]);
   }
 }

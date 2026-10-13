@@ -9,19 +9,29 @@ final class PlayerModel({
 }) {
   int _fieldsConquested = 0;
   EmojiModel _emoji = EmojiModel.emptyEmoji();
+  Color _color = Colors.transparent;
 
   int get fieldsConquested => _fieldsConquested;
   EmojiModel get emoji => _emoji;
+  Color get color => _color;
 
   void getCurrentEmoji({required int index}) => _emoji = emojis[index];
 
-  void removeEmoji({required String emoji}) => emojis.removeWhere((e) => e.emoji == emoji);
+  void removeEmoji({required String emoji}) =>
+      emojis.removeWhere((e) => e.emoji == emoji);
 
   void addEmoji({required EmojiModel emoji}) => emojis.add(emoji);
 
-  void checkColor({required Color color}) {
-    final adjustment = ColorsCorrectionDamage.getCorrection(color: color);
-    _emoji.adjustAttack(adjustment: adjustment);
+  void changeColor({required Color newColor}) {
+    _color = newColor;
+    _checkColorAdjustment();
+  }
+
+  void _checkColorAdjustment() {
+    final adjustment = ColorsCorrectionDamage.getCorrection(
+      color: _color);
+      
+    _emoji.adjustColorAttack(adjustment: adjustment);
   }
 
   void addFieldConquested() => _fieldsConquested++;

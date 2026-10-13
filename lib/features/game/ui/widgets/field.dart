@@ -1,50 +1,62 @@
+import 'package:drag_and_drop_game/features/game/domain/game_service.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/features/game/data/field_model.dart';
 import 'package:drag_and_drop_game/features/game/data/player_model.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
-class const Field({super.key}) extends StatefulWidget {
+class const Field({
+  required final FieldModel field,
+  super.key
+}) extends StatefulWidget {
   @override
   State<Field> createState() => _FieldState();
 }
 
 class _FieldState extends State<Field> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  final _gameService = GameService.instance();
 
   @override
   Widget build(BuildContext context) {
     return DragTarget<PlayerModel>(
       builder: (_, item, _) {
         return AnimatedScale(
-          scale: item.isNotEmpty ? 1.05 : 1.0,
+          scale: (item.isNotEmpty && !widget.field.isConquested) ? 1.05 : 1.0,
           curve: Curves.easeOut,
           duration: const Duration(milliseconds: 300),
           child: Card(
-            color: AppColors.orange,
+            color: widget.field.isConquested 
+              ? AppColors.lightGray
+              : AppColors.lightGray2,
             elevation: 5,
-            shadowColor: AppColors.orange,
+            shadowColor: widget.field.isConquested 
+              ? AppColors.lightGray
+              : AppColors.lightGray2,
             shape: RoundedRectangleBorder(
               borderRadius: AppThemes.stdBorderRadius,
             ),
-            child: Column(
-              mainAxisAlignment: .spaceEvenly,
-              children: <Widget>[
-                Text(
-                  "CAMPO",
-                  style: AppThemes.fieldTextStyle
-                ),
-                Text(
-                  "X: 100 / Y: 100",
-                  style: AppThemes.fieldTextStyle
-                )
-              ]
+            child: Center(
+              child: Text(
+                "X: ${widget.field.lifeX}\n\nY: ${widget.field.lifeY}",
+                style: AppThemes.fieldTextStyle
+              ),
             )
           )
         );
       },
-      onAcceptWithDetails: (details) {}
+      onAcceptWithDetails: (details) {  
+        if (widget.field.isConquested) { return; }
+
+        if (!widget.field.hasEmoji()) {
+          widget.field.receiveDamage(
+            attack: details.data.emoji.attack, 
+            player: details.data.playerId
+          );
+          setState(() {});
+          _gameService.blockSortButton.value = false;
+          details.data.emoji.restoreOriginalAttack();
+          _gameService.changeTurn();
+        }
+      }
     );
   }
 }

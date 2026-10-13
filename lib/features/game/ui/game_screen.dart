@@ -5,10 +5,8 @@ import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:drag_and_drop_game/features/game/domain/game_service.dart';
 import 'package:drag_and_drop_game/features/game/ui/widgets/export_widgets_game_screen.dart';
 
-class const GameScreen({
-  required final GameData playersData, 
-  super.key
-}) extends StatefulWidget {
+class const GameScreen({required final GameData playersData, super.key})
+    extends StatefulWidget {
   @override
   State<GameScreen> createState() => _GameScreenState();
 }
@@ -44,15 +42,17 @@ class _GameScreenState extends State<GameScreen> {
             ValueListenableBuilder(
               valueListenable: _gameService.turn,
               builder: (_, _, _) {
-                return GameHeader(
-                  turn: _gameService.turnToStr()
-                );
-              }
+                return GameHeader(turn: _gameService.turnToStr());
+              },
             ),
 
             const SizedBox(height: 10),
 
-            Expanded(child: FieldsGrid()),
+            Expanded(
+              child: FieldsGrid(
+                fields: _gameService.fields,
+              )
+            ),
 
             ValueListenableBuilder(
               valueListenable: _gameService.draggableColor,
@@ -73,7 +73,7 @@ class _GameScreenState extends State<GameScreen> {
               valueListenable: _gameService.selectedColor,
               builder: (_, isSelected, _) {
                 return ColorPicker(isSelected: isSelected);
-              }
+              },
             ),
 
             const SizedBox(height: 20),
@@ -85,16 +85,14 @@ class _GameScreenState extends State<GameScreen> {
                 builder: (_, ignoring, _) {
                   return IgnorePointer(
                     ignoring: ignoring,
-                    child: SortButton(
-                      selectColor: _gameService.selectColor
-                    )
+                    child: SortButton(selectColor: _gameService.sortEmojiColor),
                   );
-                }
-              )
-            )
-          ]
-        )
-      )
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

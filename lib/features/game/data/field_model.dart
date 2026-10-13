@@ -21,7 +21,7 @@ final class FieldModel {
   PlayerId get emojiOwner => _emojiOwner;
 
   void receiveDamage({required int attack, required PlayerId player}) {
-    player == .x  
+    player == .x
       ? _lifeX -= (attack <= _lifeX) ? attack : _lifeX
       : _lifeY -= (attack <= _lifeY) ? attack : _lifeY;
     
@@ -54,7 +54,7 @@ final class FieldModel {
     return returnPlayerEmoji;
   }
 
-  bool hasEmoji() => _emoji.emojiType == .neutro;
+  bool hasEmoji() => (_emoji.emojiType == .neutro) ? false : true;
 
   bool increaseTurn() {
     if (_turnsEmojiInField == maxTurnsEmojiInField) {
