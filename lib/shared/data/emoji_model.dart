@@ -15,10 +15,9 @@ final class EmojiModel({
   void adjustColorAttack({required int adjustment}) => 
     attack += adjustment;
 
-  void checkClassHierarchy({required EmojiType defenseEmoji}) {
-    final hierarchy = EmojiHierarchies.hierarchies.firstWhere(
-      (h) => h.type == emojiType
-    );
+  void adjustClassAttack({required EmojiType defenseEmoji}) {
+    final hierarchy = EmojiHierarchies.hierarchies.
+      firstWhere((h) => h.type == emojiType);
 
     if (hierarchy.strong == defenseEmoji) {
       attack += extraClassDamage;

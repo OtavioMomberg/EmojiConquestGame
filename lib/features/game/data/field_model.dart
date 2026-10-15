@@ -50,6 +50,7 @@ final class FieldModel {
     final returnPlayerEmoji = _emoji;
     _emoji = EmojiModel.emptyEmoji();
     _emojiOwner = .neutro;
+    _turnsEmojiInField = 0;
 
     return returnPlayerEmoji;
   }
@@ -59,9 +60,9 @@ final class FieldModel {
   bool increaseTurn() {
     if (_turnsEmojiInField == maxTurnsEmojiInField) {
       _turnsEmojiInField = 0;
-      return false;
+      return true;
     }
     _turnsEmojiInField++;
-    return true;
+    return false;
   }
 }

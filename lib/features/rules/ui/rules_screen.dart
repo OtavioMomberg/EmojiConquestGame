@@ -1,8 +1,7 @@
-import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
 import 'package:drag_and_drop_game/features/rules/ui/widgets/rules.dart';
-import 'package:drag_and_drop_game/features/rules/ui/widgets/rules_header.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/shared/widgets/header.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
 class const RulesScreen({super.key}) extends StatelessWidget {
@@ -15,52 +14,33 @@ class const RulesScreen({super.key}) extends StatelessWidget {
         useSafeArea: true,
         child: Column(
           children: <Widget>[
-            RulesHeader(
-              onPressed: () {
-                AudioHelper.instance().play(audio: .button2);
-                Navigator.pop(context);
-              },
+            Header(
+              label: "Como Jogar",
+              onPressed: () => Navigator.pop(context),
             ),
             const SizedBox(height: 25),
-            const Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Align(
-                      alignment: .centerLeft,
-                      child: Text(
-                        "Objetivo do Jogo:",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: .bold,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      "O objetivo é conquistar 3 das 4 áreas de "
-                      "conquista ou derrotar todos os emojis do adversário.",
-                      style: TextStyle(color: AppColors.white),
-                    ),
-                    SizedBox(height: 15),
-                    Align(
-                      alignment: .centerLeft,
-                      child: Text(
-                        "Regras:",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: .bold,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Rules(),
-                  ],
+            const Text(
+              "O objetivo do jogo é conquistar 3 das 4 áreas de "
+              "conquista ou derrotar todos os emojis do adversário.",
+              style: TextStyle(
+                color: AppColors.white,
+                fontWeight: .bold
+              ),
+            ),
+            const SizedBox(height: 15),
+            const Align(
+              alignment: .centerLeft,
+              child: Text(
+                "Regras:",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: .bold,
+                  color: AppColors.white,
                 ),
               ),
             ),
+            const SizedBox(height: 15),
+            const Expanded(child: Rules())
           ],
         ),
       ),

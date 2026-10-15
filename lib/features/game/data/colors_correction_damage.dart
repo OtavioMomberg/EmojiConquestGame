@@ -6,8 +6,8 @@ final class const ColorsCorrectionDamage._() {
     switch (color) {
       case AppColors.blue: return 2;
       case AppColors.red: return -2;
-      case AppColors.green: return 1;
-      case AppColors.purple: return -1;
+      case AppColors.green: return 0;
+      case AppColors.purple: return 0;
       default: return 0;
     }
   }

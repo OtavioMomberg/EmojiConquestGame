@@ -1,7 +1,8 @@
-import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
-class const RulesHeader({
+class const Header({
+  required final String label,
   required final VoidCallback onPressed, 
   super.key
 }) extends StatelessWidget {
@@ -20,7 +21,8 @@ class const RulesHeader({
             child: IconButton(
               onPressed: onPressed,
               style: IconButton.styleFrom(
-                highlightColor: AppColors.white.withValues(alpha: 0.1)
+                highlightColor: AppColors.
+                white.withValues(alpha: 0.1)
               ),
               icon: const Icon(
                 Icons.arrow_back_outlined, 
@@ -30,8 +32,8 @@ class const RulesHeader({
           ),
         ),
         const SizedBox(width: 10),
-        const Text(
-          "Como Jogar",
+        Text(
+          label,
           style: TextStyle(
             fontSize: 22, 
             fontWeight: .bold,

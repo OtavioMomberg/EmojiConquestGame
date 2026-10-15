@@ -15,22 +15,21 @@ final class PlayerModel({
   EmojiModel get emoji => _emoji;
   Color get color => _color;
 
-  void getCurrentEmoji({required int index}) => _emoji = emojis[index];
+  void getEmoji({required int index}) => _emoji = emojis[index];
 
-  void removeEmoji({required String emoji}) =>
-      emojis.removeWhere((e) => e.emoji == emoji);
+  void removeEmoji() {
+    if (_emoji.emojiType == .neutro) { return; }
+    emojis.remove(_emoji);
+  }
 
   void addEmoji({required EmojiModel emoji}) => emojis.add(emoji);
 
-  void changeColor({required Color newColor}) {
-    _color = newColor;
-    _checkColorAdjustment();
-  }
+  void changeColor({required Color newColor}) => _color = newColor;
 
-  void _checkColorAdjustment() {
-    final adjustment = ColorsCorrectionDamage.getCorrection(
-      color: _color);
-      
+  void checkColorAdjustment() {
+    final adjustment = ColorsCorrectionDamage.
+      getCorrection(color: _color);
+
     _emoji.adjustColorAttack(adjustment: adjustment);
   }
 

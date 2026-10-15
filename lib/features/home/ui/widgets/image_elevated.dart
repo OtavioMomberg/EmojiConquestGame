@@ -15,19 +15,13 @@ class const ImageElevated({
       elevation: elevation,
       shadowColor: color.withValues(alpha: 0.4),
       borderRadius: borderRadius,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxHeight: 300, 
-          minHeight: 250
+      child: DecoratedBox(
+        position: .foreground,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          border: .all(color: color),
         ),
-        child: DecoratedBox(
-          position: .foreground,
-          decoration: BoxDecoration(
-            borderRadius: borderRadius,
-            border: .all(color: color),
-          ),
-          child: ImageRounded(imagePath: imagePath)
-        )
+        child: ImageRounded(imagePath: imagePath)
       )
     );
   }

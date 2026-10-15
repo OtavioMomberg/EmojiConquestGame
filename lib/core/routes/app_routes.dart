@@ -1,3 +1,4 @@
+import 'package:drag_and_drop_game/features/emojis/ui/emojis_screen.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/features/export_screens.dart';
@@ -7,6 +8,7 @@ enum TransitionType { slide, fade, scale }
 final class const AppRoutes._() {
   static const home = "/";
   static const rules = "/rules";
+  static const emojis = "/emojis";
   static const selectEmojis = "/select_emojis";
   static const game = "/game";
 
@@ -20,6 +22,7 @@ final class const AppRoutes._() {
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
         const curve = Curves.easeInOut;
+
         final tween = Tween(
           begin: begin,
           end: end,
@@ -47,6 +50,8 @@ final class const AppRoutes._() {
         return const SelectEmojisScreen();
       case rules:
         return const RulesScreen();
+      case emojis:
+        return const EmojisScreen();
       case game:
         final arguments = settings.arguments as GameData;
         return GameScreen(playersData: arguments);
@@ -61,6 +66,7 @@ final class const AppRoutes._() {
     final transition = switch (settings.name) {
       home => TransitionType.fade,
       rules => TransitionType.slide,
+      emojis => TransitionType.slide,
       selectEmojis => TransitionType.slide,
       game => TransitionType.scale,
       _ => TransitionType.fade,

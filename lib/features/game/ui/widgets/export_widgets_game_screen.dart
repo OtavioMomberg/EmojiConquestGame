@@ -1,5 +1,4 @@
 export 'game_header.dart';
-export "game_info_button.dart";
 export "fields_grid.dart";
 export "draggable_emoji.dart";
 export "defense_selector.dart";

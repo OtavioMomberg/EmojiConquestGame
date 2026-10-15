@@ -1,3 +1,4 @@
+import 'package:drag_and_drop_game/shared/data/emoji_model.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'dart:math';
@@ -22,6 +23,8 @@ final class GameService._() {
   late final List<FieldModel> _fields;
   final audioPlayer = AudioHelper.instance();
   final _notifiers = Notifiers();
+
+  int _turnCompleted = 0;
 
   PlayerModel get player1 => _player1;
   PlayerModel get player2 => _player2;
@@ -52,9 +55,8 @@ final class GameService._() {
   void changeTurn() =>
       _notifiers.turn.value = (_notifiers.turn.value == .x) ? .y : .x;
 
-  PlayerModel getPlayer() {
-    return (_notifiers.turn.value == _player1.playerId) ? _player1 : _player2;
-  }
+  PlayerModel getPlayer() =>
+      _notifiers.turn.value == _player1.playerId ? _player1 : _player2;
 
   String turnToStr() => (_notifiers.turn.value == .x) ? "X" : "Y";
 
@@ -78,7 +80,6 @@ final class GameService._() {
 
         if (isLastIteration && i == index) {
           audioPlayer.play(audio: .general);
-          //_notifiers.blockSortButton.value = false;
           _notifiers.draggableColor.value = AppThemes.colorPicker[i];
           _sortEmojiToPlayer(colorIndex: index);
         }
@@ -96,11 +97,33 @@ final class GameService._() {
     int emojiIndex = Random().nextInt(maxValue);
 
     if (_notifiers.turn.value == _player1.playerId) {
-      _player1.getCurrentEmoji(index: emojiIndex);
+      _player1.getEmoji(index: emojiIndex);
       _player1.changeColor(newColor: AppThemes.colorPicker[colorIndex]);
+      _player1.checkColorAdjustment();
       return;
     }
-    _player2.getCurrentEmoji(index: emojiIndex);
+    _player2.getEmoji(index: emojiIndex);
     _player2.changeColor(newColor: AppThemes.colorPicker[colorIndex]);
+    _player2.checkColorAdjustment();
+  }
+
+  void fieldChangeTurn() {
+    final player = getPlayer();
+
+    _notifiers.blockSortButton.value = false;
+    _notifiers.draggableColor.value = AppColors.gray;
+    player.emoji.restoreOriginalAttack();
+    changeTurn();
+  }
+
+  EmojiModel? completeTurn({required FieldModel field}) {
+    _turnCompleted++;
+
+    if (_turnCompleted == 2) {
+      _turnCompleted = 0;
+      if (!field.hasEmoji()) { return null; }
+      return field.increaseTurn() ? field.removeEmoji() : null;
+    }
+    return null;
   }
 }
