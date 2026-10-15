@@ -140,7 +140,7 @@ final class SelectEmojiService {
 
   Color getTileColor({required int index}) {
     if (emojiAvaliable[index]) {
-      return AppColors.grayBluish;
+      return AppColors.grayBluish.withValues(alpha: .7);
     }
     if (_player1Emojis.indexes.contains(index)) {
       return AppColors.blue;

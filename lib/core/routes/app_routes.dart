@@ -1,4 +1,3 @@
-import 'package:drag_and_drop_game/features/emojis/ui/emojis_screen.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/features/export_screens.dart';
@@ -9,6 +8,7 @@ final class const AppRoutes._() {
   static const home = "/";
   static const rules = "/rules";
   static const emojis = "/emojis";
+  static const classes = "/classes";
   static const selectEmojis = "/select_emojis";
   static const game = "/game";
 
@@ -45,18 +45,20 @@ final class const AppRoutes._() {
   static Widget _getScreen({required RouteSettings settings}) {
     switch (settings.name) {
       case home:
-        return HomeScreen();
-      case selectEmojis:
-        return const SelectEmojisScreen();
-      case rules:
-        return const RulesScreen();
+        return const HomeScreen();
       case emojis:
         return const EmojisScreen();
+      case classes:
+        return const ClassesScreen();
+      case rules:
+        return const RulesScreen();
+      case selectEmojis:
+        return const SelectEmojisScreen();
       case game:
         final arguments = settings.arguments as GameData;
         return GameScreen(playersData: arguments);
       default:
-        return HomeScreen();
+        return const HomeScreen();
     }
   }
 
@@ -65,8 +67,9 @@ final class const AppRoutes._() {
 
     final transition = switch (settings.name) {
       home => TransitionType.fade,
-      rules => TransitionType.slide,
       emojis => TransitionType.slide,
+      classes => TransitionType.slide,
+      rules => TransitionType.fade,
       selectEmojis => TransitionType.slide,
       game => TransitionType.scale,
       _ => TransitionType.fade,

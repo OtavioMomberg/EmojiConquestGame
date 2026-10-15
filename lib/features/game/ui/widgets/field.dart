@@ -24,7 +24,7 @@ class _FieldState extends State<Field> {
           child: Card(
             color: widget.field.isConquested
                 ? AppColors.lightGray
-                : AppColors.grayBluish,
+                : AppColors.grayBluish.withValues(alpha: .8),
             elevation: 5,
             shadowColor: widget.field.isConquested
                 ? AppColors.lightGray

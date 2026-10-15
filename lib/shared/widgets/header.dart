@@ -4,6 +4,7 @@ import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 class const Header({
   required final String label,
   required final VoidCallback onPressed, 
+  final double fontSize = 22,
   super.key
 }) extends StatelessWidget {
   @override
@@ -35,7 +36,7 @@ class const Header({
         Text(
           label,
           style: TextStyle(
-            fontSize: 22, 
+            fontSize: fontSize, 
             fontWeight: .bold,
             color: AppColors.white
           ),

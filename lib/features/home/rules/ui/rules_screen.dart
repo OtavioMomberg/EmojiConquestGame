@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
-import 'package:drag_and_drop_game/features/rules/ui/widgets/rules.dart';
+import 'package:drag_and_drop_game/features/home/rules/ui/rules.dart';
 import 'package:drag_and_drop_game/shared/widgets/header.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
@@ -27,9 +27,9 @@ class const RulesScreen({super.key}) extends StatelessWidget {
                 fontWeight: .bold
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 25),
             const Align(
-              alignment: .centerLeft,
+              alignment: .center,
               child: Text(
                 "Regras:",
                 style: TextStyle(

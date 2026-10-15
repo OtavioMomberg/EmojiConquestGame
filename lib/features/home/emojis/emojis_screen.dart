@@ -28,9 +28,9 @@ class const EmojisScreen({super.key}) extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: AppThemes.stdBorderRadius,
                     ),
+                    color: AppColors.grayBluish.withValues(alpha: .3),
                     child: ListTile(
                       contentPadding: AppThemes.containerStdPadding,
-                      tileColor: AppColors.grayBluish,
                       shape: RoundedRectangleBorder(
                         borderRadius: AppThemes.stdBorderRadius,
                       ),

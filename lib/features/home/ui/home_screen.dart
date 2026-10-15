@@ -4,7 +4,7 @@ import 'package:drag_and_drop_game/shared/widgets/button.dart';
 import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
 import 'package:drag_and_drop_game/core/config_export.dart';
 import 'package:drag_and_drop_game/core/utils/image_paths.dart';
-import 'package:drag_and_drop_game/features/home/ui/widgets/image_elevated.dart';
+import 'package:drag_and_drop_game/features/home/ui/image_elevated.dart';
 
 class const HomeScreen({super.key}) extends StatelessWidget 
   with RouterScreens {
@@ -49,20 +49,27 @@ class const HomeScreen({super.key}) extends StatelessWidget
                 children: <Widget>[
                   Expanded(
                     child: _BorderButton(
-                      screen: AppRoutes.rules, 
-                      label: "Como Jogar"
+                      screen: AppRoutes.emojis, 
+                      label: "Emojis"
                     ),
                   ),
                   Expanded(
                     child: _BorderButton(
-                      screen: AppRoutes.emojis, 
-                      label: "Emojis"
+                      screen: AppRoutes.classes, 
+                      label: "Classes"
                     ),
                   )
                 ]
               )
             ),
-            const SizedBox(height: 20)
+            const SizedBox(height: 10),
+            FractionallySizedBox(
+              widthFactor: .8,
+              child: _BorderButton(
+                screen: AppRoutes.rules, 
+                label: "Como Jogar"
+              ),
+            )
           ]
         )
       )

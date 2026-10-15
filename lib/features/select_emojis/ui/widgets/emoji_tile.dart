@@ -13,9 +13,9 @@ class const EmojiTile({
     return IgnorePointer(
       ignoring: !selectService.emojiAvaliable[index],
       child: Material(
-        elevation: 5,
+        //elevation: 5,
         color: selectService.getTileColor(index: index),
-        shadowColor: AppColors.gray,
+        //shadowColor: AppColors.gray,
         borderRadius: AppThemes.stdBorderRadius,
         child: InkWell(
           borderRadius: AppThemes.stdBorderRadius,
