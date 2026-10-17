@@ -17,9 +17,9 @@ final class PlayerModel({
 
   void getEmoji({required int index}) => _emoji = emojis[index];
 
-  void removeEmoji() {
-    if (_emoji.emojiType == .neutro) { return; }
-    emojis.remove(_emoji);
+  void removeEmoji({required EmojiModel emoji}) {
+    if (emoji.emojiType == .neutro) { return; }
+    emojis.remove(emoji);
   }
 
   void addEmoji({required EmojiModel emoji}) => emojis.add(emoji);

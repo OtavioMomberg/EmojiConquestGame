@@ -85,7 +85,9 @@ class _GameScreenState extends State<GameScreen> {
                 builder: (_, ignoring, _) {
                   return IgnorePointer(
                     ignoring: ignoring,
-                    child: SortButton(selectColor: _gameService.sortEmojiColor),
+                    child: SortButton(
+                      selectColor: _gameService.sortEmojiColor
+                    ),
                   );
                 },
               ),

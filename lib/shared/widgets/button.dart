@@ -6,6 +6,7 @@ class const Button({
   required final VoidCallback onTap,
   final double height = 60,
   final Color color = AppColors.white,
+  final Color shadowColor = AppColors.white,
   final Color txtColor = AppColors.darkBlue,
   final Color splash = AppColors.lightGray2,
   super.key
@@ -15,7 +16,7 @@ class const Button({
     return Material(
       color: color,
       elevation: 10,
-      shadowColor: color.withValues(alpha: 0.3),
+      shadowColor: shadowColor.withValues(alpha: 0.3),
       borderRadius: AppThemes.stdBorderRadius,
       child: InkWell(
         borderRadius: AppThemes.stdBorderRadius,

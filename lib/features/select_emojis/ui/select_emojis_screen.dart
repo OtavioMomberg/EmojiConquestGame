@@ -1,10 +1,10 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:custom_feedback/custom_feedback.dart';
-import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
-import 'package:drag_and_drop_game/core/themes/app_themes.dart';
-import 'package:drag_and_drop_game/core/routes/app_routes.dart';
 import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
+import 'package:drag_and_drop_game/shared/widgets/button.dart';
+import 'package:drag_and_drop_game/core/config_export.dart';
+import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
 import 'package:drag_and_drop_game/features/select_emojis/domain/select_emoji_service.dart';
 import 'package:drag_and_drop_game/features/select_emojis/ui/widgets/emoji_selection_grid.dart';
 
@@ -13,7 +13,8 @@ class const SelectEmojisScreen({super.key}) extends StatefulWidget {
   State<SelectEmojisScreen> createState() => _SelectEmojisScreenState();
 }
 
-class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
+class _SelectEmojisScreenState extends State<SelectEmojisScreen> 
+  with RouterScreens {
   final _selectService = SelectEmojiService();
 
   @override
@@ -64,31 +65,56 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
   }
 
   Future<void> _confirmEmojis({required int player}) async {
-    final response = await CustomFeedback.confirmDialog(
+    final response = await CustomFeedback.rawDialog<bool>(
       context: context,
+      barrierDismissible: false,
       backgroundColor: AppColors.gray,
-      title: "Confirmar Emojis",
-      fontColor: AppColors.white,
-      content: "",
-      buttonColor: AppColors.white,
-      buttonFontColor: AppColors.gray,
-    ) ?? true;
+      shadowColor: AppColors.grayBluish,
+      title: const Center(
+        child: Text(
+          "Confirmar Emojis", 
+          style: TextStyle(color: AppColors.white)
+        )
+      ),
+      content: const Text(""),
+      actions: [
+        Row(
+          spacing: 8,
+          children: <Widget>[
+            Expanded(
+              child: Button(
+                text: "Não", 
+                shadowColor: AppColors.grayBluish,
+                onTap: () => Navigator.pop(context, false)
+              )
+            ),
+            Expanded(
+              child: Button(
+                text: "Sim", 
+                shadowColor: AppColors.grayBluish,
+                onTap: () => Navigator.pop(context, true)
+              )
+            ),
+          ],
+        ),
+      ]
+    ) ?? false;
 
     if (!mounted) { return; }
 
     _selectService.dialogResponseAction(response: response);
-    if (player == playerTwo && response) { _goGameScreen(); }
-  }
 
-  void _goGameScreen() {
-    Navigator.pushReplacementNamed(
-      context,
-      AppRoutes.game,
-      arguments: GameData(
-        player1Emojis: _selectService.player1Emojis,
-        player2Emojis: _selectService.player2Emojis,
-        playerToStart: _selectService.sortPlayerToStart,
-      ),
-    );
+    if (player == playerTwo && response) { 
+      navigate(
+        context: context, 
+        screen: AppRoutes.game, 
+        arguments: GameData(
+          player1Emojis: _selectService.player1Emojis,
+          player2Emojis: _selectService.player2Emojis,
+          playerToStart: _selectService.sortPlayerToStart
+        ),
+        type: .pushReplacementNamed
+      );
+    }
   }
 }

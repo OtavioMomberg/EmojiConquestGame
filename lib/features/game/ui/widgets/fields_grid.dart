@@ -14,9 +14,7 @@ class const FieldsGrid({
       ),
       itemCount: 4,
       itemBuilder: (context, index) {
-        return GestureDetector(
-          child: Field(field: fields[index])
-        );
+        return Field(field: fields[index]);
       },
     );
   }
