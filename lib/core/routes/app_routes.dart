@@ -28,15 +28,24 @@ final class const AppRoutes._() {
           end: end,
         ).chain(CurveTween(curve: curve));
 
-        return SlideTransition(position: animation.drive(tween), child: child);
+        return SlideTransition(
+          position: animation.drive(tween), 
+          child: child
+        );
       case .fade:
         return FadeTransition(
-          opacity: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          opacity: CurvedAnimation(
+            parent: animation, 
+            curve: Curves.easeInOut
+          ),
           child: child,
         );
       case .scale:
         return ScaleTransition(
-          scale: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          scale: CurvedAnimation(
+            parent: animation, 
+            curve: Curves.easeInOut
+          ),
           child: child,
         );
     }

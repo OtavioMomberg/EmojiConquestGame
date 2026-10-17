@@ -69,7 +69,7 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
       backgroundColor: AppColors.gray,
       title: "Confirmar Emojis",
       fontColor: AppColors.white,
-      content: "\nDeseja trocar de emojis?\n",
+      content: "",
       buttonColor: AppColors.white,
       buttonFontColor: AppColors.gray,
     ) ?? true;
@@ -77,7 +77,7 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen> {
     if (!mounted) { return; }
 
     _selectService.dialogResponseAction(response: response);
-    if (player == playerTwo && !response) { _goGameScreen(); }
+    if (player == playerTwo && response) { _goGameScreen(); }
   }
 
   void _goGameScreen() {

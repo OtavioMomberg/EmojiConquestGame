@@ -4,8 +4,10 @@ import 'package:drag_and_drop_game/features/game/data/field_model.dart';
 import 'package:drag_and_drop_game/features/game/data/player_model.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 
-class const Field({required final FieldModel field, super.key})
-    extends StatefulWidget {
+class const Field({
+  required final FieldModel field, 
+  super.key
+}) extends StatefulWidget {
   @override
   State<Field> createState() => _FieldState();
 }
@@ -23,12 +25,12 @@ class _FieldState extends State<Field> {
           duration: const Duration(milliseconds: 300),
           child: Card(
             color: widget.field.isConquested
-                ? AppColors.lightGray
-                : AppColors.grayBluish.withValues(alpha: .8),
+              ? AppColors.lightGray
+              : AppColors.grayBluish.withValues(alpha: .8),
             elevation: 5,
             shadowColor: widget.field.isConquested
-                ? AppColors.lightGray
-                : AppColors.grayBluish,
+              ? AppColors.lightGray
+              : AppColors.grayBluish,
             shape: RoundedRectangleBorder(
               borderRadius: AppThemes.stdBorderRadius,
             ),
@@ -53,39 +55,45 @@ class _FieldState extends State<Field> {
         _gameService.audioPlayer.play(audio: .placement);
 
         if (!widget.field.hasEmoji()) {
-          details.data.checkColorAdjustment();
-
-          widget.field.receiveDamage(
-            attack: details.data.emoji.attack,
-            player: details.data.playerId,
-          );
+          _attackWitoutEmoji(player: details.data);
         } else {
-          details.data.emoji.adjustClassAttack(
-            defenseEmoji: widget.field.emoji.emojiType,
-          );
-
-          if (details.data.emoji.attack > widget.field.emoji.attack) {
-            final _ = widget.field.removeEmoji();
-          }
-          if (details.data.emoji.attack < widget.field.emoji.attack) {
-            details.data.removeEmoji();
-          }
-
-          final checkFieldEmoji = _gameService.completeTurn(field: widget.field);
-
-          if (checkFieldEmoji != null) {
-            if (widget.field.emojiOwner == _gameService.player1.playerId) {
-              _gameService.player1.addEmoji(emoji: checkFieldEmoji);
-              return;
-            }
-            if (widget.field.emojiOwner == _gameService.player2.playerId) {
-              _gameService.player2.addEmoji(emoji: checkFieldEmoji);
-            }
-          }
+          _attackWithEmoji(player: details.data);
         }
         setState(() {});
-        _gameService.fieldChangeTurn();
+        _gameService.changePlayerInTurn();
       },
     );
+  }
+
+  void _attackWitoutEmoji({required PlayerModel player}) {
+    widget.field.receiveDamage(
+      attack: player.emoji.attack,
+      player: player.playerId,
+    );
+  }
+
+  void _attackWithEmoji({required PlayerModel player}) {
+    player.emoji.adjustClassAttack(defenseEmoji: widget.field.emoji.emojiType);
+
+    if (player.emoji.attack > widget.field.emoji.attack) {
+      final _ = widget.field.removeEmoji();
+    } else if (player.emoji.attack < widget.field.emoji.attack) {
+      player.removeEmoji();
+    }
+    _completeEmojiTurn();
+  }
+
+  void _completeEmojiTurn() {
+    final checkFieldEmoji = _gameService.completeTurn(field: widget.field);
+
+    if (checkFieldEmoji == null) { return; }
+
+    if (widget.field.emojiOwner == _gameService.player1.playerId) {
+      _gameService.player1.addEmoji(emoji: checkFieldEmoji);
+      return;
+    }
+    if (widget.field.emojiOwner == _gameService.player2.playerId) {
+      _gameService.player2.addEmoji(emoji: checkFieldEmoji);
+    }
   }
 }

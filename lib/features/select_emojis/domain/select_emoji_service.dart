@@ -104,12 +104,12 @@ final class SelectEmojiService {
     _contEmoji = 0;
     switch (response) {
       case true:
-        _resetEmojisTile(response: true);
-        _clearEmojisLists();
-        break;
-      case false:
         _resetEmojisTile(response: false);
         _switchDisplay();
+        break;
+      case false:
+        _resetEmojisTile(response: true);
+        _clearEmojisLists();
         break;
     }
   }

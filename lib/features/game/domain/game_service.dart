@@ -1,15 +1,15 @@
-import 'package:drag_and_drop_game/shared/data/emoji_model.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'dart:math';
 
-import 'package:drag_and_drop_game/features/game/data/notifiers.dart';
+import 'package:drag_and_drop_game/shared/data/emoji_model.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/shared/data/player_id.dart';
-import 'package:drag_and_drop_game/features/game/data/player_model.dart';
-import 'package:drag_and_drop_game/features/game/data/field_model.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
+import 'package:drag_and_drop_game/features/game/data/notifiers.dart';
+import 'package:drag_and_drop_game/features/game/data/player_model.dart';
+import 'package:drag_and_drop_game/features/game/data/field_model.dart';
 
 const turns = 6;
 const fieldsQuantity = 4;
@@ -23,7 +23,6 @@ final class GameService._() {
   late final List<FieldModel> _fields;
   final audioPlayer = AudioHelper.instance();
   final _notifiers = Notifiers();
-
   int _turnCompleted = 0;
 
   PlayerModel get player1 => _player1;
@@ -46,17 +45,20 @@ final class GameService._() {
 
     final playerId = (_notifiers.turn.value == .x) ? PlayerId.y : PlayerId.x;
 
-    _player2 = PlayerModel(emojis: gameData.player2Emojis, playerId: playerId);
+    _player2 = PlayerModel(
+      emojis: gameData.player2Emojis, 
+      playerId: playerId
+    );
   }
 
-  void initFields() =>
-      _fields = .generate(fieldsQuantity, (field) => FieldModel());
+  void initFields() => 
+    _fields = .generate(fieldsQuantity, (_) => FieldModel());
 
-  void changeTurn() =>
-      _notifiers.turn.value = (_notifiers.turn.value == .x) ? .y : .x;
+  void _changeTurn() =>
+    _notifiers.turn.value = (_notifiers.turn.value == .x) ? .y : .x;
 
   PlayerModel getPlayer() =>
-      _notifiers.turn.value == _player1.playerId ? _player1 : _player2;
+    _notifiers.turn.value == _player1.playerId ? _player1 : _player2;
 
   String turnToStr() => (_notifiers.turn.value == .x) ? "X" : "Y";
 
@@ -72,7 +74,7 @@ final class GameService._() {
     while (counter <= length) {
       if (counter == length) {
         isLastIteration = true;
-        length = (index + 1);
+        length = index + 1;
       }
       for (var i = 0; i < length; i++) {
         _notifiers.selectedColor.value = [false, false, false, false];
@@ -90,30 +92,23 @@ final class GameService._() {
   }
 
   void _sortEmojiToPlayer({required int colorIndex}) {
-    final maxValue = (_notifiers.turn.value == _player1.playerId)
-      ? _player1.emojis.length
-      : _player2.emojis.length;
+    final player = getPlayer();
+    final maxValue = player.emojis.length;
 
     int emojiIndex = Random().nextInt(maxValue);
 
-    if (_notifiers.turn.value == _player1.playerId) {
-      _player1.getEmoji(index: emojiIndex);
-      _player1.changeColor(newColor: AppThemes.colorPicker[colorIndex]);
-      _player1.checkColorAdjustment();
-      return;
-    }
-    _player2.getEmoji(index: emojiIndex);
-    _player2.changeColor(newColor: AppThemes.colorPicker[colorIndex]);
-    _player2.checkColorAdjustment();
+    player.getEmoji(index: emojiIndex);
+    player.changeColor(newColor: AppThemes.colorPicker[colorIndex]);
+    player.checkColorAdjustment();
   }
 
-  void fieldChangeTurn() {
+  void changePlayerInTurn() {
     final player = getPlayer();
 
     _notifiers.blockSortButton.value = false;
     _notifiers.draggableColor.value = AppColors.gray;
     player.emoji.restoreOriginalAttack();
-    changeTurn();
+    _changeTurn();
   }
 
   EmojiModel? completeTurn({required FieldModel field}) {
