@@ -11,6 +11,7 @@ class const EmojiBottomSheet({
     return DraggableScrollableSheet(
       expand: false,
       initialChildSize: .5,
+      maxChildSize: .9,
       builder: (context, scrollController) {
         return Container(
           decoration: const BoxDecoration(

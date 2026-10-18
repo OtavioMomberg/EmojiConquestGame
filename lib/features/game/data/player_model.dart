@@ -9,11 +9,15 @@ final class PlayerModel({
 }) {
   int _fieldsConquested = 0;
   EmojiModel _emoji = EmojiModel.emptyEmoji();
+  bool _hasEmojiInField = false;
   Color _color = Colors.transparent;
 
   int get fieldsConquested => _fieldsConquested;
   EmojiModel get emoji => _emoji;
+  bool get hasEmojiInField => _hasEmojiInField;
   Color get color => _color;
+
+  void changeEmojiInField() => _hasEmojiInField = !_hasEmojiInField;
 
   void getEmoji({required int index}) => _emoji = emojis[index];
 

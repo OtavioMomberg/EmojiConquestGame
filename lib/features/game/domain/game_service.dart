@@ -1,8 +1,5 @@
 import 'package:material_ui/material_ui.dart';
-
 import 'dart:math';
-
-import 'package:drag_and_drop_game/shared/data/emoji_model.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/shared/data/player_id.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
@@ -51,8 +48,7 @@ final class GameService._() {
     );
   }
 
-  void initFields() => 
-    _fields = .generate(fieldsQuantity, (_) => FieldModel());
+  void initFields() => _fields = .generate(fieldsQuantity, (_) => FieldModel());
 
   void _changeTurn() =>
     _notifiers.turn.value = (_notifiers.turn.value == .x) ? .y : .x;
@@ -97,13 +93,32 @@ final class GameService._() {
 
     int emojiIndex = Random().nextInt(maxValue);
 
-    player.getEmoji(index: emojiIndex);
-    player.changeColor(newColor: AppThemes.colorPicker[colorIndex]);
-    player.checkColorAdjustment();
+    player..getEmoji(index: emojiIndex)
+    ..changeColor(newColor: AppThemes.colorPicker[colorIndex])
+    ..checkColorAdjustment();
+  }
+
+  void attackWitoutEmoji({required PlayerModel player, required FieldModel field}) =>
+    field.receiveDamage(player: player);
+
+  void attackWithEmoji({required PlayerModel player, required FieldModel field}) {
+    player.emoji.adjustClassAttack(defenseEmoji: field.emoji.emojiType);
+
+    if (player.emoji.attack > field.emoji.attack) {
+      final _ = field.removeEmoji();
+      final defensePlayer = (player.playerId == player1.playerId)
+        ? player1
+        : player2;
+      defensePlayer.changeEmojiInField();
+    } else if (player.emoji.attack < field.emoji.attack) {
+      player.removeEmoji(emoji: player.emoji);
+    }
   }
 
   void changePlayerInTurn() {
     final player = getPlayer();
+
+    if (player.fieldsConquested == fieldsQuantity - 1) {}
 
     _notifiers.blockSortButton.value = false;
     _notifiers.draggableColor.value = AppColors.gray;
@@ -111,14 +126,29 @@ final class GameService._() {
     _changeTurn();
   }
 
-  EmojiModel? completeTurn({required FieldModel field}) {
-    _turnCompleted++;
+  bool validadePlayerBeforeSelectEmoji({required FieldModel field}) {
+    if (field.isConquested) { return false; }
+    if (field.hasEmoji()) { return false; }
+    if (getPlayer().hasEmojiInField) { return false; }
+    if (getPlayer().emojis.length <= 1) { return false; }
+    if (blockSortButton.value) { return false; }
+    return true;
+  }
 
-    if (_turnCompleted == 2) {
-      _turnCompleted = 0;
-      if (!field.hasEmoji()) { return null; }
-      return field.increaseTurn() ? field.removeEmoji() : null;
+  void completeTurn() {
+    _turnCompleted++;
+    if (_turnCompleted < 2) { return; }
+    _turnCompleted = 0;
+
+    for (var field in _fields) {
+      if (field.hasEmoji()) {
+        if (!field.increaseTurn()) { continue; }
+        final player = (field.emojiOwner == _player1.playerId)
+          ? _player1
+          : _player2;
+        final emoji = field.removeEmoji();
+        player..addEmoji(emoji: emoji)..changeEmojiInField();    
+      }
     }
-    return null;
   }
 }
