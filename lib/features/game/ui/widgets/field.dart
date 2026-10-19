@@ -31,12 +31,12 @@ class _FieldState extends State<Field> {
             duration: const Duration(milliseconds: 300),
             child: Card(
               color: widget.field.isConquested
-                ? AppColors.lightGray
-                : AppColors.grayBluish.withValues(alpha: .8),
+                  ? AppColors.lightGray
+                  : AppColors.grayBluish.withValues(alpha: .8),
               elevation: 5,
               shadowColor: widget.field.isConquested
-                ? AppColors.lightGray
-                : AppColors.grayBluish,
+                  ? AppColors.lightGray
+                  : AppColors.grayBluish,
               shape: RoundedRectangleBorder(
                 borderRadius: AppThemes.stdBorderRadius,
               ),
@@ -53,16 +53,14 @@ class _FieldState extends State<Field> {
                           style: AppThemes.fieldTextStyle,
                         ),
                         Text(
-                          "$emoji ${widget.field.emoji.attack}", 
+                          "$emoji ${widget.field.emoji.attack}",
                           style: TextStyle(
-                            fontSize: 30, 
-                            color: item.isNotEmpty 
-                              ? _playerAttack(player: item.first!) > widget.field.emoji.attack 
-                                ? AppColors.blue 
-                                : _playerAttack(player: item.first!) == widget.field.emoji.attack 
-                                  ? AppColors.white : AppColors.red
-                              : AppColors.white
-                          )
+                            fontSize: 30,
+                            color: _gameService.getFieldAttackColor(
+                              player: item,
+                              field: widget.field,
+                            ),
+                          ),
                         ),
                       ] else ...[
                         Text(
@@ -79,10 +77,13 @@ class _FieldState extends State<Field> {
           );
         },
         onAcceptWithDetails: (details) {
-          if (widget.field.isConquested) { return; }
+          if (widget.field.isConquested) {
+            return;
+          }
           _gameService.audioPlayer.play(audio: .placement);
 
-          final checkEmojiOwner = widget.field.emojiOwner == details.data.playerId;
+          final checkEmojiOwner =
+              widget.field.emojiOwner == details.data.playerId;
 
           if (!widget.field.hasEmoji() || checkEmojiOwner) {
             _gameService.attackWitoutEmoji(
@@ -96,7 +97,9 @@ class _FieldState extends State<Field> {
             );
           }
           setState(() {});
-          _gameService..completeTurn()..changePlayerInTurn();
+          _gameService
+            ..completeTurn()
+            ..changePlayerInTurn();
         },
       ),
     );
@@ -107,27 +110,19 @@ class _FieldState extends State<Field> {
       backgroundColor: AppColors.darkGray,
       isScrollControlled: true,
       context: context,
-      builder: (context) => SafeArea(
-        child: EmojiBottomSheet(player: player)
-      ),
+      builder: (context) => SafeArea(child: EmojiBottomSheet(player: player)),
     );
 
-    if (emojiIndex == null) { return; }
+    if (emojiIndex == null) {
+      return;
+    }
     widget.field.placeEmoji(
       emoji: player.emojis[emojiIndex],
       player: player.playerId,
     );
 
-    player..changeEmojiInField()
+    player
+      ..changeEmojiInField()
       ..removeEmoji(emoji: player.emojis[emojiIndex]);
-  }
-
-  int _playerAttack({required PlayerModel player}) {
-    if (widget.field.hasEmoji()) {
-      return player.emoji.displayAdjustedAttack(
-        defenseEmoji: widget.field.emoji.emojiType
-      );
-    }
-    return player.emoji.attack;
   }
 }

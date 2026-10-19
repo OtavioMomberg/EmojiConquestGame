@@ -46,10 +46,7 @@ final class GameService._() {
 
     final playerId = (_notifiers.turn.value == .x) ? PlayerId.y : PlayerId.x;
 
-    _player2 = PlayerModel(
-      emojis: gameData.player2Emojis, 
-      playerId: playerId
-    );
+    _player2 = PlayerModel(emojis: gameData.player2Emojis, playerId: playerId);
   }
 
   void initFields() {
@@ -65,11 +62,10 @@ final class GameService._() {
 
   PlayerModel getPlayer({required PlayerId player, bool invert = false}) {
     if (invert) {
-      return player == _player1.playerId ? _player2 : _player1;
+      return (player == _player1.playerId) ? _player2 : _player1;
     }
-    return player == _player1.playerId ? _player1 : _player2;
+    return (player == _player1.playerId) ? _player1 : _player2;
   }
-    
 
   String turnToStr() => (_notifiers.turn.value == .x) ? "X" : "Y";
 
@@ -113,6 +109,26 @@ final class GameService._() {
       ..checkColorAdjustment();
   }
 
+  Color getFieldAttackColor({
+    required List<PlayerModel?> player,
+    required FieldModel field,
+  }) {
+    if (player.isEmpty) { return AppColors.white; }
+    final attack = _playerAttack(player: player.first!, field: field);
+    if (attack > field.emoji.attack) { return AppColors.blue; }
+    if (attack < field.emoji.attack) { return AppColors.red; }
+    return AppColors.white;
+  }
+
+  int _playerAttack({required FieldModel field, required PlayerModel player}) {
+    if (field.hasEmoji()) {
+      return player.emoji.displayAdjustedAttack(
+        defenseEmoji: field.emoji.emojiType,
+      );
+    }
+    return player.emoji.attack;
+  }
+
   void attackWitoutEmoji({
     required PlayerModel player,
     required FieldModel field,
@@ -147,7 +163,7 @@ final class GameService._() {
 
   void _checkResult({required PlayerModel player}) {
     if (_player1.fieldsConquested == _player2.fieldsConquested) {
-      if (_player1.fieldsConquested != fieldsQuantity-2) { return; }
+      if (_player1.fieldsConquested != fieldsQuantity - 2) { return; }
 
       if (_player1.emojis.length == _player1.emojis.length) {
         result(winner: .neutro);
@@ -161,7 +177,7 @@ final class GameService._() {
       return;
     }
 
-    if (player.fieldsConquested == fieldsQuantity-1) {
+    if (player.fieldsConquested == fieldsQuantity - 1) {
       result(winner: player.playerId);
     }
   }

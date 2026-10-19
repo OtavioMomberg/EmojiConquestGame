@@ -41,7 +41,5 @@ final class EmojiModel({
     return attack;
   }
 
-  void restoreOriginalAttack() {
-    attack = _originalAttack;
-  }
+  void restoreOriginalAttack() => attack = _originalAttack;
 }

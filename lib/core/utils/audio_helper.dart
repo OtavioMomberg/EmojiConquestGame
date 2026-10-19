@@ -2,9 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 
 const _buttonSound1 = "audios/button_click1.mp3";
 const _buttonSound2 = "audios/button_click2.mp3";
-const _defenseEmojiSound = "audios/defense_emoji_sound.mp3";
 const _emojiPlacementSound = "audios/emoji_placement_sound.mp3";
-const _errorSound = "audios/error_sound.mp3";
 const _generalSound = "audios/general_use_sound.mp3";
 const _victorySound = "audios/victory_sound.mp3";
 
@@ -12,7 +10,7 @@ const startFirstSetup = 0;
 const endFirstSetUp = 3;
 const startLastSetup = 3;
 
-enum Audios { button1, button2, defense, placement, error, general, victory }
+enum Audios { button1, button2, placement, general, victory }
 
 final class AudioHelper._() {
   static final _instance = AudioHelper._();
@@ -20,9 +18,7 @@ final class AudioHelper._() {
 
   final _button1 = AudioPlayer();
   final _button2 = AudioPlayer();
-  final _defense = AudioPlayer();
   final _placement = AudioPlayer();
-  final _error = AudioPlayer();
   final _general = AudioPlayer();
   final _victory = AudioPlayer();
 
@@ -34,9 +30,7 @@ final class AudioHelper._() {
     _audioList.addAll([
       InitAudios(player: _button1, audioPath: _buttonSound1),
       InitAudios(player: _button2, audioPath: _buttonSound2),
-      InitAudios(player: _defense, audioPath: _defenseEmojiSound),
       InitAudios(player: _placement, audioPath: _emojiPlacementSound),
-      InitAudios(player: _error, audioPath: _errorSound),
       InitAudios(player: _general, audioPath: _generalSound),
       InitAudios(player: _victory, audioPath: _victorySound),
     ]);
@@ -59,8 +53,6 @@ final class AudioHelper._() {
     switch (audio) {
       case .button1: return _button1;
       case .button2: return _button2;
-      case .defense: return _defense;
-      case .error: return _error;
       case .general: return _general;
       case .placement: return _placement;
       case .victory: return _victory;

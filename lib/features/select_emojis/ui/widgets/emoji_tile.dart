@@ -1,7 +1,7 @@
+import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:drag_and_drop_game/shared/data/emojis_dataset.dart';
 import 'package:drag_and_drop_game/features/select_emojis/domain/select_emoji_service.dart';
-import 'package:material_ui/material_ui.dart';
 
 class const EmojiTile({
   required final SelectEmojiService selectService,
@@ -13,9 +13,7 @@ class const EmojiTile({
     return IgnorePointer(
       ignoring: !selectService.emojiAvaliable[index],
       child: Material(
-        //elevation: 5,
         color: selectService.getTileColor(index: index),
-        //shadowColor: AppColors.gray,
         borderRadius: AppThemes.stdBorderRadius,
         child: InkWell(
           borderRadius: AppThemes.stdBorderRadius,
