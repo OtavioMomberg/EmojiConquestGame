@@ -1,7 +1,8 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:drag_and_drop_game/core/config_export.dart';
+import 'package:drag_and_drop_game/shared/data/player_id.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
+import 'package:drag_and_drop_game/core/config_export.dart';
 import 'package:drag_and_drop_game/features/game/domain/game_service.dart';
 import 'package:drag_and_drop_game/features/game/ui/widgets/export_widgets_game_screen.dart';
 
@@ -23,13 +24,6 @@ class _GameScreenState extends State<GameScreen> with RouterScreens {
     _gameService.setUpPlayers(gameData: widget.playersData);
     _gameService.initFields();
   }
-
-  /*@override
-  void dispose() {
-    _gameService.disposeNotifiers();
-    _gameService.audioPlayer.disposePlayers();
-    super.dispose();
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +91,7 @@ class _GameScreenState extends State<GameScreen> with RouterScreens {
     );
   }
 
-  void _result({required String winner}) {
+  void _result({required PlayerId winner}) {
     navigate(
       context: context, 
       screen: AppRoutes.result,

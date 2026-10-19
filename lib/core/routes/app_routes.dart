@@ -1,3 +1,4 @@
+import 'package:drag_and_drop_game/shared/data/player_id.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/features/game/ui/result/result_screen.dart';
@@ -64,7 +65,7 @@ final class const AppRoutes._() {
         return GameScreen(playersData: arguments);
       }
       case result: {
-        final arguments = settings.arguments as String;
+        final arguments = settings.arguments as PlayerId;
         return ResultScreen(winner: arguments);
       }
       default: return const HomeScreen();

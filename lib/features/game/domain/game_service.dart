@@ -1,7 +1,5 @@
 import 'package:material_ui/material_ui.dart';
-
 import 'dart:math';
-
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/shared/data/player_id.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
@@ -12,7 +10,7 @@ import 'package:drag_and_drop_game/features/game/data/field_model.dart';
 
 const fieldsQuantity = 4;
 
-typedef Result = void Function({required String winner});
+typedef Result = void Function({required PlayerId winner});
 
 final class GameService._() {
   static final _instance = GameService._();
@@ -139,15 +137,33 @@ final class GameService._() {
 
   void changePlayerInTurn() {
     final player = getCurrentPlayer();
-
-    if (player.fieldsConquested == fieldsQuantity - 1) {
-      result(winner: player.playerId == .x ? "X" : "Y");
-    }
+    _checkResult(player: player);
 
     _notifiers.blockSortButton.value = false;
     _notifiers.draggableColor.value = AppColors.gray;
     player.emoji.restoreOriginalAttack();
     _changeTurn();
+  }
+
+  void _checkResult({required PlayerModel player}) {
+    if (_player1.fieldsConquested == _player2.fieldsConquested) {
+      if (_player1.fieldsConquested != fieldsQuantity-2) { return; }
+
+      if (_player1.emojis.length == _player1.emojis.length) {
+        result(winner: .neutro);
+        return;
+      }
+      if (_player1.emojis.length > _player1.emojis.length) {
+        result(winner: _player1.playerId);
+        return;
+      }
+      result(winner: _player2.playerId);
+      return;
+    }
+
+    if (player.fieldsConquested == fieldsQuantity-1) {
+      result(winner: player.playerId);
+    }
   }
 
   bool validadePlayerBeforeSelectEmoji({required FieldModel field}) {

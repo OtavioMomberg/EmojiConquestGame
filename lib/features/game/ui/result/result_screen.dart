@@ -1,13 +1,14 @@
+import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/shared/data/player_id.dart';
+import 'package:drag_and_drop_game/shared/widgets/button.dart';
+import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
 import 'package:drag_and_drop_game/core/config_export.dart';
 import 'package:drag_and_drop_game/core/utils/image_paths.dart';
 import 'package:drag_and_drop_game/features/game/domain/game_service.dart';
 import 'package:drag_and_drop_game/features/game/ui/widgets/export_widgets_game_screen.dart';
-import 'package:drag_and_drop_game/shared/widgets/button.dart';
-import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
-import 'package:material_ui/material_ui.dart';
 
 class const ResultScreen({
-  required final String winner, 
+  required final PlayerId winner,
   super.key
 }) extends StatefulWidget {
   @override
@@ -46,13 +47,23 @@ class _ResultScreenState extends State<ResultScreen> with RouterScreens {
               ),
               child: Column(
                 children: <Widget>[
-                  Text(
-                    "O vencedor é: ${widget.winner}",
-                    style: const TextStyle(
-                      color: AppColors.white,
-                      fontSize: 30
-                    )
-                  ),
+                  if (widget.winner == .neutro)...[
+                    const Text(
+                      "O resultado é: Empate",
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 30
+                      )
+                    ),
+                  ] else...[
+                    Text(
+                      "O vencedor é: ${widget.winner.name.toUpperCase()}",
+                      style: const TextStyle(
+                        color: AppColors.white,
+                        fontSize: 30
+                      )
+                    ),
+                  ],
                   const ImageRounded(imagePath: ImagePaths.emoji),
                   Button(
                     text: "Jogar Novamente", 

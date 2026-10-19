@@ -1,8 +1,10 @@
-import 'package:drag_and_drop_game/shared/data/emojis_dataset.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/shared/data/emojis_dataset.dart';
 import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
 import 'package:drag_and_drop_game/shared/widgets/header.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
+
+enum Power { buff, nerf }
 
 class const ClassesScreen({super.key}) extends StatelessWidget {
   @override
@@ -44,11 +46,13 @@ class const ClassesScreen({super.key}) extends StatelessWidget {
                         children: [
                           _IconText(
                             text: EmojiHierarchies.hierarchies[index].strong.name, 
-                            icon: Icons.arrow_upward
+                            icon: Icons.arrow_upward,
+                            power: .buff,
                           ),
                           _IconText(
                             text: EmojiHierarchies.hierarchies[index].weak.name, 
-                            icon: Icons.arrow_downward
+                            icon: Icons.arrow_downward,
+                            power: .nerf,
                           )
                         ]
                       )
@@ -66,20 +70,35 @@ class const ClassesScreen({super.key}) extends StatelessWidget {
 
 class const _IconText({
   required final String text,
-  required final IconData icon
+  required final IconData icon,
+  required final Power power
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: AppColors.white),
-        Text(
-          text, 
-          style: const TextStyle(
-            color: AppColors.white
+    return Container(
+      padding: const .all(10),
+      decoration: BoxDecoration(
+        borderRadius: AppThemes.stdBorderRadius,
+        color: AppColors.white
+      ),
+      child: Row(
+        children: [
+          Icon(
+            icon, 
+            color: power == .buff 
+              ? AppColors.blue 
+              : AppColors.red
+            ),
+          Text(
+            text, 
+            style: TextStyle(
+              color: power == .buff 
+                ? AppColors.blue 
+                : AppColors.red
+            )
           )
-        )
-      ]
+        ]
+      ),
     );
   }
 }
