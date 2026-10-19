@@ -8,8 +8,6 @@ final class const EmojiHierarchy({
   required final EmojiType weak,
 });
 
-// strong +1 attack
-// weak -1 attack
 final class const EmojiHierarchies._() {
   static const hierarchies = [
     EmojiHierarchy(type: .criaturas, strong: .poderes, weak: .frutas),

@@ -4,7 +4,7 @@ import 'package:drag_and_drop_game/shared/widgets/button.dart';
 import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
 import 'package:drag_and_drop_game/core/config_export.dart';
 import 'package:drag_and_drop_game/core/utils/image_paths.dart';
-import 'package:drag_and_drop_game/features/home/ui/image_elevated.dart';
+import 'package:drag_and_drop_game/features/home/image_elevated.dart';
 
 class const HomeScreen({super.key}) extends StatelessWidget 
   with RouterScreens {

@@ -1,32 +1,35 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:drag_and_drop_game/core/config_export.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
-import 'package:drag_and_drop_game/core/themes/app_themes.dart';
 import 'package:drag_and_drop_game/features/game/domain/game_service.dart';
 import 'package:drag_and_drop_game/features/game/ui/widgets/export_widgets_game_screen.dart';
 
-class const GameScreen({required final GameData playersData, super.key})
-    extends StatefulWidget {
+class const GameScreen({
+  required final GameData playersData, 
+  super.key
+}) extends StatefulWidget {
   @override
   State<GameScreen> createState() => _GameScreenState();
 }
 
-class _GameScreenState extends State<GameScreen> {
+class _GameScreenState extends State<GameScreen> with RouterScreens {
   final _gameService = GameService.instance();
 
   @override
   void initState() {
     super.initState();
+    _gameService.getResultFunction(resultF: _result);
     _gameService.setUpPlayers(gameData: widget.playersData);
     _gameService.initFields();
   }
 
-  @override
+  /*@override
   void dispose() {
     _gameService.disposeNotifiers();
     _gameService.audioPlayer.disposePlayers();
     super.dispose();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +51,7 @@ class _GameScreenState extends State<GameScreen> {
 
             const SizedBox(height: 10),
 
-            Expanded(
-              child: FieldsGrid(
-                fields: _gameService.fields,
-              )
-            ),
+            Expanded(child: FieldsGrid(fields: _gameService.fields)),
 
             ValueListenableBuilder(
               valueListenable: _gameService.draggableColor,
@@ -61,7 +60,7 @@ class _GameScreenState extends State<GameScreen> {
                   ignoring: color == AppColors.gray,
                   child: DraggableEmoji(
                     color: color,
-                    player: _gameService.getPlayer(),
+                    player: _gameService.getCurrentPlayer(),
                   ),
                 );
               },
@@ -95,6 +94,15 @@ class _GameScreenState extends State<GameScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _result({required String winner}) {
+    navigate(
+      context: context, 
+      screen: AppRoutes.result,
+      arguments: winner,
+      type: .pushReplacementNamed
     );
   }
 }

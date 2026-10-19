@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
+
 import 'dart:math';
+
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
 import 'package:drag_and_drop_game/shared/data/player_id.dart';
 import 'package:drag_and_drop_game/core/themes/app_themes.dart';
@@ -8,16 +10,18 @@ import 'package:drag_and_drop_game/features/game/data/notifiers.dart';
 import 'package:drag_and_drop_game/features/game/data/player_model.dart';
 import 'package:drag_and_drop_game/features/game/data/field_model.dart';
 
-const turns = 6;
 const fieldsQuantity = 4;
+
+typedef Result = void Function({required String winner});
 
 final class GameService._() {
   static final _instance = GameService._();
   factory instance() => _instance;
 
-  late PlayerModel _player1;
-  late PlayerModel _player2;
-  late final List<FieldModel> _fields;
+  PlayerModel _player1 = PlayerModel.emptyPlayer();
+  PlayerModel _player2 = PlayerModel.emptyPlayer();
+  Result result = ({required winner}) {};
+  final List<FieldModel> _fields = [];
   final audioPlayer = AudioHelper.instance();
   final _notifiers = Notifiers();
   int _turnCompleted = 0;
@@ -31,6 +35,8 @@ final class GameService._() {
   ValueNotifier<List<bool>> get selectedColor => _notifiers.selectedColor;
 
   void disposeNotifiers() => _notifiers.dispose();
+
+  void getResultFunction({required Result resultF}) => result = resultF;
 
   void setUpPlayers({required GameData gameData}) {
     _notifiers.turn.value = gameData.playerToStart;
@@ -48,13 +54,24 @@ final class GameService._() {
     );
   }
 
-  void initFields() => _fields = .generate(fieldsQuantity, (_) => FieldModel());
+  void initFields() {
+    _fields.clear();
+    _fields.addAll(.generate(fieldsQuantity, (_) => FieldModel()));
+  }
 
   void _changeTurn() =>
     _notifiers.turn.value = (_notifiers.turn.value == .x) ? .y : .x;
 
-  PlayerModel getPlayer() =>
+  PlayerModel getCurrentPlayer() =>
     _notifiers.turn.value == _player1.playerId ? _player1 : _player2;
+
+  PlayerModel getPlayer({required PlayerId player, bool invert = false}) {
+    if (invert) {
+      return player == _player1.playerId ? _player2 : _player1;
+    }
+    return player == _player1.playerId ? _player1 : _player2;
+  }
+    
 
   String turnToStr() => (_notifiers.turn.value == .x) ? "X" : "Y";
 
@@ -88,37 +105,44 @@ final class GameService._() {
   }
 
   void _sortEmojiToPlayer({required int colorIndex}) {
-    final player = getPlayer();
+    final player = getCurrentPlayer();
     final maxValue = player.emojis.length;
 
     int emojiIndex = Random().nextInt(maxValue);
 
     player..getEmoji(index: emojiIndex)
-    ..changeColor(newColor: AppThemes.colorPicker[colorIndex])
-    ..checkColorAdjustment();
+      ..changeColor(newColor: AppThemes.colorPicker[colorIndex])
+      ..checkColorAdjustment();
   }
 
-  void attackWitoutEmoji({required PlayerModel player, required FieldModel field}) =>
-    field.receiveDamage(player: player);
+  void attackWitoutEmoji({
+    required PlayerModel player,
+    required FieldModel field,
+  }) => field.receiveDamage(player: player);
 
-  void attackWithEmoji({required PlayerModel player, required FieldModel field}) {
+  void attackWithEmoji({
+    required PlayerModel player,
+    required FieldModel field,
+  }) {
     player.emoji.adjustClassAttack(defenseEmoji: field.emoji.emojiType);
+
+    if (player.emoji.attack == field.emoji.attack) { return; }
 
     if (player.emoji.attack > field.emoji.attack) {
       final _ = field.removeEmoji();
-      final defensePlayer = (player.playerId == player1.playerId)
-        ? player1
-        : player2;
+      final defensePlayer = getPlayer(player: player.playerId, invert: true);
       defensePlayer.changeEmojiInField();
-    } else if (player.emoji.attack < field.emoji.attack) {
-      player.removeEmoji(emoji: player.emoji);
+      return;
     }
+    player.removeEmoji(emoji: player.emoji);
   }
 
   void changePlayerInTurn() {
-    final player = getPlayer();
+    final player = getCurrentPlayer();
 
-    if (player.fieldsConquested == fieldsQuantity - 1) {}
+    if (player.fieldsConquested == fieldsQuantity - 1) {
+      result(winner: player.playerId == .x ? "X" : "Y");
+    }
 
     _notifiers.blockSortButton.value = false;
     _notifiers.draggableColor.value = AppColors.gray;
@@ -129,8 +153,8 @@ final class GameService._() {
   bool validadePlayerBeforeSelectEmoji({required FieldModel field}) {
     if (field.isConquested) { return false; }
     if (field.hasEmoji()) { return false; }
-    if (getPlayer().hasEmojiInField) { return false; }
-    if (getPlayer().emojis.length <= 1) { return false; }
+    if (getCurrentPlayer().emojis.length <= 1) { return false; }
+    if (getCurrentPlayer().hasEmojiInField) { return false; }
     if (blockSortButton.value) { return false; }
     return true;
   }
@@ -143,11 +167,10 @@ final class GameService._() {
     for (var field in _fields) {
       if (field.hasEmoji()) {
         if (!field.increaseTurn()) { continue; }
-        final player = (field.emojiOwner == _player1.playerId)
-          ? _player1
-          : _player2;
+        final player = getPlayer(player: field.emojiOwner);
         final emoji = field.removeEmoji();
-        player..addEmoji(emoji: emoji)..changeEmojiInField();    
+        player..addEmoji(emoji: emoji)
+          ..changeEmojiInField();
       }
     }
   }

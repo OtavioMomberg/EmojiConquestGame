@@ -28,6 +28,19 @@ final class EmojiModel({
     }
   }
 
+  int displayAdjustedAttack({required EmojiType defenseEmoji}) {
+    final hierarchy = EmojiHierarchies.hierarchies.
+      firstWhere((h) => h.type == emojiType);
+
+    if (hierarchy.strong == defenseEmoji) {
+      return attack + extraClassDamage;
+    }
+    if (hierarchy.weak == defenseEmoji) {
+      return attack - extraClassDamage;
+    }
+    return attack;
+  }
+
   void restoreOriginalAttack() {
     attack = _originalAttack;
   }

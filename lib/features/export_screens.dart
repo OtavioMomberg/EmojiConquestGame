@@ -1,4 +1,4 @@
-export "home/ui/home_screen.dart";
+export "home/home_screen.dart";
 export 'home/classes/classes_screen.dart';
 export 'home/emojis/emojis_screen.dart';
 export "home/rules/ui/rules_screen.dart";

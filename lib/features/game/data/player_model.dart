@@ -17,6 +17,9 @@ final class PlayerModel({
   bool get hasEmojiInField => _hasEmojiInField;
   Color get color => _color;
 
+  factory emptyPlayer() =>
+    PlayerModel(emojis: [], playerId: .neutro);
+
   void changeEmojiInField() => _hasEmojiInField = !_hasEmojiInField;
 
   void getEmoji({required int index}) => _emoji = emojis[index];

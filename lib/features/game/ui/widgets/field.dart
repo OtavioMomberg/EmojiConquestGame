@@ -5,10 +5,8 @@ import 'package:drag_and_drop_game/features/game/ui/widgets/emoji_bottom_sheet.d
 import 'package:drag_and_drop_game/features/game/data/field_model.dart';
 import 'package:drag_and_drop_game/features/game/data/player_model.dart';
 
-class const Field({
-  required final FieldModel field, 
-  super.key
-}) extends StatefulWidget {
+class const Field({required final FieldModel field, super.key})
+    extends StatefulWidget {
   @override
   State<Field> createState() => _FieldState();
 }
@@ -22,7 +20,7 @@ class _FieldState extends State<Field> {
       borderRadius: AppThemes.stdBorderRadius,
       onTap: () {
         if (_gameService.validadePlayerBeforeSelectEmoji(field: widget.field)) {
-          _selectEmojiToField(player: _gameService.getPlayer());
+          _selectEmojiToField(player: _gameService.getCurrentPlayer());
         }
       },
       child: DragTarget<PlayerModel>(
@@ -51,10 +49,21 @@ class _FieldState extends State<Field> {
                       if (widget.field.hasEmoji()) ...[
                         Text(
                           "X: ${widget.field.lifeX} | "
-                          "Y: ${widget.field.lifeY}\n",
+                          "Y: ${widget.field.lifeY}",
                           style: AppThemes.fieldTextStyle,
                         ),
-                        Text(emoji, style: const TextStyle(fontSize: 30)),
+                        Text(
+                          "$emoji ${widget.field.emoji.attack}", 
+                          style: TextStyle(
+                            fontSize: 30, 
+                            color: item.isNotEmpty 
+                              ? _playerAttack(player: item.first!) > widget.field.emoji.attack 
+                                ? AppColors.blue 
+                                : _playerAttack(player: item.first!) == widget.field.emoji.attack 
+                                  ? AppColors.white : AppColors.red
+                              : AppColors.white
+                          )
+                        ),
                       ] else ...[
                         Text(
                           "X: ${widget.field.lifeX}\n"
@@ -74,16 +83,16 @@ class _FieldState extends State<Field> {
           _gameService.audioPlayer.play(audio: .placement);
 
           final checkEmojiOwner = widget.field.emojiOwner == details.data.playerId;
-          
+
           if (!widget.field.hasEmoji() || checkEmojiOwner) {
             _gameService.attackWitoutEmoji(
-              player: details.data, 
-              field: widget.field
+              player: details.data,
+              field: widget.field,
             );
           } else {
             _gameService.attackWithEmoji(
-              player: details.data, 
-              field: widget.field
+              player: details.data,
+              field: widget.field,
             );
           }
           setState(() {});
@@ -110,6 +119,15 @@ class _FieldState extends State<Field> {
     );
 
     player..changeEmojiInField()
-    ..removeEmoji(emoji: player.emojis[emojiIndex]);
+      ..removeEmoji(emoji: player.emojis[emojiIndex]);
+  }
+
+  int _playerAttack({required PlayerModel player}) {
+    if (widget.field.hasEmoji()) {
+      return player.emoji.displayAdjustedAttack(
+        defenseEmoji: widget.field.emoji.emojiType
+      );
+    }
+    return player.emoji.attack;
   }
 }

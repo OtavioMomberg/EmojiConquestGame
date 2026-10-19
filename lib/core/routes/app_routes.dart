@@ -1,16 +1,18 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
+import 'package:drag_and_drop_game/features/game/ui/result/result_screen.dart';
 import 'package:drag_and_drop_game/features/export_screens.dart';
 
 enum TransitionType { slide, fade, scale }
 
 final class const AppRoutes._() {
   static const home = "/";
-  static const rules = "/rules";
-  static const emojis = "/emojis";
-  static const classes = "/classes";
+  static const rules = "/home/rules";
+  static const emojis = "/home/emojis";
+  static const classes = "/home/classes";
   static const selectEmojis = "/select_emojis";
   static const game = "/game";
+  static const result = "/game/result";
 
   static Widget _getTranslation({
     required Animation<double> animation,
@@ -22,7 +24,6 @@ final class const AppRoutes._() {
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
         const curve = Curves.easeInOut;
-
         final tween = Tween(
           begin: begin,
           end: end,
@@ -53,21 +54,20 @@ final class const AppRoutes._() {
 
   static Widget _getScreen({required RouteSettings settings}) {
     switch (settings.name) {
-      case home:
-        return const HomeScreen();
-      case emojis:
-        return const EmojisScreen();
-      case classes:
-        return const ClassesScreen();
-      case rules:
-        return const RulesScreen();
-      case selectEmojis:
-        return const SelectEmojisScreen();
-      case game:
+      case home: return const HomeScreen();
+      case emojis: return const EmojisScreen();
+      case classes: return const ClassesScreen();
+      case rules: return const RulesScreen();
+      case selectEmojis: return const SelectEmojisScreen();
+      case game: {
         final arguments = settings.arguments as GameData;
         return GameScreen(playersData: arguments);
-      default:
-        return const HomeScreen();
+      }
+      case result: {
+        final arguments = settings.arguments as String;
+        return ResultScreen(winner: arguments);
+      }
+      default: return const HomeScreen();
     }
   }
 
@@ -81,6 +81,7 @@ final class const AppRoutes._() {
       rules => TransitionType.fade,
       selectEmojis => TransitionType.slide,
       game => TransitionType.scale,
+      result => TransitionType.scale,
       _ => TransitionType.fade,
     };
 
