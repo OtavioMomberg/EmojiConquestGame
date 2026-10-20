@@ -1,3 +1,4 @@
+import 'package:drag_and_drop_game/shared/data/emoji_model.dart';
 import 'package:material_ui/material_ui.dart';
 import 'dart:math';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
@@ -88,7 +89,7 @@ final class GameService._() {
         _notifiers.selectedColor.value[i] = true;
 
         if (isLastIteration && i == index) {
-          audioPlayer.play(audio: .general);
+          //audioPlayer.play(audio: .general);
           _notifiers.draggableColor.value = AppThemes.colorPicker[i];
           _sortEmojiToPlayer(colorIndex: index);
         }
@@ -109,35 +110,46 @@ final class GameService._() {
       ..checkColorAdjustment();
   }
 
-  Color getFieldAttackColor({
-    required List<PlayerModel?> player,
-    required FieldModel field,
-  }) {
+  Color getFieldAttackColor({required FieldModel field, required List<PlayerModel?> player}) {
     if (player.isEmpty) { return AppColors.white; }
-    final attack = _playerAttack(player: player.first!, field: field);
+    if (field.emojiOwner == player.first!.playerId) { return AppColors.white; }
+    final attack = _playerAttack(field: field, emoji: player.first!.emoji);
     if (attack > field.emoji.attack) { return AppColors.blue; }
     if (attack < field.emoji.attack) { return AppColors.red; }
     return AppColors.white;
   }
 
-  int _playerAttack({required FieldModel field, required PlayerModel player}) {
-    if (field.hasEmoji()) {
-      return player.emoji.displayAdjustedAttack(
-        defenseEmoji: field.emoji.emojiType,
+  int getDefenseEmojiAttack({required FieldModel field, required List<PlayerModel?> player}) {
+    if (player.isNotEmpty) {
+      return _playerAttack(
+        field: field, 
+        emoji: player.first!.emoji, 
+        defenseEmoji: true
       );
     }
-    return player.emoji.attack;
+    return field.emoji.attack;
   }
 
-  void attackWitoutEmoji({
-    required PlayerModel player,
-    required FieldModel field,
-  }) => field.receiveDamage(player: player);
+  int _playerAttack({required FieldModel field, required EmojiModel emoji, bool defenseEmoji = false}) {
+    if (field.hasEmoji()) {
+      if (defenseEmoji) {
+        return field.emoji.adjustClassAttack(
+          defenseEmoji: emoji.emojiType,
+          returnAttack: true
+        )!;
+      }
+      return emoji.adjustClassAttack(
+        defenseEmoji: field.emoji.emojiType,
+        returnAttack: true
+      )!;
+    }
+    return defenseEmoji ? field.emoji.attack : emoji.attack;
+  }
 
-  void attackWithEmoji({
-    required PlayerModel player,
-    required FieldModel field,
-  }) {
+  void attackWitoutEmoji({required PlayerModel player, required FieldModel field}) => 
+    field.receiveDamage(player: player);
+
+  void attackWithEmoji({required PlayerModel player, required FieldModel field}) {
     player.emoji.adjustClassAttack(defenseEmoji: field.emoji.emojiType);
 
     if (player.emoji.attack == field.emoji.attack) { return; }

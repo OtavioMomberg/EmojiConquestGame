@@ -14,7 +14,7 @@ class const DraggableEmoji({
       feedback: _PlayerTile(
         color: color,
         child: Text(
-          "${player.emoji.emoji}\n"
+          "${player.emoji.emoji} "
           "${player.emoji.attack}",
           textAlign: .center,
           style: const TextStyle(
@@ -32,10 +32,14 @@ class const DraggableEmoji({
         color: color,
         dimension: 80,
         child: Text(
-          "Emoji",
+          color == AppColors.gray
+            ? ""
+            : "${player.emoji.emoji} ${player.emoji.attack}",
+          textAlign: .center,
           style: const TextStyle(
+            fontSize: 20,
             fontWeight: .bold,
-            color:AppColors.white
+            color: AppColors.white,
           ),
         ),
       ),

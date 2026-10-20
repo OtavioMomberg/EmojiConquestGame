@@ -15,27 +15,16 @@ final class EmojiModel({
   void adjustColorAttack({required int adjustment}) => 
     attack += adjustment;
 
-  void adjustClassAttack({required EmojiType defenseEmoji}) {
+  int? adjustClassAttack({required EmojiType defenseEmoji, bool returnAttack = false}) {
     final hierarchy = EmojiHierarchies.hierarchies.
       firstWhere((h) => h.type == emojiType);
 
     if (hierarchy.strong == defenseEmoji) {
-      attack += extraClassDamage;
-      return;
-    }
-    if (hierarchy.weak == defenseEmoji) {
-      attack -= extraClassDamage;
-    }
-  }
-
-  int displayAdjustedAttack({required EmojiType defenseEmoji}) {
-    final hierarchy = EmojiHierarchies.hierarchies.
-      firstWhere((h) => h.type == emojiType);
-
-    if (hierarchy.strong == defenseEmoji) {
+      if (!returnAttack) { attack += extraClassDamage; return null; }
       return attack + extraClassDamage;
     }
     if (hierarchy.weak == defenseEmoji) {
+      if (!returnAttack) { attack -= extraClassDamage; return null; }
       return attack - extraClassDamage;
     }
     return attack;

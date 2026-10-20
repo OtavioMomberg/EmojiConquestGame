@@ -8,12 +8,12 @@ enum TransitionType { slide, fade, scale }
 
 final class const AppRoutes._() {
   static const home = "/";
-  static const rules = "/home/rules";
-  static const emojis = "/home/emojis";
-  static const classes = "/home/classes";
+  static const rules = "/rules";
   static const selectEmojis = "/select_emojis";
+  static const emojis = "/emojis";
+  static const classes = "/classes";
   static const game = "/game";
-  static const result = "/game/result";
+  static const result = "/result";
 
   static Widget _getTranslation({
     required Animation<double> animation,
