@@ -2,7 +2,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:custom_feedback/custom_feedback.dart';
 import 'package:drag_and_drop_game/shared/widgets/formatted_container.dart';
 import 'package:drag_and_drop_game/shared/data/game_data.dart';
-import 'package:drag_and_drop_game/shared/widgets/button.dart';
 import 'package:drag_and_drop_game/core/config_export.dart';
 import 'package:drag_and_drop_game/core/utils/audio_helper.dart';
 import 'package:drag_and_drop_game/features/select_emojis/ui/widgets/select_emoji_header.dart';
@@ -59,47 +58,21 @@ class _SelectEmojisScreenState extends State<SelectEmojisScreen>
   }
 
   Future<void> _confirmEmojis({required int player}) async {
-    final response =
-        await CustomFeedback.rawDialog<bool>(
-          context: context,
-          barrierDismissible: false,
-          backgroundColor: AppColors.gray,
-          shadowColor: AppColors.grayBluish,
-          title: const Center(
-            child: Text(
-              "Confirmar Emojis",
-              style: TextStyle(color: AppColors.white),
-            ),
-          ),
-          content: const Text(""),
-          actions: [
-            Row(
-              spacing: 8,
-              children: <Widget>[
-                Expanded(
-                  child: Button(
-                    text: "Não",
-                    shadowColor: AppColors.grayBluish,
-                    onTap: () => Navigator.pop(context, false),
-                  ),
-                ),
-                Expanded(
-                  child: Button(
-                    text: "Sim",
-                    shadowColor: AppColors.grayBluish,
-                    onTap: () => Navigator.pop(context, true),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ) ??
-        false;
+    final response = await CustomFeedback.confirmDialog(
+      context: context,
+      backgroundColor: AppColors.gray,
+      title: "Confirmar Emojis",
+      content: "",
+      fontColor: AppColors.white,
+      buttonColor: AppColors.white,
+      buttonFontColor: AppColors.darkBlue,
+      yesText: "Sim",
+      noText: "No"
+    ) ?? false;
 
     if (!mounted) { return; }
-
     _selectService.dialogResponseAction(response: response);
-
+    
     if (player == playerTwo && response) {
       navigate(
         context: context,
