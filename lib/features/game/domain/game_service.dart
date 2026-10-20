@@ -121,6 +121,9 @@ final class GameService._() {
 
   int getDefenseEmojiAttack({required FieldModel field, required List<PlayerModel?> player}) {
     if (player.isNotEmpty) {
+      if (player.first!.playerId == field.emojiOwner) {
+        return field.emoji.attack;
+      }
       return _playerAttack(
         field: field, 
         emoji: player.first!.emoji, 
